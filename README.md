@@ -1,9 +1,12 @@
-# 🧪 PeptideCalc Pro v1.0
+# 🧪 PeptideCalc Pro
+
+[![Streamlit App](https://img.shields.io/badge/Streamlit-Open_App-FF4B4B?style=for-the-badge&logo=Streamlit&logoColor=white)](https://peptide-calculator.streamlit.app/)
+[![Python](https://img.shields.io/badge/Python-3.9%2B-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)
+[![Ko-fi](https://img.shields.io/badge/Ko--fi-Support-FF5E5B?style=for-the-badge&logo=ko-fi&logoColor=white)](https://ko-fi.com/musika)
 
 **PeptideCalc Pro** is a specialized dashboard designed to simplify the complex math involved in peptide reconstitution. It serves as both a precision calculator and an educational knowledge base for researchers.
 
-### 🔗 [Click Here to Launch the App](https://YOUR-APP-URL-HERE.streamlit.app)
-*(Replace the link above once you deploy on Streamlit Cloud)*
+### 🔗 [Click Here to Launch the App](https://peptide-calculator.streamlit.app/)
 
 ---
 
@@ -58,7 +61,3 @@ If you prefer to run this on your own computer instead of the web:
 If this tool saved you time or helped your research, consider supporting the development!
 
 [**Support on Ko-fi**](https://ko-fi.com/musika)
-
----
-
-*v1.0 | Developed by Musika*
