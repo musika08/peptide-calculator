@@ -91,16 +91,28 @@ if 'vial_val' not in st.session_state: st.session_state.vial_val = 5.0
 if 'dose_val' not in st.session_state: st.session_state.dose_val = 250.0
 if 'stock_unit_index' not in st.session_state: st.session_state.stock_unit_index = 0
 if 'dose_unit_index' not in st.session_state: st.session_state.dose_unit_index = 0
+if 'dose_unit_selection' not in st.session_state: st.session_state.dose_unit_selection = "mcg"
 
 # --- LOGIC ---
 def load_preset():
     selection = st.session_state.peptide_selector
     data = PEPTIDE_PRESETS[selection]
+    
+    # 1. Update Stock
     st.session_state.vial_val = float(data["vial_mg"])
     st.session_state.stock_unit_index = 0 
+
+    # 2. Smart Dose Unit Switching (Under 1mg -> mcg, Over 1mg -> mg)
     target_mcg = float(data["dose_mcg"])
-    current_dose_unit = st.session_state.get("dose_unit_selection", "mcg")
-    st.session_state.dose_val = target_mcg / FACTORS[current_dose_unit]
+    
+    if target_mcg < 1000:
+        # Less than 1 mg (e.g. 250 mcg) -> Use mcg
+        st.session_state.dose_unit_selection = "mcg"
+        st.session_state.dose_val = target_mcg
+    else:
+        # 1 mg or more (e.g. 2500 mcg) -> Use mg
+        st.session_state.dose_unit_selection = "mg"
+        st.session_state.dose_val = target_mcg / 1000
 
 def convert_dose_unit():
     new_unit = st.session_state.dose_unit_selection
@@ -149,13 +161,23 @@ with left_col:
 
     st.write("🎯 **Dosing**")
     c4, c5 = st.columns([2, 1])
-    with c4:
-        fmt = "%.4f" if st.session_state.get("dose_unit_selection") in ['mg', 'g'] else "%.1f"
-        step = 0.01 if st.session_state.get("dose_unit_selection") in ['mg', 'g'] else 10.0
-        desired_dose = st.number_input("Desired Dose", key="dose_val", min_value=0.0, step=step, format=fmt)
+    
     with c5:
-        dose_unit = st.selectbox("Dose Unit", ["mcg", "mg", "g"], index=0, key="dose_unit_selection", on_change=convert_dose_unit)
-        if "_prev_dose_unit" not in st.session_state: st.session_state._prev_dose_unit = dose_unit
+        # We use the key 'dose_unit_selection' to sync the selectbox with session state
+        dose_unit = st.selectbox(
+            "Dose Unit", 
+            ["mcg", "mg", "g"], 
+            key="dose_unit_selection", 
+            on_change=convert_dose_unit
+        )
+        if "_prev_dose_unit" not in st.session_state: 
+            st.session_state._prev_dose_unit = dose_unit
+
+    with c4:
+        # Dynamic formatting based on unit
+        fmt = "%.4f" if dose_unit in ['mg', 'g'] else "%.1f"
+        step = 0.01 if dose_unit in ['mg', 'g'] else 10.0
+        desired_dose = st.number_input("Desired Dose", key="dose_val", min_value=0.0, step=step, format=fmt)
     
     syringe_type = st.radio("Syringe Type", ["U-100 (Standard)", "U-40 (Vet)"], horizontal=True)
     syringe_factor = 100 if "U-100" in syringe_type else 40
