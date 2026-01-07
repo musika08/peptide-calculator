@@ -310,6 +310,11 @@ with right_col:
         concentration_mg_ml = concentration_mcg_ml / 1000
         draw_ml = desired_dose_mcg / concentration_mcg_ml
         units = draw_ml * syringe_factor
+        
+        # --- NEW: CYCLE CALCULATOR ---
+        # Calculate doses per vial
+        doses_per_vial = total_peptide_mcg / desired_dose_mcg
+        
         peptide_info = PEPTIDE_PRESETS[selected_peptide]
 
         # --- A. PEPTIDE DETAILS ---
@@ -329,10 +334,11 @@ with right_col:
 
         # --- B. CALCULATION RESULTS ---
         
-        # 1. Standard Metric Display (Reverted to Native Style)
-        m1, m2 = st.columns(2)
-        m1.metric("Draw Volume", f"{draw_ml:.4f} mL")
-        m2.metric("Syringe Units", f"{units:.1f} Units")
+        # 1. Standard Metrics + Cycle Info
+        c1, c2, c3 = st.columns(3)
+        c1.metric("Draw Volume", f"{draw_ml:.4f} mL")
+        c2.metric("Syringe Units", f"{units:.1f} Units")
+        c3.metric("Doses / Vial", f"{int(doses_per_vial)}")
         
         # 2. Split Dosing Logic & Visual Syringe
         percentage = min(units / syringe_factor * 100, 100)
@@ -365,7 +371,7 @@ with right_col:
             st.caption(f"Draw to the **{units:.1f}** mark on your {syringe_type} syringe.")
 
         # DOWNLOAD
-        protocol_text = f"Peptide: {selected_peptide}\nFreq: {peptide_info['freq']}\nStock: {vial_qty}{vial_unit} + {water_ml}mL Water\nConc: {concentration_mg_ml:.2f} mg/mL\nDose: {desired_dose}{dose_unit} = {units:.1f} Units ({syringe_type})\n\nDetails:\n{peptide_info['desc']}\nBenefits: {peptide_info['benefits']}\nStorage: {peptide_info['storage']}\nInstructions: {peptide_info['note']}"
+        protocol_text = f"Peptide: {selected_peptide}\nFreq: {peptide_info['freq']}\nStock: {vial_qty}{vial_unit} + {water_ml}mL Water\nConc: {concentration_mg_ml:.2f} mg/mL\nDose: {desired_dose}{dose_unit} = {units:.1f} Units ({syringe_type})\nSupply: 1 vial lasts approx {int(doses_per_vial)} doses.\n\nDetails:\n{peptide_info['desc']}\nBenefits: {peptide_info['benefits']}\nStorage: {peptide_info['storage']}\nInstructions: {peptide_info['note']}"
         st.download_button("💾 Save Protocol", protocol_text, "protocol.txt", use_container_width=True)
 
     else:
