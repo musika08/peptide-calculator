@@ -8,79 +8,119 @@ st.set_page_config(
     initial_sidebar_state="collapsed"
 )
 
-# --- EXPANDED KNOWLEDGE BASE (UPDATED WITH TIMING) ---
+# --- EXPANDED KNOWLEDGE BASE (UPDATED WITH NEW PEPTIDES & SIDE EFFECTS) ---
 PEPTIDE_PRESETS = {
     "Custom (Enter manually)": {
         "vial_mg": 5.0, "dose_mcg": 250.0, "freq": "As directed", 
         "type": "N/A",
         "desc": "Manual calculation for custom compounds.", 
-        "note": "Verify molecular weight and concentration if applicable."
+        "note": "Verify molecular weight and concentration if applicable.",
+        "side_effects": "Unknown."
     },
     "BPC-157": {
         "vial_mg": 5.0, "dose_mcg": 250.0, "freq": "Daily (or 2x Daily)", 
         "type": "Regenerative",
         "desc": "Body Protection Compound-157. Accelerates healing of soft tissue (tendons, ligaments) and protects gut health.", 
-        "note": "🕒 **ANYTIME.** Can be taken with or without food. For gut health specifically, taking it orally or injecting 30 mins after a meal is sometimes preferred."
+        "note": "🕒 **ANYTIME.** Can be taken with or without food.",
+        "side_effects": "Very rare. Occasional nausea or injection site irritation."
     },
     "TB-500": {
         "vial_mg": 5.0, "dose_mcg": 2500.0, "freq": "2x / Week", 
         "type": "Regenerative",
         "desc": "Synthetic Thymosin Beta-4. Promotes flexibility, reduces inflammation, and aids recovery.", 
-        "note": "🕒 **ANYTIME.** Timing relative to meals does not matter."
+        "note": "🕒 **ANYTIME.** Timing relative to meals does not matter.",
+        "side_effects": "Fatigue, temporary head rush."
     },
     "Semaglutide": {
         "vial_mg": 5.0, "dose_mcg": 250.0, "freq": "Once Weekly", 
         "type": "Metabolic (GLP-1)",
         "desc": "GLP-1 Agonist. Increases insulin secretion and reduces appetite. FDA approved for weight management.", 
-        "note": "🕒 **ANYTIME (Weekly).** Taken on the same day each week. Meals do not affect absorption, but eating light prevents nausea."
+        "note": "🕒 **ANYTIME (Weekly).** Taken on the same day each week. Meals do not affect absorption.",
+        "side_effects": "Nausea, vomiting, diarrhea, constipation, fatigue."
     },
     "Tirzepatide": {
         "vial_mg": 10.0, "dose_mcg": 2500.0, "freq": "Once Weekly", 
         "type": "Metabolic (GLP-1/GIP)",
         "desc": "Dual GIP/GLP-1 Agonist. Potent weight loss and metabolic regulation.", 
-        "note": "🕒 **ANYTIME (Weekly).** Taken on the same day each week. Meals do not affect absorption."
+        "note": "🕒 **ANYTIME (Weekly).** Taken on the same day each week.",
+        "side_effects": "Nausea, diarrhea, decreased appetite, constipation."
+    },
+    "Retatrutide": {
+        "vial_mg": 10.0, "dose_mcg": 2000.0, "freq": "Once Weekly", 
+        "type": "Metabolic (GLP-1/GIP/Glucagon)",
+        "desc": "Triple agonist (GLP-1, GIP, Glucagon). The newest generation weight loss peptide with high potency.", 
+        "note": "🕒 **ANYTIME (Weekly).** Start low. Potent metabolic effects.",
+        "side_effects": "Increased heart rate, nausea, arrhythmia risk, appetite suppression."
     },
     "GHK-Cu": {
         "vial_mg": 50.0, "dose_mcg": 2000.0, "freq": "Daily", 
         "type": "Cosmetic/Repair",
         "desc": "Copper Tripeptide-1. Increases collagen production. Used for skin, scarring, and hair.", 
-        "note": "🌙 **EVENING PREFERRED.** High concentrations can sting—rotate sites. Zinc supplements are often recommended to balance copper."
+        "note": "🌙 **EVENING PREFERRED.** High concentrations can sting—rotate sites.",
+        "side_effects": "Injection site pain (stinging), redness, copper toxicity (if overdosed)."
+    },
+    "NAD+": {
+        "vial_mg": 500.0, "dose_mcg": 50000.0, "freq": "2-3x / Week", 
+        "type": "Cellular Energy",
+        "desc": "Nicotinamide Adenine Dinucleotide. Critical for cellular energy (ATP) and anti-aging.", 
+        "note": "⚠️ **SLOW INJECTION.** If injected too fast, causes chest pressure and anxiety.",
+        "side_effects": "Chest pressure, palpitations, nausea, lightheadedness (short duration)."
+    },
+    "Epithalon": {
+        "vial_mg": 10.0, "dose_mcg": 5000.0, "freq": "Daily (Course)", 
+        "type": "Anti-Aging",
+        "desc": "Synthetic tetrapeptide that increases telomerase activity, potentially lengthening telomeres.", 
+        "note": "🕒 **ANYTIME.** Usually taken in a 10-20 day course, then cycled off.",
+        "side_effects": "None reported/Very mild."
+    },
+    "Kisspeptin": {
+        "vial_mg": 10.0, "dose_mcg": 100.0, "freq": "As needed", 
+        "type": "Hormonal",
+        "desc": "Stimulates GnRH release, increasing LH and FSH. Used to restart HPTA axis.", 
+        "note": "🕒 **ANYTIME.** Often used as a safer alternative to HCG.",
+        "side_effects": "Flushing, injection site reactions."
     },
     "CJC-1295 (No DAC)": {
         "vial_mg": 5.0, "dose_mcg": 100.0, "freq": "Daily (PM)", 
         "type": "Growth Hormone",
         "desc": "Modified GRF 1-29. Stimulates pulsatile Growth Hormone release.", 
-        "note": "⚠️ **FASTED ONLY.** Inject immediately **before bed**. You must have an **EMPTY STOMACH** (2-3 hours after last meal) or the insulin spike will blunt the effect."
+        "note": "⚠️ **FASTED ONLY.** Inject immediately **before bed** on empty stomach.",
+        "side_effects": "Head rush, flushing (warm face), vivid dreams."
     },
     "Ipamorelin": {
         "vial_mg": 5.0, "dose_mcg": 100.0, "freq": "Daily (PM)", 
         "type": "Growth Hormone",
         "desc": "Selective GH Secretagogue. Stimulates GH release without major cortisol spikes.", 
-        "note": "⚠️ **FASTED ONLY.** Inject immediately **before bed**. You must have an **EMPTY STOMACH** (2-3 hours after last meal) or the effect is wasted."
+        "note": "⚠️ **FASTED ONLY.** Inject immediately **before bed** on empty stomach.",
+        "side_effects": "Head rush, mild water retention."
     },
-    "Melanotan 2": {
+    "Melanotan II": {
         "vial_mg": 10.0, "dose_mcg": 500.0, "freq": "Daily (Loading)", 
         "type": "Cosmetic",
         "desc": "Stimulates tanning and acts as a potent aphrodisiac.", 
-        "note": "☀️ **BEFORE UV EXPOSURE.** Take 30 mins before tanning bed or sun. If using for libido only, take 4 hours before effect is needed."
+        "note": "☀️ **BEFORE UV EXPOSURE.** Take 30 mins before tanning bed or sun.",
+        "side_effects": "Nausea (common), facial flushing, increased libido, appetite suppression."
     },
     "PT-141": {
         "vial_mg": 10.0, "dose_mcg": 1000.0, "freq": "As needed", 
         "type": "Libido",
         "desc": "Bremelanotide. Treats hypoactive sexual desire via the CNS.", 
-        "note": "⏰ **BEFORE ACTIVITY.** Inject **45-60 minutes before** sexual activity. Do not exceed 1 dose every 72 hours."
+        "note": "⏰ **BEFORE ACTIVITY.** Inject **45-60 minutes before** sexual activity.",
+        "side_effects": "Nausea, flushing, headache, increased blood pressure."
     },
     "Tesamorelin": {
         "vial_mg": 2.0, "dose_mcg": 1000.0, "freq": "Daily (PM)", 
         "type": "Growth Hormone",
         "desc": "Potent GHRH analog. Specific for reducing visceral belly fat.", 
-        "note": "⚠️ **FASTED ONLY.** Inject immediately **before bed**. Must be on an **EMPTY STOMACH** (at least 2 hours after food)."
+        "note": "⚠️ **FASTED ONLY.** Inject immediately **before bed** on empty stomach.",
+        "side_effects": "Injection site reactions, joint pain, water retention."
     },
     "HCG": {
         "vial_mg": 5.0, "dose_mcg": 250.0, "freq": "2-3x / Week", 
         "type": "Hormonal",
         "desc": "Human Chorionic Gonadotropin. Mimics LH to maintain testicular function.", 
-        "note": "🌅 **MORNING.** Usually taken upon waking. Consistency in timing is key."
+        "note": "🌅 **MORNING.** Usually taken upon waking.",
+        "side_effects": "Estrogen elevation, acne, water retention."
     },
 }
 
@@ -92,6 +132,8 @@ if 'dose_val' not in st.session_state: st.session_state.dose_val = 250.0
 if 'stock_unit_index' not in st.session_state: st.session_state.stock_unit_index = 0
 if 'dose_unit_index' not in st.session_state: st.session_state.dose_unit_index = 0
 if 'dose_unit_selection' not in st.session_state: st.session_state.dose_unit_selection = "mcg"
+# USAGE COUNTER (Session only)
+if 'calc_count' not in st.session_state: st.session_state.calc_count = 0
 
 # --- LOGIC ---
 def load_preset():
@@ -106,13 +148,14 @@ def load_preset():
     target_mcg = float(data["dose_mcg"])
     
     if target_mcg < 1000:
-        # Less than 1 mg (e.g. 250 mcg) -> Use mcg
         st.session_state.dose_unit_selection = "mcg"
         st.session_state.dose_val = target_mcg
     else:
-        # 1 mg or more (e.g. 2500 mcg) -> Use mg
         st.session_state.dose_unit_selection = "mg"
         st.session_state.dose_val = target_mcg / 1000
+
+    # Increment counter on interaction
+    st.session_state.calc_count += 1
 
 def convert_dose_unit():
     new_unit = st.session_state.dose_unit_selection
@@ -155,7 +198,8 @@ with left_col:
     with c2:
         vial_unit = st.selectbox("Unit", ["mg", "mcg", "g"], index=st.session_state.stock_unit_index, key="stock_unit_selection")
     with c3:
-        water_ml = st.number_input("Water Added (mL)", value=2.0, step=0.1, min_value=0.1, format="%.1f")
+        # STEP SIZE CHANGED TO 0.5 HERE
+        water_ml = st.number_input("Water Added (mL)", value=2.0, step=0.5, min_value=0.1, format="%.1f")
 
     st.warning("⚠️ **Safety Check:** Ensure inputs match your physical supplies.")
 
@@ -163,7 +207,6 @@ with left_col:
     c4, c5 = st.columns([2, 1])
     
     with c5:
-        # We use the key 'dose_unit_selection' to sync the selectbox with session state
         dose_unit = st.selectbox(
             "Dose Unit", 
             ["mcg", "mg", "g"], 
@@ -174,7 +217,6 @@ with left_col:
             st.session_state._prev_dose_unit = dose_unit
 
     with c4:
-        # Dynamic formatting based on unit
         fmt = "%.4f" if dose_unit in ['mg', 'g'] else "%.1f"
         step = 0.01 if dose_unit in ['mg', 'g'] else 10.0
         desired_dose = st.number_input("Desired Dose", key="dose_val", min_value=0.0, step=step, format=fmt)
@@ -204,6 +246,7 @@ with right_col:
                 st.markdown(f"**Type:** {peptide_info['type']}")
                 st.markdown(f"**Description:** {peptide_info['desc']}")
                 st.markdown(f"**Frequency:** {peptide_info['freq']}")
+                st.warning(f"**⚠️ Side Effects:** {peptide_info['side_effects']}")
                 st.info(f"**📋 Instructions:** {peptide_info['note']}")
                 st.caption("Common injection sites: Subcutaneous fat (Abdomen, Thigh, or Back of Arm).")
 
@@ -224,8 +267,17 @@ with right_col:
             st.caption(f"Draw to **{units:.1f}** mark.")
 
         # DOWNLOAD
-        protocol_text = f"Peptide: {selected_peptide}\nFreq: {peptide_info['freq']}\nStock: {vial_qty}{vial_unit} + {water_ml}mL Water\nConc: {concentration_mg_ml:.2f} mg/mL\nDose: {desired_dose}{dose_unit} = {units:.1f} Units ({syringe_type})\n\nDetails:\n{peptide_info['desc']}\nInstructions: {peptide_info['note']}"
+        protocol_text = f"Peptide: {selected_peptide}\nFreq: {peptide_info['freq']}\nStock: {vial_qty}{vial_unit} + {water_ml}mL Water\nConc: {concentration_mg_ml:.2f} mg/mL\nDose: {desired_dose}{dose_unit} = {units:.1f} Units ({syringe_type})\n\nDetails:\n{peptide_info['desc']}\nSide Effects: {peptide_info['side_effects']}\nInstructions: {peptide_info['note']}"
         st.download_button("💾 Save Protocol", protocol_text, "protocol.txt", use_container_width=True)
 
     else:
         st.info("Enter inputs to see results.")
+
+# --- FOOTER: USAGE TRACKING ---
+st.divider()
+c_foot1, c_foot2 = st.columns([1,1])
+with c_foot1:
+    st.caption(f"🔢 Calculations performed this session: **{st.session_state.calc_count}**")
+with c_foot2:
+    # This acts as a global visitor counter image (free service)
+    st.markdown("![Visitor Count](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fpeptide-calculator.streamlit.app&count_bg=%2379C83D&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=Total+Visits&edge_flat=false)")
