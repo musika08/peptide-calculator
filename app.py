@@ -250,10 +250,10 @@ with left_col:
     # --- DYNAMIC MIXING GUIDE ---
     with st.expander("🛠️ How to Reconstitute (Mix)"):
         st.markdown(f"""
-        1. **Clean:** Wipe the top of the **{vial_qty} {vial_unit}** peptide vial and the water vial with an alcohol swab. [Image of alcohol swab wiping vial top]
+        1. **Clean:** Wipe the top of the **{vial_qty} {vial_unit}** peptide vial and the water vial with an alcohol swab.
         2. **Withdraw:** Draw exactly **{water_ml} mL** of Bacteriostatic Water.
-        3. **Inject:** Slowly inject the **{water_ml} mL** of water into the peptide vial. Aim for the glass wall, not the powder directly. [Image of water being injected into vial]
-        4. **Mix:** **Do not shake.** Gently swirl the vial until dissolved. [Image of gentle swirling of vial]
+        3. **Inject:** Slowly inject the **{water_ml} mL** of water into the peptide vial. Aim for the glass wall, not the powder directly.
+        4. **Mix:** **Do not shake.** Gently swirl the vial until dissolved.
         5. **Store:** Refrigerate immediately.
         """)
 
@@ -283,8 +283,10 @@ with right_col:
                 st.warning(f"**⚠️ Side Effects:** {peptide_info['side_effects']}")
                 st.info(f"**📋 Instructions:** {peptide_info['note']}")
                 st.markdown(f"**❄️ Storage:** {peptide_info['storage']}")
-                st.caption("Common injection sites: Subcutaneous fat (Abdomen, Thigh, or Back of Arm).")
-                st.markdown("[Image of subcutaneous injection sites]")
+                
+        # --- NEW: INJECTION VISUAL GUIDE ---
+        with st.expander("💉 Visual Guide: Injection Sites", expanded=True):
+            st.image("https://upload.wikimedia.org/wikipedia/commons/thumb/a/a1/Injection_Sites_Subcutaneous.png/640px-Injection_Sites_Subcutaneous.png", caption="Common Subcutaneous Injection Sites (Source: Wikimedia Commons)")
 
         st.divider()
 
