@@ -259,9 +259,9 @@ with left_col:
         5. **Store:** Refrigerate immediately.
         """)
 
-    # --- MOVED INJECTION VISUAL GUIDE HERE ---
+    # --- INJECTION VISUAL GUIDE (New Image) ---
     with st.expander("💉 Visual Guide: Injection Sites", expanded=True):
-        st.image("https://upload.wikimedia.org/wikipedia/commons/a/a1/Injection_Sites_Subcutaneous.png", caption="Common Subcutaneous Injection Sites (Source: Wikimedia Commons)", use_container_width=True)
+        st.image("https://upload.wikimedia.org/wikipedia/commons/thumb/3/35/Subcutaneous_injection_sites_EN.svg/640px-Subcutaneous_injection_sites_EN.svg.png", caption="Common Subcutaneous Injection Sites", use_container_width=True)
 
 
 # === RIGHT COLUMN: RESULTS ===
