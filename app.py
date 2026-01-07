@@ -8,7 +8,45 @@ st.set_page_config(
     initial_sidebar_state="collapsed"
 )
 
-# --- EXPANDED KNOWLEDGE BASE (ALPHABETICAL + STORAGE) ---
+# --- CSS FOR VISUAL SYRINGE ---
+st.markdown("""
+<style>
+    .syringe-container {
+        border: 2px solid #333;
+        border-radius: 4px;
+        background-color: #f0f0f0;
+        height: 30px;
+        width: 100%;
+        position: relative;
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+    .syringe-liquid {
+        background-color: #ff4b4b;
+        height: 100%;
+        border-radius: 2px 0 0 2px;
+        transition: width 0.5s ease-in-out;
+    }
+    .syringe-markings {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: repeating-linear-gradient(90deg, transparent, transparent 19%, #000 20%);
+        opacity: 0.1;
+    }
+    .metric-box {
+        background-color: #f0f2f6;
+        padding: 15px;
+        border-radius: 10px;
+        border: 1px solid #d6d6d6;
+        text-align: center;
+    }
+</style>
+""", unsafe_allow_html=True)
+
+# --- EXPANDED KNOWLEDGE BASE ---
 PEPTIDE_PRESETS = {
     "Custom (Enter manually)": {
         "vial_mg": 5.0, "dose_mcg": 250.0, "freq": "As directed", 
@@ -261,7 +299,6 @@ with left_col:
 
     # --- INJECTION VISUAL GUIDE (Local File) ---
     with st.expander("💉 Visual Guide: Injection Sites", expanded=True):
-        # We try to load the local image. If the user forgot to upload it, we show a text warning instead of crashing.
         try:
             st.image("injection_sites.png", caption="Recommended Subcutaneous Zones", use_container_width=True)
         except:
@@ -297,18 +334,51 @@ with right_col:
         st.divider()
 
         # --- B. CALCULATION RESULTS ---
-        m1, m2 = st.columns(2)
-        m1.metric("Draw Volume", f"{draw_ml:.4f} mL")
-        m2.metric("Syringe Units", f"{units:.1f} Units")
         
-        # BAR
-        bar_val = min(units / syringe_factor, 1.0)
+        # 1. Visual Metrics (Cards)
+        st.markdown(f"""
+        <div style="display: flex; gap: 10px; margin-bottom: 20px;">
+            <div class="metric-box" style="flex: 1;">
+                <div style="font-size: 14px; color: #666;">Draw Volume</div>
+                <div style="font-size: 24px; font-weight: bold; color: #333;">{draw_ml:.4f} mL</div>
+            </div>
+            <div class="metric-box" style="flex: 1; border: 2px solid #ff4b4b;">
+                <div style="font-size: 14px; color: #ff4b4b;">Syringe Units</div>
+                <div style="font-size: 24px; font-weight: bold; color: #ff4b4b;">{units:.1f}</div>
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
+        
+        # 2. Split Dosing Logic & Visual Syringe
+        percentage = min(units / syringe_factor * 100, 100)
+        
         if units > syringe_factor:
-            st.progress(1.0)
-            st.error(f"⚠️ Dose ({units:.1f} U) > 1 Full Syringe!")
+            # DOSE TOO HIGH - SPLIT IT
+            import math
+            num_injections = math.ceil(units / syringe_factor)
+            dose_per = units / num_injections
+            st.error(f"⚠️ **Volume too large for one syringe!**")
+            st.warning(f"💡 **Recommendation:** Split into **{num_injections}** injections of **{dose_per:.1f} Units** each.")
+            
+            # Show full bar
+            st.markdown(f"""
+            <div style="margin-bottom:5px; font-weight:bold;">Visual Fill (1 Full Syringe + Overflow):</div>
+            <div class="syringe-container">
+                <div class="syringe-liquid" style="width: 100%; background-color: #ff0000;"></div>
+                <div class="syringe-markings"></div>
+            </div>
+            """, unsafe_allow_html=True)
+
         else:
-            st.progress(bar_val)
-            st.caption(f"Draw to **{units:.1f}** mark.")
+            # DOSE OK
+            st.markdown(f"""
+            <div style="margin-bottom:5px; font-weight:bold;">Visual Syringe Fill ({units:.1f} Units):</div>
+            <div class="syringe-container">
+                <div class="syringe-liquid" style="width: {percentage}%;"></div>
+                <div class="syringe-markings"></div>
+            </div>
+            """, unsafe_allow_html=True)
+            st.caption(f"Draw to the **{units:.1f}** mark on your {syringe_type} syringe.")
 
         # DOWNLOAD
         protocol_text = f"Peptide: {selected_peptide}\nFreq: {peptide_info['freq']}\nStock: {vial_qty}{vial_unit} + {water_ml}mL Water\nConc: {concentration_mg_ml:.2f} mg/mL\nDose: {desired_dose}{dose_unit} = {units:.1f} Units ({syringe_type})\n\nDetails:\n{peptide_info['desc']}\nBenefits: {peptide_info['benefits']}\nStorage: {peptide_info['storage']}\nInstructions: {peptide_info['note']}"
@@ -324,3 +394,7 @@ with c_foot1:
     st.caption(f"🔢 Calculations performed this session: **{st.session_state.calc_count}**")
 with c_foot2:
     st.markdown("[![Hits](https://hits.sh/peptide-calculator.streamlit.app.svg?style=flat-square&label=Total%20Visits&extraCount=2023&color=79c83d)](https://hits.sh/peptide-calculator.streamlit.app/)")
+
+# --- DISCLAIMER ---
+st.markdown("---")
+st.caption("⚠️ **Medical Disclaimer:** This tool is for educational and informational purposes only and does not constitute medical advice. Always verify calculations with a professional. The developers assume no liability for errors or misuse.")
