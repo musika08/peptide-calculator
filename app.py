@@ -247,13 +247,13 @@ with left_col:
     syringe_type = st.radio("Syringe Type", ["U-100 (Standard)", "U-40 (Vet)"], horizontal=True)
     syringe_factor = 100 if "U-100" in syringe_type else 40
 
-    # --- NEW: MIXING GUIDE (Fixed Strings) ---
+    # --- DYNAMIC MIXING GUIDE ---
     with st.expander("🛠️ How to Reconstitute (Mix)"):
-        st.markdown("""
-        1. **Clean:** Wipe the tops of both the peptide vial and water vial with an alcohol swab.
-        2. **Withdraw:** Draw your desired amount of Bacteriostatic Water (e.g., 2.0mL).
-        3. **Inject:** Slowly inject the water into the peptide vial. Aim for the glass wall, not the powder directly.
-        4. **Mix:** **Do not shake.** Gently swirl the vial until dissolved.
+        st.markdown(f"""
+        1. **Clean:** Wipe the top of the **{vial_qty} {vial_unit}** peptide vial and the water vial with an alcohol swab. [Image of alcohol swab wiping vial top]
+        2. **Withdraw:** Draw exactly **{water_ml} mL** of Bacteriostatic Water.
+        3. **Inject:** Slowly inject the **{water_ml} mL** of water into the peptide vial. Aim for the glass wall, not the powder directly. [Image of water being injected into vial]
+        4. **Mix:** **Do not shake.** Gently swirl the vial until dissolved. [Image of gentle swirling of vial]
         5. **Store:** Refrigerate immediately.
         """)
 
@@ -284,6 +284,7 @@ with right_col:
                 st.info(f"**📋 Instructions:** {peptide_info['note']}")
                 st.markdown(f"**❄️ Storage:** {peptide_info['storage']}")
                 st.caption("Common injection sites: Subcutaneous fat (Abdomen, Thigh, or Back of Arm).")
+                st.markdown("[Image of subcutaneous injection sites]")
 
         st.divider()
 
