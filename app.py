@@ -212,7 +212,7 @@ st.divider()
 # --- MAIN DASHBOARD ---
 left_col, right_col = st.columns([1, 1.2], gap="large")
 
-# === LEFT COLUMN: INPUTS ===
+# === LEFT COLUMN: INPUTS & GUIDES ===
 with left_col:
     st.info("1️⃣ **Configuration**")
     
@@ -247,6 +247,8 @@ with left_col:
     syringe_type = st.radio("Syringe Type", ["U-100 (Standard)", "U-40 (Vet)"], horizontal=True)
     syringe_factor = 100 if "U-100" in syringe_type else 40
 
+    st.divider()
+
     # --- DYNAMIC MIXING GUIDE ---
     with st.expander("🛠️ How to Reconstitute (Mix)"):
         st.markdown(f"""
@@ -256,6 +258,10 @@ with left_col:
         4. **Mix:** **Do not shake.** Gently swirl the vial until dissolved.
         5. **Store:** Refrigerate immediately.
         """)
+
+    # --- MOVED INJECTION VISUAL GUIDE HERE ---
+    with st.expander("💉 Visual Guide: Injection Sites", expanded=True):
+        st.image("https://upload.wikimedia.org/wikipedia/commons/a/a1/Injection_Sites_Subcutaneous.png", caption="Common Subcutaneous Injection Sites (Source: Wikimedia Commons)", use_container_width=True)
 
 
 # === RIGHT COLUMN: RESULTS ===
@@ -283,10 +289,6 @@ with right_col:
                 st.warning(f"**⚠️ Side Effects:** {peptide_info['side_effects']}")
                 st.info(f"**📋 Instructions:** {peptide_info['note']}")
                 st.markdown(f"**❄️ Storage:** {peptide_info['storage']}")
-                
-        # --- NEW: INJECTION VISUAL GUIDE ---
-        with st.expander("💉 Visual Guide: Injection Sites", expanded=True):
-            st.image("https://upload.wikimedia.org/wikipedia/commons/thumb/a/a1/Injection_Sites_Subcutaneous.png/640px-Injection_Sites_Subcutaneous.png", caption="Common Subcutaneous Injection Sites (Source: Wikimedia Commons)")
 
         st.divider()
 
