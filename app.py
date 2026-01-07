@@ -1,4 +1,5 @@
 import streamlit as st
+import math
 
 # --- 1. CONFIGURATION: WIDE MODE ---
 st.set_page_config(
@@ -8,7 +9,7 @@ st.set_page_config(
     initial_sidebar_state="collapsed"
 )
 
-# --- CSS FOR VISUAL SYRINGE ---
+# --- CSS FOR VISUAL SYRINGE ONLY ---
 st.markdown("""
 <style>
     .syringe-container {
@@ -35,13 +36,6 @@ st.markdown("""
         bottom: 0;
         background: repeating-linear-gradient(90deg, transparent, transparent 19%, #000 20%);
         opacity: 0.1;
-    }
-    .metric-box {
-        background-color: #f0f2f6;
-        padding: 15px;
-        border-radius: 10px;
-        border: 1px solid #d6d6d6;
-        text-align: center;
     }
 </style>
 """, unsafe_allow_html=True)
@@ -335,26 +329,16 @@ with right_col:
 
         # --- B. CALCULATION RESULTS ---
         
-        # 1. Visual Metrics (Cards)
-        st.markdown(f"""
-        <div style="display: flex; gap: 10px; margin-bottom: 20px;">
-            <div class="metric-box" style="flex: 1;">
-                <div style="font-size: 14px; color: #666;">Draw Volume</div>
-                <div style="font-size: 24px; font-weight: bold; color: #333;">{draw_ml:.4f} mL</div>
-            </div>
-            <div class="metric-box" style="flex: 1; border: 2px solid #ff4b4b;">
-                <div style="font-size: 14px; color: #ff4b4b;">Syringe Units</div>
-                <div style="font-size: 24px; font-weight: bold; color: #ff4b4b;">{units:.1f}</div>
-            </div>
-        </div>
-        """, unsafe_allow_html=True)
+        # 1. Standard Metric Display (Reverted to Native Style)
+        m1, m2 = st.columns(2)
+        m1.metric("Draw Volume", f"{draw_ml:.4f} mL")
+        m2.metric("Syringe Units", f"{units:.1f} Units")
         
         # 2. Split Dosing Logic & Visual Syringe
         percentage = min(units / syringe_factor * 100, 100)
         
         if units > syringe_factor:
             # DOSE TOO HIGH - SPLIT IT
-            import math
             num_injections = math.ceil(units / syringe_factor)
             dose_per = units / num_injections
             st.error(f"⚠️ **Volume too large for one syringe!**")
