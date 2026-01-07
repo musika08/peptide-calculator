@@ -259,9 +259,13 @@ with left_col:
         5. **Store:** Refrigerate immediately.
         """)
 
-    # --- INJECTION VISUAL GUIDE (New Image) ---
+    # --- INJECTION VISUAL GUIDE (Local File) ---
     with st.expander("💉 Visual Guide: Injection Sites", expanded=True):
-        st.image("https://upload.wikimedia.org/wikipedia/commons/thumb/3/35/Subcutaneous_injection_sites_EN.svg/640px-Subcutaneous_injection_sites_EN.svg.png", caption="Common Subcutaneous Injection Sites", use_container_width=True)
+        # We try to load the local image. If the user forgot to upload it, we show a text warning instead of crashing.
+        try:
+            st.image("injection_sites.png", caption="Recommended Subcutaneous Zones", use_container_width=True)
+        except:
+            st.warning("⚠️ Image not found. Please upload 'injection_sites.png' to your GitHub repository.")
 
 
 # === RIGHT COLUMN: RESULTS ===
