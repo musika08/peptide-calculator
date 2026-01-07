@@ -214,7 +214,7 @@ with left_col:
     with c2:
         vial_unit = st.selectbox("Unit", ["mg", "mcg", "g"], index=st.session_state.stock_unit_index, key="stock_unit_selection")
     with c3:
-        # STEP SIZE CHANGED TO 0.5 HERE
+        # STEP SIZE 0.5 mL
         water_ml = st.number_input("Water Added (mL)", value=2.0, step=0.5, min_value=0.1, format="%.1f")
 
     st.warning("⚠️ **Safety Check:** Ensure inputs match your physical supplies.")
@@ -262,7 +262,7 @@ with right_col:
                 st.markdown(f"**Type:** {peptide_info['type']}")
                 st.markdown(f"**Description:** {peptide_info['desc']}")
                 
-                # BENEFITS ADDED HERE
+                # BENEFITS
                 st.markdown(f"**🌟 Benefits:** {peptide_info['benefits']}")
                 
                 st.markdown(f"**Frequency:** {peptide_info['freq']}")
@@ -299,5 +299,5 @@ c_foot1, c_foot2 = st.columns([1,1])
 with c_foot1:
     st.caption(f"🔢 Calculations performed this session: **{st.session_state.calc_count}**")
 with c_foot2:
-    # Updated to a more reliable counter service
-    st.markdown("![Visitor Count](https://visit-counter.vercel.app/counter.png?page=https%3A%2F%2Fpeptide-calculator.streamlit.app%2F&s=20&c=79C83D&b=555555&w=150)")
+    # Updated to Hits.sh - extremely reliable
+    st.markdown("[![Hits](https://hits.sh/peptide-calculator.streamlit.app.svg?style=flat-square&label=Total%20Visits&extraCount=2023&color=79c83d)](https://hits.sh/peptide-calculator.streamlit.app/)")
