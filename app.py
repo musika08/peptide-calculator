@@ -8,7 +8,7 @@ st.set_page_config(
     initial_sidebar_state="collapsed"
 )
 
-# --- EXPANDED KNOWLEDGE BASE (UPDATED WITH BENEFITS) ---
+# --- EXPANDED KNOWLEDGE BASE (ALPHABETICAL ORDER) ---
 PEPTIDE_PRESETS = {
     "Custom (Enter manually)": {
         "vial_mg": 5.0, "dose_mcg": 250.0, "freq": "As directed", 
@@ -26,53 +26,13 @@ PEPTIDE_PRESETS = {
         "note": "🕒 **ANYTIME.** Can be taken with or without food.",
         "side_effects": "Very rare. Occasional nausea or injection site irritation."
     },
-    "TB-500": {
-        "vial_mg": 5.0, "dose_mcg": 2500.0, "freq": "2x / Week", 
-        "type": "Regenerative",
-        "desc": "Synthetic Thymosin Beta-4. Promotes flexibility, reduces inflammation, and aids recovery.", 
-        "benefits": "Muscle recovery, Reduced inflammation, Improved flexibility, hair growth.",
-        "note": "🕒 **ANYTIME.** Timing relative to meals does not matter.",
-        "side_effects": "Fatigue, temporary head rush."
-    },
-    "Semaglutide": {
-        "vial_mg": 5.0, "dose_mcg": 250.0, "freq": "Once Weekly", 
-        "type": "Metabolic (GLP-1)",
-        "desc": "GLP-1 Agonist. Increases insulin secretion and reduces appetite. FDA approved for weight management.", 
-        "benefits": "Significant weight loss, Appetite suppression, Blood sugar control.",
-        "note": "🕒 **ANYTIME (Weekly).** Taken on the same day each week. Meals do not affect absorption.",
-        "side_effects": "Nausea, vomiting, diarrhea, constipation, fatigue."
-    },
-    "Tirzepatide": {
-        "vial_mg": 10.0, "dose_mcg": 2500.0, "freq": "Once Weekly", 
-        "type": "Metabolic (GLP-1/GIP)",
-        "desc": "Dual GIP/GLP-1 Agonist. Potent weight loss and metabolic regulation.", 
-        "benefits": "Potent weight loss, Improved insulin sensitivity, Reduced food noise.",
-        "note": "🕒 **ANYTIME (Weekly).** Taken on the same day each week.",
-        "side_effects": "Nausea, diarrhea, decreased appetite, constipation."
-    },
-    "Retatrutide": {
-        "vial_mg": 10.0, "dose_mcg": 2000.0, "freq": "Once Weekly", 
-        "type": "Metabolic (GLP-1/GIP/Glucagon)",
-        "desc": "Triple agonist (GLP-1, GIP, Glucagon). The newest generation weight loss peptide with high potency.", 
-        "benefits": "Maximum weight loss potential, Fat burning, Metabolic reset.",
-        "note": "🕒 **ANYTIME (Weekly).** Start low. Potent metabolic effects.",
-        "side_effects": "Increased heart rate, nausea, arrhythmia risk, appetite suppression."
-    },
-    "GHK-Cu": {
-        "vial_mg": 50.0, "dose_mcg": 2000.0, "freq": "Daily", 
-        "type": "Cosmetic/Repair",
-        "desc": "Copper Tripeptide-1. Increases collagen production. Used for skin, scarring, and hair.", 
-        "benefits": "Skin elasticity/tightening, Wrinkle reduction, Hair regrowth, Wound healing.",
-        "note": "🌙 **EVENING PREFERRED.** High concentrations can sting—rotate sites.",
-        "side_effects": "Injection site pain (stinging), redness, copper toxicity (if overdosed)."
-    },
-    "NAD+": {
-        "vial_mg": 500.0, "dose_mcg": 50000.0, "freq": "2-3x / Week", 
-        "type": "Cellular Energy",
-        "desc": "Nicotinamide Adenine Dinucleotide. Critical for cellular energy (ATP) and anti-aging.", 
-        "benefits": "Mental clarity, Energy boost, DNA repair, Anti-aging.",
-        "note": "⚠️ **SLOW INJECTION.** If injected too fast, causes chest pressure and anxiety.",
-        "side_effects": "Chest pressure, palpitations, nausea, lightheadedness (short duration)."
+    "CJC-1295 (No DAC)": {
+        "vial_mg": 5.0, "dose_mcg": 100.0, "freq": "Daily (PM)", 
+        "type": "Growth Hormone",
+        "desc": "Modified GRF 1-29. Stimulates pulsatile Growth Hormone release.", 
+        "benefits": "Lean muscle growth, Fat loss, Deep sleep quality.",
+        "note": "⚠️ **FASTED ONLY.** Inject immediately **before bed** on empty stomach.",
+        "side_effects": "Head rush, flushing (warm face), vivid dreams."
     },
     "Epithalon": {
         "vial_mg": 10.0, "dose_mcg": 5000.0, "freq": "Daily (Course)", 
@@ -82,21 +42,21 @@ PEPTIDE_PRESETS = {
         "note": "🕒 **ANYTIME.** Usually taken in a 10-20 day course, then cycled off.",
         "side_effects": "None reported/Very mild."
     },
-    "Kisspeptin": {
-        "vial_mg": 10.0, "dose_mcg": 100.0, "freq": "As needed", 
-        "type": "Hormonal",
-        "desc": "Stimulates GnRH release, increasing LH and FSH. Used to restart HPTA axis.", 
-        "benefits": "Testosterone support, Fertility improvement, HPTA axis restart.",
-        "note": "🕒 **ANYTIME.** Often used as a safer alternative to HCG.",
-        "side_effects": "Flushing, injection site reactions."
+    "GHK-Cu": {
+        "vial_mg": 50.0, "dose_mcg": 2000.0, "freq": "Daily", 
+        "type": "Cosmetic/Repair",
+        "desc": "Copper Tripeptide-1. Increases collagen production. Used for skin, scarring, and hair.", 
+        "benefits": "Skin elasticity/tightening, Wrinkle reduction, Hair regrowth, Wound healing.",
+        "note": "🌙 **EVENING PREFERRED.** High concentrations can sting—rotate sites.",
+        "side_effects": "Injection site pain (stinging), redness, copper toxicity (if overdosed)."
     },
-    "CJC-1295 (No DAC)": {
-        "vial_mg": 5.0, "dose_mcg": 100.0, "freq": "Daily (PM)", 
-        "type": "Growth Hormone",
-        "desc": "Modified GRF 1-29. Stimulates pulsatile Growth Hormone release.", 
-        "benefits": "Lean muscle growth, Fat loss, Deep sleep quality.",
-        "note": "⚠️ **FASTED ONLY.** Inject immediately **before bed** on empty stomach.",
-        "side_effects": "Head rush, flushing (warm face), vivid dreams."
+    "HCG": {
+        "vial_mg": 5.0, "dose_mcg": 250.0, "freq": "2-3x / Week", 
+        "type": "Hormonal",
+        "desc": "Human Chorionic Gonadotropin. Mimics LH to maintain testicular function.", 
+        "benefits": "Testicular size maintenance, Fertility, Endogenous testosterone signal.",
+        "note": "🌅 **MORNING.** Usually taken upon waking.",
+        "side_effects": "Estrogen elevation, acne, water retention."
     },
     "Ipamorelin": {
         "vial_mg": 5.0, "dose_mcg": 100.0, "freq": "Daily (PM)", 
@@ -106,6 +66,14 @@ PEPTIDE_PRESETS = {
         "note": "⚠️ **FASTED ONLY.** Inject immediately **before bed** on empty stomach.",
         "side_effects": "Head rush, mild water retention."
     },
+    "Kisspeptin": {
+        "vial_mg": 10.0, "dose_mcg": 100.0, "freq": "As needed", 
+        "type": "Hormonal",
+        "desc": "Stimulates GnRH release, increasing LH and FSH. Used to restart HPTA axis.", 
+        "benefits": "Testosterone support, Fertility improvement, HPTA axis restart.",
+        "note": "🕒 **ANYTIME.** Often used as a safer alternative to HCG.",
+        "side_effects": "Flushing, injection site reactions."
+    },
     "Melanotan II": {
         "vial_mg": 10.0, "dose_mcg": 500.0, "freq": "Daily (Loading)", 
         "type": "Cosmetic",
@@ -113,6 +81,14 @@ PEPTIDE_PRESETS = {
         "benefits": "Deep tanning (melanin), Strong libido boost, Appetite suppression.",
         "note": "☀️ **BEFORE UV EXPOSURE.** Take 30 mins before tanning bed or sun.",
         "side_effects": "Nausea (common), facial flushing, increased libido, appetite suppression."
+    },
+    "NAD+": {
+        "vial_mg": 500.0, "dose_mcg": 50000.0, "freq": "2-3x / Week", 
+        "type": "Cellular Energy",
+        "desc": "Nicotinamide Adenine Dinucleotide. Critical for cellular energy (ATP) and anti-aging.", 
+        "benefits": "Mental clarity, Energy boost, DNA repair, Anti-aging.",
+        "note": "⚠️ **SLOW INJECTION.** If injected too fast, causes chest pressure and anxiety.",
+        "side_effects": "Chest pressure, palpitations, nausea, lightheadedness (short duration)."
     },
     "PT-141": {
         "vial_mg": 10.0, "dose_mcg": 1000.0, "freq": "As needed", 
@@ -122,6 +98,30 @@ PEPTIDE_PRESETS = {
         "note": "⏰ **BEFORE ACTIVITY.** Inject **45-60 minutes before** sexual activity.",
         "side_effects": "Nausea, flushing, headache, increased blood pressure."
     },
+    "Retatrutide": {
+        "vial_mg": 10.0, "dose_mcg": 2000.0, "freq": "Once Weekly", 
+        "type": "Metabolic (GLP-1/GIP/Glucagon)",
+        "desc": "Triple agonist (GLP-1, GIP, Glucagon). The newest generation weight loss peptide with high potency.", 
+        "benefits": "Maximum weight loss potential, Fat burning, Metabolic reset.",
+        "note": "🕒 **ANYTIME (Weekly).** Start low. Potent metabolic effects.",
+        "side_effects": "Increased heart rate, nausea, arrhythmia risk, appetite suppression."
+    },
+    "Semaglutide": {
+        "vial_mg": 5.0, "dose_mcg": 250.0, "freq": "Once Weekly", 
+        "type": "Metabolic (GLP-1)",
+        "desc": "GLP-1 Agonist. Increases insulin secretion and reduces appetite. FDA approved for weight management.", 
+        "benefits": "Significant weight loss, Appetite suppression, Blood sugar control.",
+        "note": "🕒 **ANYTIME (Weekly).** Taken on the same day each week. Meals do not affect absorption.",
+        "side_effects": "Nausea, vomiting, diarrhea, constipation, fatigue."
+    },
+    "TB-500": {
+        "vial_mg": 5.0, "dose_mcg": 2500.0, "freq": "2x / Week", 
+        "type": "Regenerative",
+        "desc": "Synthetic Thymosin Beta-4. Promotes flexibility, reduces inflammation, and aids recovery.", 
+        "benefits": "Muscle recovery, Reduced inflammation, Improved flexibility, hair growth.",
+        "note": "🕒 **ANYTIME.** Timing relative to meals does not matter.",
+        "side_effects": "Fatigue, temporary head rush."
+    },
     "Tesamorelin": {
         "vial_mg": 2.0, "dose_mcg": 1000.0, "freq": "Daily (PM)", 
         "type": "Growth Hormone",
@@ -130,13 +130,13 @@ PEPTIDE_PRESETS = {
         "note": "⚠️ **FASTED ONLY.** Inject immediately **before bed** on empty stomach.",
         "side_effects": "Injection site reactions, joint pain, water retention."
     },
-    "HCG": {
-        "vial_mg": 5.0, "dose_mcg": 250.0, "freq": "2-3x / Week", 
-        "type": "Hormonal",
-        "desc": "Human Chorionic Gonadotropin. Mimics LH to maintain testicular function.", 
-        "benefits": "Testicular size maintenance, Fertility, Endogenous testosterone signal.",
-        "note": "🌅 **MORNING.** Usually taken upon waking.",
-        "side_effects": "Estrogen elevation, acne, water retention."
+    "Tirzepatide": {
+        "vial_mg": 10.0, "dose_mcg": 2500.0, "freq": "Once Weekly", 
+        "type": "Metabolic (GLP-1/GIP)",
+        "desc": "Dual GIP/GLP-1 Agonist. Potent weight loss and metabolic regulation.", 
+        "benefits": "Potent weight loss, Improved insulin sensitivity, Reduced food noise.",
+        "note": "🕒 **ANYTIME (Weekly).** Taken on the same day each week.",
+        "side_effects": "Nausea, diarrhea, decreased appetite, constipation."
     },
 }
 
@@ -299,5 +299,4 @@ c_foot1, c_foot2 = st.columns([1,1])
 with c_foot1:
     st.caption(f"🔢 Calculations performed this session: **{st.session_state.calc_count}**")
 with c_foot2:
-    # Updated to Hits.sh - extremely reliable
     st.markdown("[![Hits](https://hits.sh/peptide-calculator.streamlit.app.svg?style=flat-square&label=Total%20Visits&extraCount=2023&color=79c83d)](https://hits.sh/peptide-calculator.streamlit.app/)")
