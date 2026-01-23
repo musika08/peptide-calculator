@@ -40,7 +40,7 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
-# --- EXPANDED KNOWLEDGE BASE WITH UPDATED BENEFITS ---
+# --- EXPANDED KNOWLEDGE BASE WITH BLENDS ---
 PEPTIDE_PRESETS = {
     "Custom (Enter manually)": {
         "vial_mg": 5.0, "dose_mcg": 250.0, "freq": "As directed", 
@@ -60,6 +60,15 @@ PEPTIDE_PRESETS = {
         "side_effects": "Very rare. Occasional nausea or injection site irritation.",
         "storage": "Refrigerate after mixing. Stable for ~30 days."
     },
+    "BPC-157 + TB-500 Blend": {
+        "vial_mg": 10.0, "dose_mcg": 500.0, "freq": "Daily (or 2x Daily)", 
+        "type": "Regenerative Blend",
+        "desc": "The ultimate tissue-repair combination (often called the 'Wolverine Stack'). Combines the rapid tendon/gut healing of BPC with the muscle repair and flexibility of TB-500.", 
+        "benefits": "Maximum-speed tissue healing (muscles, tendons, ligaments); Extreme anti-inflammatory effects; Promotes new blood vessel growth; Gut health protection; Increased flexibility.",
+        "note": "🕒 **ANYTIME.** Dosage is for TOTAL peptide volume. A 500mcg dose yields 250mcg of each peptide.",
+        "side_effects": "Fatigue, temporary head rush, mild injection site irritation.",
+        "storage": "Refrigerate after mixing. Stable for ~30 days."
+    },
     "CJC-1295 (No DAC)": {
         "vial_mg": 5.0, "dose_mcg": 100.0, "freq": "Daily (PM)", 
         "type": "Growth Hormone",
@@ -68,6 +77,15 @@ PEPTIDE_PRESETS = {
         "note": "⚠️ **FASTED ONLY.** Inject immediately **before bed** on empty stomach.",
         "side_effects": "Head rush, flushing (warm face), vivid dreams.",
         "storage": "Refrigerate. Sensitive to light/heat."
+    },
+    "CJC-1295 + Ipamorelin Blend": {
+        "vial_mg": 10.0, "dose_mcg": 200.0, "freq": "Daily (PM)", 
+        "type": "Growth Hormone Blend",
+        "desc": "A synergistic blend of a GHRH (CJC-1295) and a GHRP (Ipamorelin). By combining the two, it creates a much stronger natural Growth Hormone pulse than either peptide alone.", 
+        "benefits": "Maximum natural GH release; Builds lean muscle mass; Rapidly burns fat; Superior deep/REM sleep; Extreme anti-aging effects for skin and nails; Quicker recovery.",
+        "note": "⚠️ **FASTED ONLY.** Inject immediately **before bed** on an empty stomach (no food for 2 hours prior). A 200mcg dose yields 100mcg of each.",
+        "side_effects": "Head rush (common), flushing (warm face), vivid dreams, mild water retention.",
+        "storage": "Refrigerate. Sensitive to light. Do not shake vigorously."
     },
     "Epithalon": {
         "vial_mg": 10.0, "dose_mcg": 5000.0, "freq": "Daily (Course)", 
@@ -86,6 +104,15 @@ PEPTIDE_PRESETS = {
         "note": "🌙 **EVENING PREFERRED.** High concentrations can sting—rotate sites.",
         "side_effects": "Injection site pain (stinging), redness, copper toxicity (if overdosed).",
         "storage": "Refrigerate. Can degrade if exposed to strong light."
+    },
+    "Glow Blend (GHK-Cu/BPC/TB)": {
+        "vial_mg": 70.0, "dose_mcg": 2500.0, "freq": "Daily", 
+        "type": "Cosmetic/Recovery Blend",
+        "desc": "A 70mg tri-blend of GHK-Cu, BPC-157, and TB-500. Combines full-body tissue recovery with extreme skin and hair rejuvenation. BPC/TB buffer the notorious GHK-Cu sting.", 
+        "benefits": "Massive collagen and elastin boost; Accelerates wound and tissue healing; Enhances skin tightness; Hair follicle regeneration; Increased flexibility; Gut health support.",
+        "note": "🌙 **EVENING PREFERRED.** Rotate injection sites daily. Dosage is for TOTAL peptide volume.",
+        "side_effects": "Mild injection site pain/redness, temporary flushing.",
+        "storage": "Refrigerate strictly. Keep away from strong light."
     },
     "HCG": {
         "vial_mg": 5.0, "dose_mcg": 250.0, "freq": "2-3x / Week", 
@@ -113,6 +140,15 @@ PEPTIDE_PRESETS = {
         "note": "🕒 **ANYTIME.** Often used as a safer alternative to HCG.",
         "side_effects": "Flushing, injection site reactions.",
         "storage": "Refrigerate after mixing."
+    },
+    "Klow Blend (GHK-Cu/BPC/TB/KPV)": {
+        "vial_mg": 80.0, "dose_mcg": 3000.0, "freq": "Daily", 
+        "type": "Ultimate Repair/Cosmetic Blend",
+        "desc": "The 80mg 'Klow' master stack. Combines GHK-Cu, BPC-157, TB-500, and KPV. The addition of KPV makes this a powerhouse for systemic inflammation, gut health (IBD), and clearing skin conditions.", 
+        "benefits": "Superior anti-inflammatory action (via KPV); Gut/intestinal healing; Clears acne and psoriasis; Extreme skin rejuvenation and collagen synthesis; Rapid soft tissue repair.",
+        "note": "🌙 **EVENING PREFERRED.** High volume blend. Dose is for TOTAL peptide volume.",
+        "side_effects": "Injection site pain/redness, temporary flushing.",
+        "storage": "Refrigerate strictly. Keep away from strong light."
     },
     "Melanotan II": {
         "vial_mg": 10.0, "dose_mcg": 500.0, "freq": "Daily (Loading)", 
@@ -176,6 +212,15 @@ PEPTIDE_PRESETS = {
         "note": "⚠️ **FASTED ONLY.** Inject immediately **before bed** on empty stomach.",
         "side_effects": "Injection site reactions, joint pain, water retention.",
         "storage": "Refrigerate. Use within 20-30 days."
+    },
+    "Tesamorelin + Ipamorelin Blend": {
+        "vial_mg": 12.0, "dose_mcg": 350.0, "freq": "Daily (PM)", 
+        "type": "Growth Hormone/Fat Loss Blend",
+        "desc": "Potent combination for visceral fat loss and anti-aging. Tesa targets belly fat while Ipamorelin boosts overall GH pulses.", 
+        "benefits": "Rapidly reduces visceral (belly) fat; Preserves and builds lean muscle; Deep sleep quality; Enhanced recovery; Anti-aging for skin.",
+        "note": "⚠️ **FASTED ONLY.** Inject immediately **before bed** on an empty stomach (fasted for 2 hours).",
+        "side_effects": "Injection site reactions, joint pain, mild water retention, flushing.",
+        "storage": "Refrigerate strictly. Use within 20-30 days."
     },
     "Tirzepatide": {
         "vial_mg": 30.0, "dose_mcg": 2500.0, "freq": "Once Weekly", 
