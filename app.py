@@ -1,6 +1,5 @@
 import streamlit as st
 import math
-import pandas as pd
 
 # --- 1. CONFIGURATION: WIDE MODE ---
 st.set_page_config(
@@ -38,275 +37,468 @@ st.markdown("""
         background: repeating-linear-gradient(90deg, transparent, transparent 19%, #000 20%);
         opacity: 0.1;
     }
+    /* Database Card Styles */
     .db-tag {
         background-color: #4b4bff;
         color: white;
-        padding: 3px 8px;
+        padding: 4px 10px;
         border-radius: 12px;
         font-size: 0.8em;
         font-weight: bold;
+        display: inline-block;
+        margin-bottom: 10px;
     }
-    /* Improve Expanders in Database */
-    .streamlit-expanderHeader {
-        font-weight: bold;
-        color: #333;
+    .side-effect-box {
+        background-color: #3e1818;
+        border-left: 4px solid #ff4b4b;
+        padding: 10px;
+        margin-top: 10px;
+        border-radius: 4px;
+        font-size: 0.9em;
     }
 </style>
 """, unsafe_allow_html=True)
 
-# --- EXPANDED HIGH-DETAIL KNOWLEDGE BASE (v2.1) ---
+# --- EXPANDED KNOWLEDGE BASE (v2.1) ---
 PEPTIDE_PRESETS = {
     "Custom (Enter manually)": {
-        "vial_mg": 5.0, "dose_mcg": 250.0, "freq": "As directed", 
+        "vial_mg": 5.0, "dose_mcg": 250.0, 
         "type": "N/A",
-        "desc": "Manual calculation for custom compounds.", 
-        "benefits": "N/A",
-        "note": "Verify molecular weight and concentration if applicable.",
-        "side_effects": "Unknown.",
+        "desc": "Manual calculation for custom compounds.",
+        # Summaries for Calculator
+        "benefits_summary": "N/A",
+        "side_effects_summary": "Unknown.",
+        "protocol_summary": "As directed.",
+        # Details for Database
+        "benefits_detailed": "N/A",
+        "protocol_detailed": "N/A",
+        "side_effects_detailed": "N/A",
         "storage": "Dependant on compound."
     },
-    "AOD-9604": {
-        "vial_mg": 5.0, "dose_mcg": 300.0, "freq": "Daily (AM)", 
-        "type": "Fat Loss",
-        "desc": "Anti-Obesity Drug 9604. A modified fragment (C-terminal) of Human Growth Hormone (HGH) that retains the lipolytic (fat burning) properties of HGH without the insulin or growth effects.", 
-        "benefits": "- **Pure Fat Loss:** Specifically targets adipose tissue reduction.\n- **No Blood Sugar Impact:** Does not induce hyperglycemia like full HGH.\n- **Joint Health:** Some users report mild cartilage repair benefits.",
-        "note": "🔹 **Dosage:** 300mcg daily.\n🔹 **Frequency:** Once per day.\n🔹 **Timing:** Immediately upon waking, completely fasted. Wait 1-2 hours before eating.\n🔹 **Cycle:** 12 weeks on, 4 weeks off.",
-        "side_effects": "Very mild. Occasional stomach upset or headache initially.",
-        "storage": "Refrigerate. Stable."
-    },
     "BPC-157": {
-        "vial_mg": 5.0, "dose_mcg": 250.0, "freq": "Daily (or 2x Daily)", 
+        "vial_mg": 5.0, "dose_mcg": 250.0, 
         "type": "Regenerative",
-        "desc": "Body Protection Compound-157. A 15-amino acid chain derived from gastric juice. It modulates the nitric oxide system and promotes angiogenesis (creation of new blood vessels).", 
-        "benefits": "- **Soft Tissue:** Rapidly heals tendons, ligaments, and bones.\n- **GI Tract:** Heals gastric ulcers, leaky gut, and IBS symptoms.\n- **Neurological:** Neuroprotective; heals dopamine/serotonin systems.",
-        "note": "🔹 **Dosage:** 250mcg to 500mcg.\n🔹 **Frequency:** 1-2 times daily.\n🔹 **Timing:** Anytime. Can be taken with food.\n🔹 **Cycle:** 4-6 weeks for injury, then 2 weeks off.",
-        "side_effects": "Extremely safe. Rare fatigue or temporary anhedonia (dopamine regulation).",
-        "storage": "Refrigerate after mixing. Highly stable."
+        "desc": "Body Protection Compound-157. A 15-amino acid chain derived from gastric juice. It modulates the nitric oxide system and promotes angiogenesis (creation of new blood vessels).",
+        "benefits_summary": "Heals tendons/ligaments, protects gut health (IBS), reduces inflammation.",
+        "side_effects_summary": "Rare. Mild nausea or injection site irritation.",
+        "protocol_summary": "250-500mcg daily or 2x daily.",
+        "benefits_detailed": """
+        - **Soft Tissue Repair:** Rapidly accelerates healing of tendons, ligaments, and bone fractures.
+        - **Gut Health:** Potent cytoprotective effects on the GI tract; used for IBS, leaky gut, and ulcers.
+        - **Neuroprotection:** Modulates serotonergic and dopaminergic systems (brain health).
+        - **Systemic:** Lowers systemic inflammation via nitric oxide pathway.
+        """,
+        "protocol_detailed": """
+        **Dosage:** 250mcg - 500mcg (0.25mg - 0.5mg)
+        **Frequency:** Daily or Twice Daily (AM/PM)
+        **Timing:** SubQ near injury site (local) or belly fat (systemic)
+        **Cycle:** 4 to 6 Weeks on, 2 Weeks off
+        **Study Note:** Extensive pre-clinical trials demonstrate accelerated tendon-to-bone healing.
+        """,
+        "side_effects_detailed": "Generally considered extremely safe. Rare reports of fatigue, mild nausea, or temporary anhedonia (blunted emotions) due to dopamine modulation.",
+        "storage": "Refrigerate. Stable for ~30-45 days."
     },
     "BPC-157 + TB-500 Blend": {
-        "vial_mg": 10.0, "dose_mcg": 500.0, "freq": "Daily (or 2x Daily)", 
+        "vial_mg": 10.0, "dose_mcg": 500.0, 
         "type": "Regenerative Blend",
-        "desc": "The 'Wolverine Stack'. Synergistic combination where BPC-157 works on tendons/ligaments/gut, while TB-500 works on muscle tissue and promotes actin regulation for cellular migration.", 
-        "benefits": "- **Maximum Healing:** The ultimate protocol for post-surgery or acute injury.\n- **Flexibility:** Noticeable improvement in joint range of motion.\n- **Cardio-Protection:** TB-500 aids in cardiac tissue repair.",
-        "note": "🔹 **Dosage:** 500mcg - 1mg total fluid (yields 250-500mcg of each).\n🔹 **Frequency:** Daily.\n🔹 **Cycle:** Run for duration of injury (4-8 weeks).\n🔹 **Pro-Tip:** If you feel a head rush, inject slower.",
-        "side_effects": "Head rush (from TB-500), fatigue. Do not use if active cancer is present.",
-        "storage": "Refrigerate after mixing."
+        "desc": "The 'Wolverine Stack'. Synergistic combination where BPC-157 works on connective tissue/gut, while TB-500 regulates actin for muscle repair and cell migration.",
+        "benefits_summary": "Maximum tissue repair, flexibility, anti-inflammatory, cardiac health.",
+        "side_effects_summary": "Head rush, fatigue, lethargy.",
+        "protocol_summary": "500mcg-1mg total fluid daily.",
+        "benefits_detailed": """
+        - **Synergy:** BPC repairs the structure (tendon/bone) while TB-500 aids muscle contractile tissue.
+        - **Flexibility:** Significant improvements in joint range of motion.
+        - **Cardiac:** TB-500 has documented cardioprotective effects post-injury.
+        - **Angiogenesis:** Promotes new blood vessel formation for nutrient delivery.
+        """,
+        "protocol_detailed": """
+        **Dosage:** 500mcg - 1000mcg (Total Volume)
+        **Frequency:** Daily
+        **Timing:** Any time of day
+        **Cycle:** 4 to 8 Weeks (Duration of injury)
+        **Study Note:** Pre-clinical models show faster wound closure rates when these two are combined vs used alone.
+        """,
+        "side_effects_detailed": "Temporary head rush immediately after injection (common with TB-500). Fatigue or lethargy during the healing phase.",
+        "storage": "Refrigerate. Use within 30 days."
     },
     "CJC-1295 (No DAC)": {
-        "vial_mg": 5.0, "dose_mcg": 100.0, "freq": "Daily (PM)", 
+        "vial_mg": 5.0, "dose_mcg": 100.0, 
         "type": "Growth Hormone",
-        "desc": "A GHRH (Growth Hormone Releasing Hormone) analog that acts on the pituitary gland to release bursts of natural GH. 'No DAC' means it has a short half-life, mimicking natural pulses.", 
-        "benefits": "- **Hyperplasia:** Increases number of muscle cells.\n- **Recovery:** Improves deep wave sleep.\n- **Cosmetic:** Plumps skin and thickens hair.",
-        "note": "🔹 **Dosage:** 100mcg.\n🔹 **Frequency:** 1-3 times daily (Pre-bed is best).\n🔹 **Timing:** ⚠️ **FASTED ONLY.** 2+ hours after food.\n🔹 **Cycle:** 5 days on, 2 days off.",
-        "side_effects": "Head rush, flushing, vivid dreams. Carpal tunnel symptoms if overdosed.",
+        "desc": "Modified GRF 1-29. A GHRH analog that acts on the pituitary gland to stimulate pulsatile Growth Hormone release without affecting half-life excessively.",
+        "benefits_summary": "Lean muscle, fat loss, deep sleep, anti-aging.",
+        "side_effects_summary": "Head rush, flushing, vivid dreams.",
+        "protocol_summary": "100mcg nightly, fasted.",
+        "benefits_detailed": """
+        - **Hyperplasia:** Increases the actual number of muscle cells.
+        - **Sleep Architecture:** Increases slow-wave (Delta) deep sleep.
+        - **Cosmetic:** Improves skin elasticity and collagen density.
+        - **Metabolic:** Increases basal metabolic rate.
+        """,
+        "protocol_detailed": """
+        **Dosage:** 100mcg (0.1mg)
+        **Frequency:** Daily (5 days on / 2 days off)
+        **Timing:** Immediately before bed (Fasted 2+ hours)
+        **Cycle:** 12 Weeks +
+        **Study Note:** Mimics natural pulsatile GH secretion rather than the 'constant bleed' of synthetic HGH.
+        """,
+        "side_effects_detailed": "Immediate head rush (vasodilation) lasting 10-20 mins. Warm/flushed face. Vivid dreams. Mild water retention.",
         "storage": "Refrigerate. Sensitive to light/heat."
     },
     "CJC-1295 + Ipamorelin Blend": {
-        "vial_mg": 10.0, "dose_mcg": 200.0, "freq": "Daily (PM)", 
+        "vial_mg": 10.0, "dose_mcg": 200.0, 
         "type": "Growth Hormone Blend",
-        "desc": "The Gold Standard for GH enhancement. Synergistic pairing of a GHRH (CJC) and a GHRP (Ipamorelin). Together, they release 5x to 10x more GH than either used alone.", 
-        "benefits": "- **Synergy:** Creates a massive GH pulse without shutting down natural production.\n- **Fat Loss:** Mobilizes visceral fat while sleeping.\n- **Safety:** No cortisol/prolactin spikes.",
-        "note": "🔹 **Dosage:** 200mcg - 300mcg total fluid.\n🔹 **Timing:** ⚠️ **FASTED ONLY.** Immediately before bed.\n🔹 **Cycle:** 5 days on, 2 days off (12-16 weeks).",
-        "side_effects": "Intense head rush, deep sleep, vivid dreams, mild water retention.",
-        "storage": "Refrigerate. Do not shake vigorously."
+        "desc": "The Gold Standard GH Stack. Combines a Releasing Hormone (CJC) with a Releasing Peptide (Ipamorelin) for a synergistic 5x-10x GH pulse.",
+        "benefits_summary": "Max natural GH release, fat loss, muscle preservation, recovery.",
+        "side_effects_summary": "Head rush, numb fingers, water retention.",
+        "protocol_summary": "200-300mcg total nightly, fasted.",
+        "benefits_detailed": """
+        - **Maximum Pulse:** The strongest natural GH release signal possible without synthetic HGH.
+        - **Safety:** Ipamorelin ensures no spike in cortisol or prolactin.
+        - **Recomposition:** Simultaneously burns visceral fat and builds lean tissue.
+        - **Recovery:** Drastically shortens recovery time from intense exercise.
+        """,
+        "protocol_detailed": """
+        **Dosage:** 200mcg - 300mcg (Total Volume)
+        **Frequency:** Nightly (5 days on / 2 days off)
+        **Timing:** Immediately before bed (Fasted 2+ hours)
+        **Cycle:** 3 to 6 Months
+        **Study Note:** Clinical data suggests GHRH+GHRP combinations are far superior to monotherapy for IGF-1 elevation.
+        """,
+        "side_effects_detailed": "Head rush. Numbness/tingling in hands (carpal tunnel-like symptoms) if dose is too high. Water weight gain.",
+        "storage": "Refrigerate. Do not shake."
     },
     "Epithalon": {
-        "vial_mg": 10.0, "dose_mcg": 5000.0, "freq": "Daily (Course)", 
+        "vial_mg": 10.0, "dose_mcg": 5000.0, 
         "type": "Anti-Aging",
-        "desc": "Synthetic tetrapeptide derived from the pineal gland. It up-regulates telomerase production to elongate telomeres (the protective caps on DNA).", 
-        "benefits": "- **Longevity:** Increases lifespan in animal models.\n- **Circadian Rhythm:** Resets sleep cycles/melatonin.\n- **Immunity:** Restores thymus function.",
-        "note": "🔹 **Dosage:** 5mg - 10mg.\n🔹 **Frequency:** Daily for 10-20 days.\n🔹 **Cycle:** Run this short course once every 6-12 months.\n🔹 **Pro-Tip:** Can be taken AM or PM.",
-        "side_effects": "Very rare. Vivid dreams.",
-        "storage": "Refrigerate after mixing."
+        "desc": "Synthetic tetrapeptide that increases telomerase activity, potentially lengthening telomeres (DNA protective caps).",
+        "benefits_summary": "Longevity, telomere lengthening, circadian rhythm reset.",
+        "side_effects_summary": "None reported/Very mild.",
+        "protocol_summary": "5mg-10mg daily for 10-20 days.",
+        "benefits_detailed": """
+        - **Life Extension:** Increases telomere length, a marker of biological age.
+        - **Endocrine Health:** Restores sensitivity of the pineal gland.
+        - **Sleep:** Normalizes melatonin production and circadian rhythms.
+        - **Immunity:** Boosts T-cell function and antioxidant status.
+        """,
+        "protocol_detailed": """
+        **Dosage:** 5mg - 10mg
+        **Frequency:** Daily
+        **Timing:** Morning or Evening
+        **Cycle:** 10 to 20 Day Course (Repeat every 6-12 months)
+        **Study Note:** Based on the Khavinson Protocol (Russian gerontology trials).
+        """,
+        "side_effects_detailed": "Extremely safe profile. Occasional daytime drowsiness during the course.",
+        "storage": "Refrigerate."
     },
     "GHK-Cu": {
-        "vial_mg": 50.0, "dose_mcg": 2000.0, "freq": "Daily", 
+        "vial_mg": 50.0, "dose_mcg": 2000.0, 
         "type": "Cosmetic/Repair",
-        "desc": "Copper Tripeptide-1. Modulates over 4,000 human genes back to a younger state. Powerful remodeling agent for skin and scar tissue.", 
-        "benefits": "- **Skin:** Increases collagen by 70%, tightens loose skin.\n- **Hair:** Enlarges hair follicles (reverses miniaturization).\n- **Wounds:** Accelerates healing.",
-        "note": "🔹 **Dosage:** 1mg - 2mg.\n🔹 **Timing:** Evening preferred.\n🔹 **Warning:** **STINGS.** Dilute with extra water or mix with BPC-157.\n🔹 **Cycle:** 30 days on, then break to monitor copper levels.",
-        "side_effects": "Painful injection site (red welts), potential zinc depletion (take Zinc supplement).",
+        "desc": "Copper Tripeptide-1. A naturally occurring peptide that declines with age. It modulates over 4,000 genes to a younger state.",
+        "benefits_summary": "Collagen boost, wrinkle reduction, hair regrowth, wound healing.",
+        "side_effects_summary": "Painful injection sting, redness, potential zinc depletion.",
+        "protocol_summary": "1-2mg daily. Evening.",
+        "benefits_detailed": """
+        - **Skin Architecture:** Increases collagen (70%) and elastin levels. Tightens loose skin.
+        - **Hair Restoration:** Enlarges hair follicles and stimulates growth (comparable to Minoxidil).
+        - **Wound Healing:** Powerful antioxidant and anti-inflammatory properties.
+        - **Scarring:** Breaks down scar tissue and remodels skin.
+        """,
+        "protocol_detailed": """
+        **Dosage:** 1mg - 2mg (1000mcg - 2000mcg)
+        **Frequency:** Daily
+        **Timing:** Evening (rotate sites)
+        **Cycle:** 30 Days on, 30 Days off
+        **Study Note:** Monitor copper/zinc balance. Supplement Zinc if using long-term.
+        """,
+        "side_effects_detailed": "High incidence of injection site pain (burning) and redness. Systemic copper toxicity risk if overdosed.",
         "storage": "Refrigerate. Protect from light."
     },
     "Glow Blend (GHK-Cu/BPC/TB)": {
-        "vial_mg": 70.0, "dose_mcg": 2500.0, "freq": "Daily", 
+        "vial_mg": 70.0, "dose_mcg": 2500.0, 
         "type": "Cosmetic/Recovery Blend",
-        "desc": "A 70mg tri-blend. BPC and TB buffer the acidic sting of GHK-Cu while adding systemic repair properties.", 
-        "benefits": "- **Painless:** BPC neutralizes the GHK sting.\n- **Total Package:** Skin elasticity, hair regrowth, and muscle recovery.",
-        "note": "🔹 **Dosage:** 2.5mg - 3mg total fluid.\n🔹 **Frequency:** Daily (Evening).\n🔹 **Cycle:** 4-6 weeks.",
-        "side_effects": "Mild redness. Take Zinc supplement during cycle.",
-        "storage": "Refrigerate strictly."
+        "desc": "70mg Tri-Blend. BPC-157 and TB-500 are added to buffer the GHK-Cu, significantly reducing the 'sting' while adding systemic recovery benefits.",
+        "benefits_summary": "Painless GHK-Cu, skin tightening, total body recovery.",
+        "side_effects_summary": "Mild redness, flushing.",
+        "protocol_summary": "2.5mg - 3mg total daily.",
+        "benefits_detailed": """
+        - **Painless Application:** BPC-157 neutralizes the acidity of Copper, making injections tolerable.
+        - **Total Rejuvenation:** Targets skin, hair, gut, and muscle simultaneously.
+        - **Collagen Matrix:** Synergistic upregulation of collagen synthesis.
+        """,
+        "protocol_detailed": """
+        **Dosage:** 2.5mg - 3mg (Total Volume)
+        **Frequency:** Daily
+        **Timing:** Evening
+        **Cycle:** 4 to 6 Weeks
+        **Study Note:** Combined protocol targets both aesthetic markers (skin) and biological markers (inflammation).
+        """,
+        "side_effects_detailed": "Mild injection site redness. Temporary flushing.",
+        "storage": "Refrigerate. Protect from light."
     },
     "HCG": {
-        "vial_mg": 5.0, "dose_mcg": 250.0, "freq": "2-3x / Week", 
+        "vial_mg": 5.0, "dose_mcg": 250.0, 
         "type": "Hormonal",
-        "desc": "Human Chorionic Gonadotropin. Mimics LH to stimulate Leydig cells in the testes.", 
-        "benefits": "- **TRT:** Prevents testicular atrophy.\n- **Fertility:** Increases sperm count.\n- **Mood:** Upregulates neurosteroids (DHEA/Pregnenolone).",
-        "note": "🔹 **Dosage:** 250iu - 500iu (approx 250-500mcg equivalent).\n🔹 **Frequency:** 2-3 times per week.\n🔹 **Timing:** Morning.",
-        "side_effects": "Estrogen spikes (gynecomastia risk), acne. Monitor E2 levels.",
-        "storage": "MUST Refrigerate. Fragile."
-    },
-    "IGF-1 LR3": {
-        "vial_mg": 1.0, "dose_mcg": 50.0, "freq": "Pre-Workout", 
-        "type": "Anabolic",
-        "desc": "Insulin-like Growth Factor 1 (Long Arg3). A modified version of IGF-1 with a longer half-life (20-30 hours). It forces nutrients into muscle cells causing hyperplasia (new cell growth).", 
-        "benefits": "- **Hyperplasia:** Splits muscle cells creating new fibers.\n- **Pumps:** Extreme muscle fullness.\n- **Nutrient Partitioning:** Shuttles carbs into muscle, not fat.",
-        "note": "🔹 **Dosage:** 20mcg - 50mcg (Start low!).\n🔹 **Timing:** Pre or Post workout.\n🔹 **Cycle:** 4 weeks on, 4 weeks off (receptors downregulate fast).\n⚠️ **WARNING:** Risk of hypoglycemia. Consume carbs immediately after.",
-        "side_effects": "Hypoglycemia (low blood sugar), gut growth (if abused), headaches.",
-        "storage": "Refrigerate. Very delicate."
+        "desc": "Human Chorionic Gonadotropin. Mimics LH to maintain testicular function.",
+        "benefits_summary": "Maintains testicular size, fertility, libido.",
+        "side_effects_summary": "High estrogen, acne, gynecomastia risk.",
+        "protocol_summary": "250-500iu 2-3x per week.",
+        "benefits_detailed": """
+        - **On-Cycle Support:** Prevents testicular atrophy during TRT.
+        - **Fertility:** Restores spermatogenesis and intratesticular testosterone.
+        - **Mood:** Upstream pathways support DHEA and Pregnenolone synthesis.
+        """,
+        "protocol_detailed": """
+        **Dosage:** 250iu - 500iu (Check vial concentration!)
+        **Frequency:** 2 to 3 times per week
+        **Timing:** Morning
+        **Cycle:** Continuous with TRT or as PCT
+        **Study Note:** Essential for maintaining the HPTA axis during exogenous testosterone use.
+        """,
+        "side_effects_detailed": "Estrogen spikes (requires AI management), acne, water retention, desensitization if overdosed.",
+        "storage": "Refrigerate. Fragile."
     },
     "Ipamorelin": {
-        "vial_mg": 5.0, "dose_mcg": 100.0, "freq": "Daily (PM)", 
+        "vial_mg": 5.0, "dose_mcg": 100.0, 
         "type": "Growth Hormone",
-        "desc": "The mildest GHRP. Mimics Ghrelin but without the extreme hunger side effect.", 
-        "benefits": "- **Lean Mass:** Preserves muscle in deficits.\n- **Sleep:** Increases REM sleep.\n- **Safe:** No cortisol elevation.",
-        "note": "🔹 **Dosage:** 100mcg - 300mcg.\n🔹 **Timing:** ⚠️ **FASTED ONLY.** Before bed.\n🔹 **Cycle:** 12+ weeks.",
-        "side_effects": "Very rare. Mild water retention.",
-        "storage": "Refrigerate. Do not shake."
-    },
-    "Kisspeptin": {
-        "vial_mg": 10.0, "dose_mcg": 100.0, "freq": "As needed", 
-        "type": "Hormonal",
-        "desc": "Neuromodulator that stimulates GnRH release. A safer alternative to HCG for restarting natural testosterone.", 
-        "benefits": "- **HPTA:** Restarts natural production safely.\n- **Libido:** Enhances sexual desire via brain pathways.",
-        "note": "🔹 **Dosage:** 100mcg - 200mcg.\n🔹 **Frequency:** Daily or EOD.\n🔹 **Timing:** Evening.",
-        "side_effects": "Flushing. Safe profile.",
+        "desc": "Selective GH Secretagogue. The mildest and safest GHRP.",
+        "benefits_summary": "Fat loss, sleep, no hunger spike.",
+        "side_effects_summary": "Very mild. Rare dizziness.",
+        "protocol_summary": "100-300mcg nightly, fasted.",
+        "benefits_detailed": """
+        - **Pure Signal:** Stimulates GH release without the extreme hunger of GHRP-6.
+        - **Deep Sleep:** Increases REM cycles.
+        - **Anabolic:** Preserves lean tissue during caloric restriction.
+        """,
+        "protocol_detailed": """
+        **Dosage:** 100mcg - 300mcg
+        **Frequency:** Nightly
+        **Timing:** Before Bed (Fasted)
+        **Cycle:** 8 to 12 Weeks
+        **Study Note:** Does not elevate cortisol or prolactin levels in clinical trials.
+        """,
+        "side_effects_detailed": "Extremely well tolerated. Slight water retention possible.",
         "storage": "Refrigerate."
     },
     "Klow Blend (GHK-Cu/BPC/TB/KPV)": {
-        "vial_mg": 80.0, "dose_mcg": 3000.0, "freq": "Daily", 
+        "vial_mg": 80.0, "dose_mcg": 3000.0, 
         "type": "Ultimate Repair/Cosmetic Blend",
-        "desc": "The Master Stack. Adds **KPV** to the Glow blend. KPV is a potent anti-inflammatory and antimicrobial peptide.", 
-        "benefits": "- **Skin:** KPV clears acne, psoriasis, and eczema.\n- **Gut:** KPV + BPC is the strongest stack for IBD/Colitis.\n- **Systemic:** Total body repair.",
-        "note": "🔹 **Dosage:** ~3mg total fluid.\n🔹 **Frequency:** Daily (Evening).\n🔹 **Pro-Tip:** Rotate injection sites religiously to prevent welts.",
-        "side_effects": "Red welts (common), fatigue. Zinc supplementation recommended.",
-        "storage": "Refrigerate strictly."
+        "desc": "The 80mg Master Stack. Adds **KPV** to the GHK/BPC/TB trio. KPV is a potent anti-inflammatory and anti-microbial agent.",
+        "benefits_summary": "Clear skin (acne/psoriasis), gut healing, anti-inflammatory.",
+        "side_effects_summary": "Injection site redness, fatigue.",
+        "protocol_summary": "3mg total daily.",
+        "benefits_detailed": """
+        - **Dermatology:** KPV actively treats acne, psoriasis, and eczema via anti-microbial pathways.
+        - **Gut Health:** Strongest known stack for IBD, SIBO, and Colitis.
+        - **Systemic:** Mast cell stabilization (histamine control).
+        """,
+        "protocol_detailed": """
+        **Dosage:** 3mg (Total Volume)
+        **Frequency:** Daily
+        **Timing:** Evening
+        **Cycle:** 4 to 8 Weeks
+        **Study Note:** KPV data shows significant reduction in inflammatory cytokines.
+        """,
+        "side_effects_detailed": "Red welts at injection site (common). Herxheimer reaction (fatigue) possible as body detoxes.",
+        "storage": "Refrigerate. Protect from light."
     },
     "Melanotan II": {
-        "vial_mg": 10.0, "dose_mcg": 500.0, "freq": "Daily (Loading)", 
+        "vial_mg": 10.0, "dose_mcg": 500.0, 
         "type": "Cosmetic",
-        "desc": "Alpha-MSH analog. Stimulates melanin (tanning) and libido.", 
-        "benefits": "- **Tan:** Deep tan with minimal sun.\n- **Libido:** Extreme sexual arousal.\n- **Diet:** Suppresses appetite.",
-        "note": "🔹 **Dosage:** 100mcg - 500mcg.\n🔹 **Timing:** 30 mins before UV exposure.\n🔹 **Protocol:** Load daily until tanned, then 1x weekly maintenance.",
-        "side_effects": "Nausea (severe if dosed high), facial flushing, spontaneous erections, darkening of moles.",
-        "storage": "Refrigerate. Stable."
-    },
-    "MOTS-c": {
-        "vial_mg": 10.0, "dose_mcg": 5000.0, "freq": "Weekly", 
-        "type": "Mitochondrial",
-        "desc": "Mitochondrial Open Reading Frame of the 12S rRNA-c. A peptide encoded in the mitochondria that regulates metabolic homeostasis. Often called 'Exercise in a Bottle'.", 
-        "benefits": "- **Endurance:** drastically increases exercise capacity and energy.\n- **Metabolism:** Improves glucose metabolism and insulin sensitivity.\n- **Cellular:** Promotes mitochondrial biogenesis (new mitochondria creation).",
-        "note": "🔹 **Dosage:** 5mg - 10mg.\n🔹 **Frequency:** Once weekly (or 2mg every 3 days).\n🔹 **Timing:** Immediately before endurance exercise.\n⚠️ **WARNING:** The injection **STINGS** significantly. Warm the syringe in hands before injecting.",
-        "side_effects": "Injection site pain (burning), flu-like symptoms for a few hours after injection.",
-        "storage": "Refrigerate. Use vial quickly after mixing (less stable than others)."
+        "desc": "Alpha-MSH analog. Stimulates melanin production and sexual arousal centers.",
+        "benefits_summary": "Deep tan, high libido, appetite suppression.",
+        "side_effects_summary": "Nausea, flushing, darkening moles.",
+        "protocol_summary": "100-500mcg before UV exposure.",
+        "benefits_detailed": """
+        - **Tanning:** Activates melanocytes to produce protective melanin (tan) with minimal UV.
+        - **Libido:** Potent central nervous system aphrodisiac for men and women.
+        - **Metabolic:** suppresses appetite and increases energy expenditure.
+        """,
+        "protocol_detailed": """
+        **Dosage:** 100mcg - 500mcg
+        **Frequency:** As needed (Loading phase: Daily)
+        **Timing:** 30 mins before UV exposure
+        **Cycle:** Until desired color, then maintenance
+        **Study Note:** Start very low (50-100mcg) to assess nausea tolerance.
+        """,
+        "side_effects_detailed": "Significant nausea (lasts 1-2 hours), facial flushing, spontaneous erections, darkening of freckles.",
+        "storage": "Refrigerate."
     },
     "NAD+": {
-        "vial_mg": 500.0, "dose_mcg": 25000.0, "freq": "2-3x / Week", 
+        "vial_mg": 500.0, "dose_mcg": 25000.0, 
         "type": "Cellular Energy",
-        "desc": "Essential coenzyme for ATP production and DNA repair.", 
-        "benefits": "- **Mental:** Clears brain fog.\n- **Energy:** Restores cellular ATP.\n- **Anti-Aging:** Activates Sirtuins.",
-        "note": "🔹 **Dosage:** 25mg - 50mg.\n🔹 **Frequency:** 2-3x weekly.\n⚠️ **WARNING:** Inject **VERY SLOWLY** (over 60 seconds) to avoid the 'NAD Flush' (chest pressure/anxiety).",
-        "side_effects": "Chest tightness, palpitations, nausea (if injected fast).",
-        "storage": "Refrigerate immediately. Degrades in heat."
-    },
-    "PEG-MGF": {
-        "vial_mg": 2.0, "dose_mcg": 200.0, "freq": "Post-Workout", 
-        "type": "Anabolic/Repair",
-        "desc": "Pegylated Mechano Growth Factor. A variant of IGF-1 that triggers satellite cells to repair damaged muscle tissue. The PEGylation increases half-life from minutes to days.", 
-        "benefits": "- **Recovery:** Accelerates repair of torn muscle fibers.\n- **Lagging Parts:** Often used to bring up lagging muscle groups.\n- **Neuro:** Neuroprotective effects.",
-        "note": "🔹 **Dosage:** 200mcg - 400mcg.\n🔹 **Timing:** Post-workout or on Rest Days.\n🔹 **Cycle:** 4-6 weeks.\n🔹 **Site:** Can be injected SubQ or IM into the target muscle.",
-        "side_effects": "Injection site pain, potential hypoglycemia (rare compared to IGF-1).",
-        "storage": "Refrigerate. Do not shake."
+        "desc": "Nicotinamide Adenine Dinucleotide. The fuel for cellular engines (mitochondria).",
+        "benefits_summary": "Mental clarity, energy, DNA repair, detox.",
+        "side_effects_summary": "Chest pressure, anxiety, nausea (The 'Flush').",
+        "protocol_summary": "25-50mg 2-3x per week. SLOW INJECTION.",
+        "benefits_detailed": """
+        - **Cognition:** Clears brain fog and improves focus.
+        - **Cellular:** Restores mitochondrial function (ATP production).
+        - **Anti-Aging:** Activates Sirtuins (longevity genes).
+        - **Addiction:** Helps restore neurotransmitter balance.
+        """,
+        "protocol_detailed": """
+        **Dosage:** 25mg - 50mg
+        **Frequency:** 2-3x / Week
+        **Timing:** Morning
+        **Cycle:** Ongoing
+        **Study Note:** ⚠️ INJECT VERY SLOWLY. Rapid injection causes severe discomfort.
+        """,
+        "side_effects_detailed": "Intense chest pressure, abdominal cramping, anxiety, palpitations. Lasts 5-10 minutes.",
+        "storage": "Refrigerate immediately."
     },
     "PT-141": {
-        "vial_mg": 10.0, "dose_mcg": 1000.0, "freq": "As needed", 
+        "vial_mg": 10.0, "dose_mcg": 1000.0, 
         "type": "Libido",
-        "desc": "Bremelanotide. Targets brain receptors to increase sexual desire.", 
-        "benefits": "- **ED:** Works on non-vascular ED.\n- **Libido:** Increases desire in men and women.",
-        "note": "🔹 **Dosage:** 1mg - 2mg.\n🔹 **Timing:** 2-4 hours BEFORE activity.\n🔹 **Duration:** Effects last up to 24h.",
-        "side_effects": "Nausea (common), flushing, headache.",
+        "desc": "Bremelanotide. Works on the nervous system to treat hypoactive sexual desire.",
+        "benefits_summary": "Treats ED, increases libido in men/women.",
+        "side_effects_summary": "Nausea, flushing, headache.",
+        "protocol_summary": "1.5-2mg, 2 hours before activity.",
+        "benefits_detailed": """
+        - **Mechanism:** Targets the hypothalamus, not the vascular system (works when Viagra fails).
+        - **Efficacy:** FDA approved (Vyleesi) for low libido in women.
+        - **Response:** Increases physical arousal and desire.
+        """,
+        "protocol_detailed": """
+        **Dosage:** 1.5mg - 2mg
+        **Frequency:** As needed
+        **Timing:** 2 to 4 hours BEFORE activity
+        **Cycle:** Max 8 doses per month
+        **Study Note:** Effects can last up to 24 hours.
+        """,
+        "side_effects_detailed": "Nausea (40% of users), flushing, headache, elevated blood pressure.",
         "storage": "Refrigerate."
     },
     "Retatrutide": {
-        "vial_mg": 10.0, "dose_mcg": 2000.0, "freq": "Once Weekly", 
+        "vial_mg": 10.0, "dose_mcg": 2000.0, 
         "type": "Metabolic (GLP-1/GIP/Glucagon)",
-        "desc": "Triple Agonist. The most potent weight loss agent currently available.", 
-        "benefits": "- **Weight Loss:** 24%+ average loss.\n- **Liver:** Clears fatty liver disease.\n- **Metabolism:** Actively burns fat (Glucagon).",
-        "note": "🔹 **Dosage:** Start 2mg. Titrate +2mg every 4 weeks.\n🔹 **Max Dose:** 12mg.\n🔹 **Frequency:** Once weekly.",
-        "side_effects": "Rapid heart rate, skin sensitivity (allodynia), nausea.",
+        "desc": "The 'Triple G' Agonist. The most potent weight loss agent currently in trials.",
+        "benefits_summary": "Extreme weight loss, liver fat reduction, metabolic reset.",
+        "side_effects_summary": "Increased heart rate, skin sensitivity, nausea.",
+        "protocol_summary": "2mg weekly, titrate up.",
+        "benefits_detailed": """
+        - **Efficacy:** 24.2% average weight loss in clinical trials.
+        - **Liver Health:** Resolves NAFLD (fatty liver) by actively burning liver fat via Glucagon.
+        - **Metabolic:** Massive improvements in insulin sensitivity and lipids.
+        """,
+        "protocol_detailed": """
+        **Dosage:** Start 2mg -> Titrate to Max 12mg
+        **Frequency:** Once Weekly
+        **Timing:** Any time
+        **Cycle:** Continuous
+        **Study Note:** Glucagon component increases resting energy expenditure.
+        """,
+        "side_effects_detailed": "Tachycardia (fast heart rate), cutaneous hyperesthesia (sensitive skin), nausea, constipation.",
         "storage": "Refrigerate. Do not freeze."
     },
-    "Selank": {
-        "vial_mg": 5.0, "dose_mcg": 250.0, "freq": "Daily", 
-        "type": "Nootropic",
-        "desc": "Synthetic analog of the immunomodulatory peptide Tuftsin. Known for its pronounced anxiolytic (anti-anxiety) and nootropic effects.", 
-        "benefits": "- **Anxiety:** Reduces stress without sedation.\n- **Focus:** Improves mental clarity and memory.\n- **Immunity:** Modulates the immune system.",
-        "note": "🔹 **Dosage:** 250mcg - 500mcg.\n🔹 **Frequency:** Daily or as needed for stress.\n🔹 **Route:** SubQ (injectable version).",
-        "side_effects": "Very rare. Fatigue if dosed too high.",
-        "storage": "Refrigerate."
-    },
     "Semaglutide": {
-        "vial_mg": 5.0, "dose_mcg": 250.0, "freq": "Once Weekly", 
+        "vial_mg": 5.0, "dose_mcg": 250.0, 
         "type": "Metabolic (GLP-1)",
-        "desc": "GLP-1 Agonist. Slows digestion and signals fullness.", 
-        "benefits": "- **Weight Loss:** 15% average loss.\n- **Heart:** Cardioprotective.\n- **Habits:** Breaks addiction loops.",
-        "note": "🔹 **Dosage:** Start 0.25mg. Titrate every 4 weeks.\n🔹 **Max Dose:** 2.4mg.\n🔹 **Frequency:** Once weekly.",
-        "side_effects": "Nausea, constipation, fatigue, 'Ozempic face'.",
+        "desc": "GLP-1 Agonist. The standard for medical weight loss.",
+        "benefits_summary": "Weight loss, appetite control, cardioprotection.",
+        "side_effects_summary": "Nausea, constipation, fatigue, muscle loss.",
+        "protocol_summary": "0.25mg weekly, titrate up.",
+        "benefits_detailed": """
+        - **Satiety:** Slows gastric emptying, keeping you full longer.
+        - **Heart:** 20% reduction in major adverse cardiac events.
+        - **Addiction:** Reduces cravings for alcohol and sugar.
+        """,
+        "protocol_detailed": """
+        **Dosage:** Start 0.25mg -> Max 2.4mg
+        **Frequency:** Once Weekly
+        **Timing:** Any time
+        **Cycle:** Continuous
+        **Study Note:** Requires protein prioritization to prevent muscle wasting.
+        """,
+        "side_effects_detailed": "Nausea, vomiting, severe constipation, 'Ozempic face', fatigue.",
         "storage": "Refrigerate. Protect from light."
     },
-    "Semax": {
-        "vial_mg": 5.0, "dose_mcg": 250.0, "freq": "Daily", 
-        "type": "Nootropic",
-        "desc": "Derived from Adrenocorticotropic Hormone (ACTH). Highly potent nootropic used for cognitive enhancement and stroke recovery.", 
-        "benefits": "- **Cognition:** Enhances attention, memory, and learning.\n- **Neuroprotection:** Protects neurons from oxidative stress.\n- **Mood:** Mild elevation in mood and motivation.",
-        "note": "🔹 **Dosage:** 250mcg - 500mcg.\n🔹 **Frequency:** Daily (Morning).\n🔹 **Route:** SubQ (injectable version).",
-        "side_effects": "Mild stimulation, difficulty sleeping if taken too late.",
-        "storage": "Refrigerate."
-    },
     "TB-500": {
-        "vial_mg": 5.0, "dose_mcg": 2500.0, "freq": "2x / Week", 
+        "vial_mg": 5.0, "dose_mcg": 2500.0, 
         "type": "Regenerative",
-        "desc": "Synthetic Thymosin Beta-4. Directs stem cells to damage.", 
-        "benefits": "- **Muscle:** Heals tears and strains.\n- **Joints:** Improves flexibility.\n- **Heart:** Repairs cardiac tissue.",
-        "note": "🔹 **Dosage:** 2.5mg.\n🔹 **Frequency:** 2x per week (e.g., Mon/Thu).\n🔹 **Cycle:** 4-6 weeks.",
-        "side_effects": "Head rush. Avoid if active cancer present.",
+        "desc": "Synthetic Thymosin Beta-4. The 'Muscle Repair' peptide.",
+        "benefits_summary": "Muscle healing, flexibility, heart health.",
+        "side_effects_summary": "Rare. Head rush.",
+        "protocol_summary": "2.5mg twice weekly.",
+        "benefits_detailed": """
+        - **Actin Regulation:** Upregulates actin for faster cellular migration to wounds.
+        - **Musculoskeletal:** Best choice for muscle tears and strains.
+        - **Cardiac:** Repairs heart tissue after ischemic events.
+        """,
+        "protocol_detailed": """
+        **Dosage:** 2.5mg (2500mcg)
+        **Frequency:** 2x Per Week (e.g., Mon/Thu)
+        **Timing:** Any time
+        **Cycle:** 4 to 6 Weeks
+        **Study Note:** Do not use if active cancer is present.
+        """,
+        "side_effects_detailed": "Very rare. Temporary head rush.",
         "storage": "Refrigerate."
     },
     "Tesamorelin": {
-        "vial_mg": 2.0, "dose_mcg": 1000.0, "freq": "Daily (PM)", 
+        "vial_mg": 2.0, "dose_mcg": 1000.0, 
         "type": "Growth Hormone",
-        "desc": "Potent GHRH for visceral fat reduction.", 
-        "benefits": "- **Belly Fat:** specifically targets visceral fat.\n- **Lipids:** Lowers triglycerides.",
-        "note": "🔹 **Dosage:** 1mg - 2mg.\n🔹 **Timing:** ⚠️ **FASTED ONLY.** Before bed.\n🔹 **Cycle:** 8-12 weeks.",
-        "side_effects": "Injection site redness, water retention, joint stiffness.",
-        "storage": "Refrigerate."
+        "desc": "FDA Approved GHRH for visceral fat reduction.",
+        "benefits_summary": "Belly fat loss, nootropic, muscle tone.",
+        "side_effects_summary": "Injection redness, joint pain, water retention.",
+        "protocol_summary": "1-2mg nightly, fasted.",
+        "benefits_detailed": """
+        - **Visceral Fat:** Specifically targets stubborn adipose tissue around organs.
+        - **Cognition:** Improves executive function in older adults.
+        - **Lipids:** Lowers triglycerides significantly.
+        """,
+        "protocol_detailed": """
+        **Dosage:** 1mg - 2mg
+        **Frequency:** Daily
+        **Timing:** Before Bed (Fasted)
+        **Cycle:** 8 to 12 Weeks
+        **Study Note:** FDA approved as Egrifta.
+        """,
+        "side_effects_detailed": "High rate of injection site redness/itching. Joint stiffness. Carpal tunnel symptoms.",
+        "storage": "Refrigerate. Use within 20-30 days."
     },
     "Tesamorelin + Ipamorelin Blend": {
-        "vial_mg": 12.0, "dose_mcg": 350.0, "freq": "Daily (PM)", 
+        "vial_mg": 12.0, "dose_mcg": 350.0, 
         "type": "Growth Hormone/Fat Loss Blend",
-        "desc": "The Ultimate Shred Stack.", 
-        "benefits": "- **Recomp:** Burn fat and build muscle simultaneously.\n- **Metabolic:** Lowers inflammation.",
-        "note": "🔹 **Dosage:** 350mcg - 500mcg total.\n🔹 **Timing:** ⚠️ **FASTED ONLY.** Before bed.\n🔹 **Cycle:** 5 on / 2 off.",
-        "side_effects": "Joint stiffness, flushing, vivid dreams.",
-        "storage": "Refrigerate."
-    },
-    "Thymalin": {
-        "vial_mg": 10.0, "dose_mcg": 5000.0, "freq": "Daily (Course)", 
-        "type": "Immune/Anti-Aging",
-        "desc": "A polypeptide extract from the thymus gland. It regulates the immune system and has profound anti-aging effects when combined with Epithalon.", 
-        "benefits": "- **Immunity:** Corrects immunodeficiency and autoimmune conditions.\n- **Longevity:** Reduces all-cause mortality in trials.\n- **Balance:** Normalizes T-cell/B-cell ratios.",
-        "note": "🔹 **Dosage:** 5mg - 10mg.\n🔹 **Frequency:** Daily for 10 days.\n🔹 **Cycle:** Repeat every 6-12 months.\n🔹 **Stack:** Often cycled with Epithalon.",
-        "side_effects": "None reported. Very safe.",
+        "desc": "The 'Shred Stack'. Targets visceral fat + systemic GH elevation.",
+        "benefits_summary": "Max fat loss, muscle definition, deep sleep.",
+        "side_effects_summary": "Flushing, joint stiffness, water retention.",
+        "protocol_summary": "350-500mcg total nightly, fasted.",
+        "benefits_detailed": """
+        - **Recomposition:** Powerful combo for changing body composition.
+        - **Metabolic:** Amplifies the fat-burning effects of fasting.
+        - **Synergy:** Ipamorelin extends the pulse duration of Tesamorelin.
+        """,
+        "protocol_detailed": """
+        **Dosage:** 350mcg - 500mcg (Total Volume)
+        **Frequency:** Daily (5 days on / 2 off)
+        **Timing:** Before Bed (Fasted)
+        **Cycle:** 8 to 12 Weeks
+        **Study Note:** Monitor for water retention.
+        """,
+        "side_effects_detailed": "Joint pain, carpal tunnel numbness, flushing.",
         "storage": "Refrigerate."
     },
     "Tirzepatide": {
-        "vial_mg": 30.0, "dose_mcg": 2500.0, "freq": "Once Weekly", 
+        "vial_mg": 30.0, "dose_mcg": 2500.0, 
         "type": "Metabolic (GLP-1/GIP)",
-        "desc": "Dual Agonist. The GIP component reduces nausea vs Semaglutide.", 
-        "benefits": "- **Weight Loss:** 20%+ average.\n- **Satiety:** Silences food noise.",
-        "note": "🔹 **Dosage:** Start 2.5mg. Titrate +2.5mg every 4 weeks.\n🔹 **Max Dose:** 15mg.\n🔹 **Frequency:** Once weekly.",
-        "side_effects": "Anhedonia, constipation, cold extremities, hair shedding.",
-        "storage": "Refrigerate."
+        "desc": "Dual Agonist (Mounjaro). GIP + GLP-1. Superior to Semaglutide.",
+        "benefits_summary": "Massive weight loss, no food noise, less nausea.",
+        "side_effects_summary": "Anhedonia, constipation, hair shedding.",
+        "protocol_summary": "2.5mg weekly, titrate up.",
+        "benefits_detailed": """
+        - **Weight Loss:** 20%+ average loss in SURMOUNT-1 trials.
+        - **Food Noise:** Eliminates obsessive food thoughts.
+        - **Tolerability:** GIP component reduces nausea compared to Semaglutide.
+        """,
+        "protocol_detailed": """
+        **Dosage:** Start 2.5mg -> Max 15mg
+        **Frequency:** Once Weekly
+        **Timing:** Any time
+        **Cycle:** Continuous
+        **Study Note:** Watch for 'anhedonia' (loss of interest in hobbies).
+        """,
+        "side_effects_detailed": "Anhedonia, cold extremities, constipation, hair shedding (due to rapid weight loss).",
+        "storage": "Refrigerate. Do not freeze."
     },
 }
 
@@ -327,7 +519,7 @@ with st.sidebar:
     page = st.radio("Go to:", ["🧮 Calculator", "📚 Peptide Database"])
     st.markdown("---")
     
-    # Ko-fi Button
+    # Ko-fi Button inside the sidebar
     st.link_button("☕ Support my work (Ko-fi)", "https://ko-fi.com/musika", use_container_width=True)
     st.caption("v2.1 | by Musika")
 
@@ -374,13 +566,7 @@ if page == "🧮 Calculator":
     with left_col:
         st.info("1️⃣ **Configuration**")
         
-        # Sort keys alphabetically
-        sorted_peptides = sorted(list(PEPTIDE_PRESETS.keys()))
-        # Ensure Custom is first
-        if "Custom (Enter manually)" in sorted_peptides:
-            sorted_peptides.insert(0, sorted_peptides.pop(sorted_peptides.index("Custom (Enter manually)")))
-
-        selected_peptide = st.selectbox("Select Peptide Profile", sorted_peptides, key="peptide_selector", on_change=load_preset)
+        selected_peptide = st.selectbox("Select Peptide Profile", list(PEPTIDE_PRESETS.keys()), key="peptide_selector", on_change=load_preset)
         
         st.write("📦 **Stock & Water**")
         c1, c2, c3 = st.columns([1.5, 1, 1.5])
@@ -435,17 +621,18 @@ if page == "🧮 Calculator":
             doses_per_vial = total_peptide_mcg / desired_dose_mcg
             peptide_info = PEPTIDE_PRESETS[selected_peptide]
 
+            # --- CALCULATOR VIEW (SUMMARIZED) ---
             with st.expander(f"📖 **Profile: {selected_peptide}**", expanded=True):
                 if selected_peptide == "Custom (Enter manually)":
                      st.write("Manual mode selected.")
                 else:
                     st.markdown(f"**Type:** {peptide_info['type']}")
-                    st.markdown(f"**Description:** {peptide_info['desc']}")
-                    st.markdown(f"**🌟 Benefits:** {peptide_info['benefits']}")
-                    st.markdown(f"**Frequency:** {peptide_info['freq']}")
-                    st.warning(f"**⚠️ Side Effects:** {peptide_info['side_effects']}")
-                    st.info(f"**📋 Instructions:** {peptide_info['note']}")
+                    # Use Summarized Data for Calc View
+                    st.markdown(f"**🌟 Key Benefits:** {peptide_info['benefits_summary']}")
+                    st.warning(f"**⚠️ Common Side Effects:** {peptide_info['side_effects_summary']}")
+                    st.info(f"**📋 Quick Protocol:** {peptide_info['protocol_summary']}")
                     st.markdown(f"**❄️ Storage:** {peptide_info['storage']}")
+                    st.caption("*For full details, visit the 'Peptide Database' tab.*")
 
             st.divider()
 
@@ -466,7 +653,7 @@ if page == "🧮 Calculator":
                 st.markdown(f"""<div style="margin-bottom:5px; font-weight:bold;">Visual Syringe Fill ({units:.1f} Units):</div><div class="syringe-container"><div class="syringe-liquid" style="width: {percentage}%;"></div><div class="syringe-markings"></div></div>""", unsafe_allow_html=True)
                 st.caption(f"Draw to the **{units:.1f}** mark on your {syringe_type} syringe.")
 
-            protocol_text = f"Peptide: {selected_peptide}\nFreq: {peptide_info['freq']}\nStock: {vial_qty}{vial_unit} + {water_ml}mL Water\nConc: {concentration_mg_ml:.2f} mg/mL\nDose: {desired_dose}{dose_unit} = {units:.1f} Units ({syringe_type})\nSupply: 1 vial lasts approx {int(doses_per_vial)} doses.\n\nDetails:\n{peptide_info['desc']}\nBenefits: {peptide_info['benefits']}\nStorage: {peptide_info['storage']}\nInstructions: {peptide_info['note']}"
+            protocol_text = f"Peptide: {selected_peptide}\nType: {peptide_info['type']}\nStock: {vial_qty}{vial_unit} + {water_ml}mL Water\nConc: {concentration_mg_ml:.2f} mg/mL\nDose: {desired_dose}{dose_unit} = {units:.1f} Units ({syringe_type})\nSupply: 1 vial lasts approx {int(doses_per_vial)} doses.\n\nQuick Protocol: {peptide_info['protocol_summary']}\nBenefits: {peptide_info['benefits_summary']}\nStorage: {peptide_info['storage']}"
             st.download_button("💾 Save Protocol", protocol_text, "protocol.txt", use_container_width=True)
         else:
             st.info("Enter inputs to see results.")
@@ -479,11 +666,11 @@ if page == "🧮 Calculator":
         st.markdown("[![Hits](https://hits.sh/peptide-calculator.streamlit.app.svg?style=flat-square&label=Total%20Visits&extraCount=2023&color=79c83d)](https://hits.sh/peptide-calculator.streamlit.app/)")
 
 # ==============================================================================
-# PAGE 2: PEPTIDE DATABASE (Notion-Style)
+# PAGE 2: PEPTIDE DATABASE (Notion-Style / v2.1)
 # ==============================================================================
 elif page == "📚 Peptide Database":
     st.subheader("📚 Peptide Database")
-    st.caption("A comprehensive guide to the compounds available in our system, inspired by the Foofyrka Notion database.")
+    st.caption("Comprehensive clinical data, mechanisms, and protocols. *Disclaimer: For educational purposes only.*")
     st.divider()
 
     # Get all peptides except the "Custom" entry
@@ -509,7 +696,7 @@ elif page == "📚 Peptide Database":
         if category_filter != "All" and data['type'] != category_filter:
             continue
         # Match Search
-        if search_query not in name.lower() and search_query not in data['benefits'].lower() and search_query not in data['desc'].lower():
+        if search_query not in name.lower() and search_query not in data['benefits_detailed'].lower() and search_query not in data['desc'].lower():
             continue
         filtered_items[name] = data
 
@@ -517,10 +704,7 @@ elif page == "📚 Peptide Database":
     num_cols = 3
     cols = st.columns(num_cols)
     
-    # Sort items alphabetically
-    sorted_items = dict(sorted(filtered_items.items()))
-    
-    for idx, (name, info) in enumerate(sorted_items.items()):
+    for idx, (name, info) in enumerate(filtered_items.items()):
         col = cols[idx % num_cols]
         with col:
             # Replicating Notion Card Style
@@ -528,14 +712,27 @@ elif page == "📚 Peptide Database":
                 st.markdown(f"### {name}")
                 st.markdown(f"<span class='db-tag'>{info['type']}</span>", unsafe_allow_html=True)
                 st.write("") # Spacer
-                st.markdown(f"**Description:** {info['desc']}")
                 
-                with st.expander("🌟 View Benefits"):
-                    st.markdown(info['benefits'])
-                with st.expander("📋 Protocol & Side Effects"):
-                    st.markdown(f"{info['note']}")
-                    st.markdown(f"**⚠️ Side Effects:** {info['side_effects']}")
+                # VISIBLE IMMEDIATELY: Benefits & Side Effects
+                st.markdown("**🌟 Clinical Benefits:**")
+                st.markdown(info['benefits_detailed'])
+                
+                st.markdown(f"""
+                <div class='side-effect-box'>
+                <strong>⚠️ Side Effects:</strong><br>{info['side_effects_detailed']}
+                </div>
+                """, unsafe_allow_html=True)
+                
+                st.write("")
+
+                # COLLAPSIBLE: Description & Mechanism
+                with st.expander("ℹ️ Description & Mechanism"):
+                    st.markdown(f"_{info['desc']}_")
                     st.markdown(f"**❄️ Storage:** {info['storage']}")
+                
+                # COLLAPSIBLE: Detailed Protocol
+                with st.expander("📋 Detailed Protocol"):
+                     st.markdown(info['protocol_detailed'])
 
     if len(filtered_items) == 0:
         st.warning("No peptides match your search criteria. Try clearing the filters.")
