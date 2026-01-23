@@ -4,7 +4,7 @@ import pandas as pd
 
 # --- 1. CONFIGURATION: WIDE MODE ---
 st.set_page_config(
-    page_title="PeptideCalc Pro",
+    page_title="PeptideCalc Pro v2.0",
     page_icon="🧪",
     layout="wide",
     initial_sidebar_state="expanded"
@@ -49,7 +49,7 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
-# --- EXPANDED HIGH-DETAIL KNOWLEDGE BASE ---
+# --- EXPANDED HIGH-DETAIL KNOWLEDGE BASE (v2.0 - Cleaned MG Conversions) ---
 PEPTIDE_PRESETS = {
     "Custom (Enter manually)": {
         "vial_mg": 5.0, "dose_mcg": 250.0, "freq": "As directed", 
@@ -74,7 +74,7 @@ PEPTIDE_PRESETS = {
         "type": "Regenerative Blend",
         "desc": "The 'Wolverine Stack'. Synergistic combination where BPC-157 works on tendons/ligaments/gut, while TB-500 works on muscle tissue and promotes actin regulation for cellular migration.", 
         "benefits": "- **Maximum Healing:** The ultimate protocol for post-surgery or acute physical injury.\n- **Flexibility:** Noticeable improvement in joint and muscle flexibility.\n- **Hair & Heart:** TB-500 promotes hair growth and protects cardiac tissue post-injury.",
-        "note": "**Protocol:** 500mcg - 1000mcg total fluid daily (yielding 250mcg-500mcg of EACH compound). Injected SubQ. **Cycle:** Run for the duration of injury recovery (typically 4-8 weeks).",
+        "note": "**Protocol:** 500mcg - 1mg total fluid daily (yielding 250mcg-500mcg of EACH compound). Injected SubQ. **Cycle:** Run for the duration of injury recovery (typically 4-8 weeks).",
         "side_effects": "Head rush upon injection (from TB-500), fatigue, lethargy. Angiogenic properties mean this should NOT be used by individuals with active cancers.",
         "storage": "Refrigerate after mixing. Use within 30 days."
     },
@@ -119,7 +119,7 @@ PEPTIDE_PRESETS = {
         "type": "Cosmetic/Recovery Blend",
         "desc": "A 70mg tri-blend of GHK-Cu, BPC-157, and TB-500. The BPC and TB eliminate the painful injection sting of GHK-Cu while amplifying the tissue regenerative effects.", 
         "benefits": "- **Painless GHK-Cu:** BPC neutralizes the acidic sting of the copper.\n- **Total Rejuvenation:** Combines the systemic healing of BPC/TB with the cosmetic power of GHK-Cu.\n- Targets hair, skin elasticity, gut health, and muscle recovery all at once.",
-        "note": "**Protocol:** 2.5mg (2500mcg) to 3mg daily SubQ. **Cycle:** 4 to 6 weeks. Rotate injection sites daily. Inject at night.",
+        "note": "**Protocol:** 2.5mg to 3mg daily SubQ. **Cycle:** 4 to 6 weeks. Rotate injection sites daily. Inject at night.",
         "side_effects": "Mild redness at injection site. Requires zinc supplementation if run for longer than 30 days.",
         "storage": "Refrigerate strictly. Protect from light."
     },
@@ -155,7 +155,7 @@ PEPTIDE_PRESETS = {
         "type": "Ultimate Repair/Cosmetic Blend",
         "desc": "The Master Stack. GHK-Cu, BPC-157, TB-500, plus **KPV**. KPV acts as a master anti-inflammatory agent and antimicrobial, specifically targeting mast cells and gut flora.", 
         "benefits": "- **Skin Clearing:** KPV drastically reduces acne, psoriasis, and eczema.\n- **IBD/Gut:** KPV + BPC-157 is the strongest known peptide combo for Ulcerative Colitis, SIBO, and Crohn's.\n- **Total Healing:** Connective tissue repair and anti-aging in one.",
-        "note": "**Protocol:** ~3000mcg total daily SubQ. This is a high-volume injection. Rotate sites religiously.",
+        "note": "**Protocol:** ~3mg total daily SubQ. This is a high-volume injection. Rotate sites religiously.",
         "side_effects": "Temporary red welts (from the copper/volume). Fatigue from systemic healing activation.",
         "storage": "Refrigerate strictly. Keep away from strong light."
     },
@@ -209,7 +209,7 @@ PEPTIDE_PRESETS = {
         "type": "Regenerative",
         "desc": "Synthetic version of Thymosin Beta-4. It acts as an actin-sequestering protein, guiding stem cells and immune cells directly to the site of damage.", 
         "benefits": "- **Muscular Repair:** Best peptide for torn muscles and deep tissue bruising.\n- **Flexibility:** Noticeably improves range of motion and joint suppleness.\n- **Cardiac Health:** Repairs heart tissue post-infarction.",
-        "note": "**Protocol:** 2.5mg (2500mcg) twice per week (e.g., Mon/Thurs) SubQ. **Half-life:** Long (hence the 2x/week dosing). Cycle: 4-6 weeks.",
+        "note": "**Protocol:** 2.5mg twice per week (e.g., Mon/Thurs) SubQ. **Half-life:** Long (hence the 2x/week dosing). Cycle: 4-6 weeks.",
         "side_effects": "Very rare. Occasional flu-like symptoms, lethargy, or minor head rush. Do not use if active cancer is present (promotes tumor angiogenesis).",
         "storage": "Refrigerate after mixing."
     },
@@ -252,13 +252,16 @@ if 'dose_unit_index' not in st.session_state: st.session_state.dose_unit_index =
 if 'dose_unit_selection' not in st.session_state: st.session_state.dose_unit_selection = "mcg"
 if 'calc_count' not in st.session_state: st.session_state.calc_count = 0
 
-# --- NAVIGATION SIDEBAR ---
+# --- NAVIGATION SIDEBAR (v2.0 UI) ---
 with st.sidebar:
     st.image("https://img.icons8.com/color/96/000000/biotech.png", width=60) # Placeholder logo
     st.title("Navigation")
     page = st.radio("Go to:", ["🧮 Calculator", "📚 Peptide Database"])
     st.markdown("---")
-    st.caption("v1.0 | by Musika")
+    
+    # NEW: Ko-fi Button inside the sidebar
+    st.link_button("☕ Support my work (Ko-fi)", "https://ko-fi.com/musika", use_container_width=True)
+    st.caption("v2.0 | by Musika")
 
 # ==============================================================================
 # PAGE 1: CALCULATOR
@@ -293,13 +296,7 @@ if page == "🧮 Calculator":
         return value * FACTORS[unit]
 
     # --- UI HEADER ---
-    col_title, col_space, col_btn = st.columns([2, 2, 1])
-    with col_title:
-        st.subheader("🧪 Reconstitution Calculator")
-    with col_btn:
-        st.write("") 
-        st.link_button("☕ Support (Ko-fi)", "https://ko-fi.com/musika", use_container_width=True)
-
+    st.subheader("🧪 Reconstitution Calculator")
     st.divider()
 
     # --- MAIN DASHBOARD ---
