@@ -1,15 +1,16 @@
 import streamlit as st
 import math
+import pandas as pd
 
 # --- 1. CONFIGURATION: WIDE MODE ---
 st.set_page_config(
     page_title="PeptideCalc Pro",
     page_icon="🧪",
     layout="wide",
-    initial_sidebar_state="collapsed"
+    initial_sidebar_state="expanded" # Changed to expanded so users see the menu
 )
 
-# --- CSS FOR VISUAL SYRINGE ONLY ---
+# --- CSS FOR VISUAL SYRINGE & CARDS ---
 st.markdown("""
 <style>
     .syringe-container {
@@ -36,6 +37,23 @@ st.markdown("""
         bottom: 0;
         background: repeating-linear-gradient(90deg, transparent, transparent 19%, #000 20%);
         opacity: 0.1;
+    }
+    /* Styles for Database Cards */
+    .db-card {
+        background-color: #1e1e1e;
+        border: 1px solid #444;
+        border-radius: 8px;
+        padding: 15px;
+        margin-bottom: 15px;
+        height: 100%;
+    }
+    .db-tag {
+        background-color: #4b4bff;
+        color: white;
+        padding: 3px 8px;
+        border-radius: 12px;
+        font-size: 0.8em;
+        font-weight: bold;
     }
 </style>
 """, unsafe_allow_html=True)
@@ -243,202 +261,221 @@ if 'dose_unit_index' not in st.session_state: st.session_state.dose_unit_index =
 if 'dose_unit_selection' not in st.session_state: st.session_state.dose_unit_selection = "mcg"
 if 'calc_count' not in st.session_state: st.session_state.calc_count = 0
 
-# --- LOGIC ---
-def load_preset():
-    selection = st.session_state.peptide_selector
-    data = PEPTIDE_PRESETS[selection]
-    
-    # 1. Update Stock
-    st.session_state.vial_val = float(data["vial_mg"])
-    st.session_state.stock_unit_index = 0 
+# --- NAVIGATION SIDEBAR ---
+with st.sidebar:
+    st.image("https://img.icons8.com/color/96/000000/biotech.png", width=60) # Placeholder logo
+    st.title("Navigation")
+    page = st.radio("Go to:", ["🧮 Calculator", "📚 Peptide Database"])
+    st.markdown("---")
+    st.caption("v1.0 | by Musika")
 
-    # 2. Smart Dose Unit Switching
-    target_mcg = float(data["dose_mcg"])
-    if target_mcg < 1000:
-        st.session_state.dose_unit_selection = "mcg"
-        st.session_state.dose_val = target_mcg
-    else:
-        st.session_state.dose_unit_selection = "mg"
-        st.session_state.dose_val = target_mcg / 1000
+# ==============================================================================
+# PAGE 1: CALCULATOR
+# ==============================================================================
+if page == "🧮 Calculator":
 
-    st.session_state.calc_count += 1
+    # --- LOGIC ---
+    def load_preset():
+        selection = st.session_state.peptide_selector
+        data = PEPTIDE_PRESETS[selection]
+        st.session_state.vial_val = float(data["vial_mg"])
+        st.session_state.stock_unit_index = 0 
+        target_mcg = float(data["dose_mcg"])
+        if target_mcg < 1000:
+            st.session_state.dose_unit_selection = "mcg"
+            st.session_state.dose_val = target_mcg
+        else:
+            st.session_state.dose_unit_selection = "mg"
+            st.session_state.dose_val = target_mcg / 1000
+        st.session_state.calc_count += 1
 
-def convert_dose_unit():
-    new_unit = st.session_state.dose_unit_selection
-    old_unit = st.session_state.get("_prev_dose_unit", "mcg")
-    current_val = st.session_state.dose_val
-    val_in_mcg = current_val * FACTORS[old_unit]
-    new_val = val_in_mcg / FACTORS[new_unit]
-    st.session_state.dose_val = new_val
-    st.session_state._prev_dose_unit = new_unit
+    def convert_dose_unit():
+        new_unit = st.session_state.dose_unit_selection
+        old_unit = st.session_state.get("_prev_dose_unit", "mcg")
+        current_val = st.session_state.dose_val
+        val_in_mcg = current_val * FACTORS[old_unit]
+        new_val = val_in_mcg / FACTORS[new_unit]
+        st.session_state.dose_val = new_val
+        st.session_state._prev_dose_unit = new_unit
 
-def get_mcg(value, unit):
-    return value * FACTORS[unit]
+    def get_mcg(value, unit):
+        return value * FACTORS[unit]
 
-# --- UI HEADER ---
-col_title, col_space, col_btn = st.columns([2, 2, 1])
-with col_title:
-    st.subheader("🧪 PeptideCalc Pro")
-    st.caption("v1.0 | by Musika | *Educational Use Only*")
-with col_btn:
-    st.write("") 
-    st.link_button("☕ Support (Ko-fi)", "https://ko-fi.com/musika", use_container_width=True)
-
-st.divider()
-
-# --- MAIN DASHBOARD ---
-left_col, right_col = st.columns([1, 1.2], gap="large")
-
-# === LEFT COLUMN: INPUTS & GUIDES ===
-with left_col:
-    st.info("1️⃣ **Configuration**")
-    
-    selected_peptide = st.selectbox("Select Peptide Profile", list(PEPTIDE_PRESETS.keys()), key="peptide_selector", on_change=load_preset)
-    
-    st.write("📦 **Stock & Water**")
-    c1, c2, c3 = st.columns([1.5, 1, 1.5])
-    with c1:
-        vial_qty = st.number_input("Stock Amount", key="vial_val", min_value=0.0, step=1.0, format="%.1f")
-    with c2:
-        vial_unit = st.selectbox("Unit", ["mg", "mcg", "g"], index=st.session_state.stock_unit_index, key="stock_unit_selection")
-    with c3:
-        water_ml = st.number_input("Water Added (mL)", value=2.0, step=0.5, min_value=0.1, format="%.1f")
-
-    st.warning("⚠️ **Safety Check:** Ensure inputs match your physical supplies.")
-
-    st.write("🎯 **Dosing**")
-    c4, c5 = st.columns([2, 1])
-    with c5:
-        dose_unit = st.selectbox(
-            "Dose Unit", 
-            ["mcg", "mg", "g"], 
-            key="dose_unit_selection", 
-            on_change=convert_dose_unit
-        )
-        if "_prev_dose_unit" not in st.session_state: st.session_state._prev_dose_unit = dose_unit
-    with c4:
-        # Step logic: 1.0 for mg, 50.0 for mcg, 0.001 for g
-        if dose_unit == 'mg':
-            step = 1.0
-            fmt = "%.1f"
-        elif dose_unit == 'mcg':
-            step = 50.0
-            fmt = "%.1f"
-        else: # 'g'
-            step = 0.001
-            fmt = "%.4f"
-        
-        desired_dose = st.number_input("Desired Dose", key="dose_val", min_value=0.0, step=step, format=fmt)
-    
-    syringe_type = st.radio("Syringe Type", ["U-100 (Standard)", "U-40 (Vet)"], horizontal=True)
-    syringe_factor = 100 if "U-100" in syringe_type else 40
+    # --- UI HEADER ---
+    col_title, col_space, col_btn = st.columns([2, 2, 1])
+    with col_title:
+        st.subheader("🧪 Reconstitution Calculator")
+    with col_btn:
+        st.write("") 
+        st.link_button("☕ Support (Ko-fi)", "https://ko-fi.com/musika", use_container_width=True)
 
     st.divider()
 
-    # --- DYNAMIC MIXING GUIDE ---
-    with st.expander("🛠️ How to Reconstitute (Mix)"):
-        st.markdown(f"""
-        1. **Clean:** Wipe the top of the **{vial_qty} {vial_unit}** peptide vial and the water vial with an alcohol swab.
-        2. **Withdraw:** Draw exactly **{water_ml} mL** of Bacteriostatic Water.
-        3. **Inject:** Slowly inject the **{water_ml} mL** of water into the peptide vial. Aim for the glass wall, not the powder directly.
-        4. **Mix:** **Do not shake.** Gently swirl the vial until dissolved.
-        5. **Store:** Refrigerate immediately.
-        """)
+    # --- MAIN DASHBOARD ---
+    left_col, right_col = st.columns([1, 1.2], gap="large")
 
-    # --- INJECTION VISUAL GUIDE (Local File) ---
-    with st.expander("💉 Visual Guide: Injection Sites", expanded=True):
-        try:
-            st.image("injection_sites.png", caption="Recommended Subcutaneous Zones", use_container_width=True)
-        except:
-            st.warning("⚠️ Image not found. Please upload 'injection_sites.png' to your GitHub repository.")
-
-
-# === RIGHT COLUMN: RESULTS ===
-with right_col:
-    st.success("2️⃣ **Profile & Results**")
-
-    if vial_qty > 0 and water_ml > 0 and desired_dose > 0:
-        total_peptide_mcg = get_mcg(vial_qty, vial_unit)
-        desired_dose_mcg = get_mcg(desired_dose, dose_unit)
-        concentration_mcg_ml = total_peptide_mcg / water_ml
-        concentration_mg_ml = concentration_mcg_ml / 1000
-        draw_ml = desired_dose_mcg / concentration_mcg_ml
-        units = draw_ml * syringe_factor
+    # === LEFT COLUMN: INPUTS & GUIDES ===
+    with left_col:
+        st.info("1️⃣ **Configuration**")
         
-        # --- NEW: CYCLE CALCULATOR ---
-        # Calculate doses per vial
-        doses_per_vial = total_peptide_mcg / desired_dose_mcg
+        selected_peptide = st.selectbox("Select Peptide Profile", list(PEPTIDE_PRESETS.keys()), key="peptide_selector", on_change=load_preset)
         
-        peptide_info = PEPTIDE_PRESETS[selected_peptide]
+        st.write("📦 **Stock & Water**")
+        c1, c2, c3 = st.columns([1.5, 1, 1.5])
+        with c1:
+            vial_qty = st.number_input("Stock Amount", key="vial_val", min_value=0.0, step=1.0, format="%.1f")
+        with c2:
+            vial_unit = st.selectbox("Unit", ["mg", "mcg", "g"], index=st.session_state.stock_unit_index, key="stock_unit_selection")
+        with c3:
+            water_ml = st.number_input("Water Added (mL)", value=2.0, step=0.5, min_value=0.1, format="%.1f")
 
-        # --- A. PEPTIDE DETAILS ---
-        with st.expander(f"📖 **Profile: {selected_peptide}**", expanded=True):
-            if selected_peptide == "Custom (Enter manually)":
-                 st.write("Manual mode selected.")
+        st.warning("⚠️ **Safety Check:** Ensure inputs match your physical supplies.")
+
+        st.write("🎯 **Dosing**")
+        c4, c5 = st.columns([2, 1])
+        with c5:
+            dose_unit = st.selectbox("Dose Unit", ["mcg", "mg", "g"], key="dose_unit_selection", on_change=convert_dose_unit)
+            if "_prev_dose_unit" not in st.session_state: st.session_state._prev_dose_unit = dose_unit
+        with c4:
+            if dose_unit == 'mg':
+                step, fmt = 1.0, "%.1f"
+            elif dose_unit == 'mcg':
+                step, fmt = 50.0, "%.1f"
             else:
-                st.markdown(f"**Type:** {peptide_info['type']}")
-                st.markdown(f"**Description:** {peptide_info['desc']}")
-                st.markdown(f"**🌟 Benefits:** {peptide_info['benefits']}")
-                st.markdown(f"**Frequency:** {peptide_info['freq']}")
-                st.warning(f"**⚠️ Side Effects:** {peptide_info['side_effects']}")
-                st.info(f"**📋 Instructions:** {peptide_info['note']}")
-                st.markdown(f"**❄️ Storage:** {peptide_info['storage']}")
+                step, fmt = 0.001, "%.4f"
+            desired_dose = st.number_input("Desired Dose", key="dose_val", min_value=0.0, step=step, format=fmt)
+        
+        syringe_type = st.radio("Syringe Type", ["U-100 (Standard)", "U-40 (Vet)"], horizontal=True)
+        syringe_factor = 100 if "U-100" in syringe_type else 40
 
         st.divider()
 
-        # --- B. CALCULATION RESULTS ---
-        
-        # 1. Standard Metrics + Cycle Info
-        c1, c2, c3 = st.columns(3)
-        c1.metric("Draw Volume", f"{draw_ml:.4f} mL")
-        c2.metric("Syringe Units", f"{units:.1f} Units")
-        c3.metric("Doses / Vial", f"{int(doses_per_vial)}")
-        
-        # 2. Split Dosing Logic & Visual Syringe
-        percentage = min(units / syringe_factor * 100, 100)
-        
-        if units > syringe_factor:
-            # DOSE TOO HIGH - SPLIT IT
-            num_injections = math.ceil(units / syringe_factor)
-            dose_per = units / num_injections
-            st.error(f"⚠️ **Volume too large for one syringe!**")
-            st.warning(f"💡 **Recommendation:** Split into **{num_injections}** injections of **{dose_per:.1f} Units** each.")
+        with st.expander("🛠️ How to Reconstitute (Mix)"):
+            st.markdown(f"1. **Clean:** Wipe the top of the **{vial_qty} {vial_unit}** peptide vial and the water vial with an alcohol swab.\n2. **Withdraw:** Draw exactly **{water_ml} mL** of Bacteriostatic Water.\n3. **Inject:** Slowly inject the **{water_ml} mL** of water into the peptide vial. Aim for the glass wall, not the powder directly.\n4. **Mix:** **Do not shake.** Gently swirl the vial until dissolved.\n5. **Store:** Refrigerate immediately.")
+
+        with st.expander("💉 Visual Guide: Injection Sites", expanded=True):
+            try:
+                st.image("injection_sites.png", caption="Recommended Subcutaneous Zones", use_container_width=True)
+            except:
+                st.warning("⚠️ Image not found. Please upload 'injection_sites.png' to your GitHub repository.")
+
+    # === RIGHT COLUMN: RESULTS ===
+    with right_col:
+        st.success("2️⃣ **Profile & Results**")
+
+        if vial_qty > 0 and water_ml > 0 and desired_dose > 0:
+            total_peptide_mcg = get_mcg(vial_qty, vial_unit)
+            desired_dose_mcg = get_mcg(desired_dose, dose_unit)
+            concentration_mcg_ml = total_peptide_mcg / water_ml
+            concentration_mg_ml = concentration_mcg_ml / 1000
+            draw_ml = desired_dose_mcg / concentration_mcg_ml
+            units = draw_ml * syringe_factor
+            doses_per_vial = total_peptide_mcg / desired_dose_mcg
+            peptide_info = PEPTIDE_PRESETS[selected_peptide]
+
+            with st.expander(f"📖 **Profile: {selected_peptide}**", expanded=True):
+                if selected_peptide == "Custom (Enter manually)":
+                     st.write("Manual mode selected.")
+                else:
+                    st.markdown(f"**Type:** {peptide_info['type']}")
+                    st.markdown(f"**Description:** {peptide_info['desc']}")
+                    st.markdown(f"**🌟 Benefits:** {peptide_info['benefits']}")
+                    st.markdown(f"**Frequency:** {peptide_info['freq']}")
+                    st.warning(f"**⚠️ Side Effects:** {peptide_info['side_effects']}")
+                    st.info(f"**📋 Instructions:** {peptide_info['note']}")
+                    st.markdown(f"**❄️ Storage:** {peptide_info['storage']}")
+
+            st.divider()
+
+            c1, c2, c3 = st.columns(3)
+            c1.metric("Draw Volume", f"{draw_ml:.4f} mL")
+            c2.metric("Syringe Units", f"{units:.1f} Units")
+            c3.metric("Doses / Vial", f"{int(doses_per_vial)}")
             
-            # Show full bar
-            st.markdown(f"""
-            <div style="margin-bottom:5px; font-weight:bold;">Visual Fill (1 Full Syringe + Overflow):</div>
-            <div class="syringe-container">
-                <div class="syringe-liquid" style="width: 100%; background-color: #ff0000;"></div>
-                <div class="syringe-markings"></div>
-            </div>
-            """, unsafe_allow_html=True)
+            percentage = min(units / syringe_factor * 100, 100)
+            
+            if units > syringe_factor:
+                num_injections = math.ceil(units / syringe_factor)
+                dose_per = units / num_injections
+                st.error(f"⚠️ **Volume too large for one syringe!**")
+                st.warning(f"💡 **Recommendation:** Split into **{num_injections}** injections of **{dose_per:.1f} Units** each.")
+                st.markdown(f"""<div style="margin-bottom:5px; font-weight:bold;">Visual Fill (1 Full Syringe + Overflow):</div><div class="syringe-container"><div class="syringe-liquid" style="width: 100%; background-color: #ff0000;"></div><div class="syringe-markings"></div></div>""", unsafe_allow_html=True)
+            else:
+                st.markdown(f"""<div style="margin-bottom:5px; font-weight:bold;">Visual Syringe Fill ({units:.1f} Units):</div><div class="syringe-container"><div class="syringe-liquid" style="width: {percentage}%;"></div><div class="syringe-markings"></div></div>""", unsafe_allow_html=True)
+                st.caption(f"Draw to the **{units:.1f}** mark on your {syringe_type} syringe.")
 
+            protocol_text = f"Peptide: {selected_peptide}\nFreq: {peptide_info['freq']}\nStock: {vial_qty}{vial_unit} + {water_ml}mL Water\nConc: {concentration_mg_ml:.2f} mg/mL\nDose: {desired_dose}{dose_unit} = {units:.1f} Units ({syringe_type})\nSupply: 1 vial lasts approx {int(doses_per_vial)} doses.\n\nDetails:\n{peptide_info['desc']}\nBenefits: {peptide_info['benefits']}\nStorage: {peptide_info['storage']}\nInstructions: {peptide_info['note']}"
+            st.download_button("💾 Save Protocol", protocol_text, "protocol.txt", use_container_width=True)
         else:
-            # DOSE OK
-            st.markdown(f"""
-            <div style="margin-bottom:5px; font-weight:bold;">Visual Syringe Fill ({units:.1f} Units):</div>
-            <div class="syringe-container">
-                <div class="syringe-liquid" style="width: {percentage}%;"></div>
-                <div class="syringe-markings"></div>
-            </div>
-            """, unsafe_allow_html=True)
-            st.caption(f"Draw to the **{units:.1f}** mark on your {syringe_type} syringe.")
+            st.info("Enter inputs to see results.")
 
-        # DOWNLOAD
-        protocol_text = f"Peptide: {selected_peptide}\nFreq: {peptide_info['freq']}\nStock: {vial_qty}{vial_unit} + {water_ml}mL Water\nConc: {concentration_mg_ml:.2f} mg/mL\nDose: {desired_dose}{dose_unit} = {units:.1f} Units ({syringe_type})\nSupply: 1 vial lasts approx {int(doses_per_vial)} doses.\n\nDetails:\n{peptide_info['desc']}\nBenefits: {peptide_info['benefits']}\nStorage: {peptide_info['storage']}\nInstructions: {peptide_info['note']}"
-        st.download_button("💾 Save Protocol", protocol_text, "protocol.txt", use_container_width=True)
+    st.divider()
+    c_foot1, c_foot2 = st.columns([1,1])
+    with c_foot1:
+        st.caption(f"🔢 Calculations performed this session: **{st.session_state.calc_count}**")
+    with c_foot2:
+        st.markdown("[![Hits](https://hits.sh/peptide-calculator.streamlit.app.svg?style=flat-square&label=Total%20Visits&extraCount=2023&color=79c83d)](https://hits.sh/peptide-calculator.streamlit.app/)")
 
-    else:
-        st.info("Enter inputs to see results.")
+# ==============================================================================
+# PAGE 2: PEPTIDE DATABASE (Notion-Style)
+# ==============================================================================
+elif page == "📚 Peptide Database":
+    st.subheader("📚 Peptide Database")
+    st.caption("A comprehensive guide to the compounds available in our system, inspired by the Foofyrka Notion database.")
+    st.divider()
 
-# --- FOOTER ---
-st.divider()
-c_foot1, c_foot2 = st.columns([1,1])
-with c_foot1:
-    st.caption(f"🔢 Calculations performed this session: **{st.session_state.calc_count}**")
-with c_foot2:
-    st.markdown("[![Hits](https://hits.sh/peptide-calculator.streamlit.app.svg?style=flat-square&label=Total%20Visits&extraCount=2023&color=79c83d)](https://hits.sh/peptide-calculator.streamlit.app/)")
+    # Get all peptides except the "Custom" entry
+    db_items = {k: v for k, v in PEPTIDE_PRESETS.items() if k != "Custom (Enter manually)"}
 
-# --- DISCLAIMER ---
+    # Extract unique categories for the filter
+    all_types = sorted(list(set([v['type'] for v in db_items.values()])))
+    all_types.insert(0, "All")
+
+    # Filters
+    col_search, col_filter = st.columns([3, 1])
+    with col_search:
+        search_query = st.text_input("🔍 Search Peptides", placeholder="Search by name, benefit, or type...").lower()
+    with col_filter:
+        category_filter = st.selectbox("🏷️ Filter by Category", all_types)
+
+    st.markdown("---")
+
+    # Filter Logic
+    filtered_items = {}
+    for name, data in db_items.items():
+        # Match Category
+        if category_filter != "All" and data['type'] != category_filter:
+            continue
+        # Match Search
+        if search_query not in name.lower() and search_query not in data['benefits'].lower() and search_query not in data['desc'].lower():
+            continue
+        filtered_items[name] = data
+
+    # Display Grid (3 columns)
+    num_cols = 3
+    cols = st.columns(num_cols)
+    
+    for idx, (name, info) in enumerate(filtered_items.items()):
+        col = cols[idx % num_cols]
+        with col:
+            # Replicating Notion Card Style
+            with st.container(border=True):
+                st.markdown(f"### {name}")
+                st.markdown(f"<span class='db-tag'>{info['type']}</span>", unsafe_allow_html=True)
+                st.write("") # Spacer
+                st.markdown(f"**Description:** {info['desc']}")
+                
+                with st.expander("🌟 View Benefits"):
+                    st.markdown(f"**Key Benefits:**\n{info['benefits']}")
+                with st.expander("📋 Protocol & Side Effects"):
+                    st.markdown(f"**Frequency:** {info['freq']}")
+                    st.markdown(f"**Note:** {info['note']}")
+                    st.markdown(f"**Side Effects:** {info['side_effects']}")
+                    st.markdown(f"**Storage:** {info['storage']}")
+
+    if len(filtered_items) == 0:
+        st.warning("No peptides match your search criteria. Try clearing the filters.")
+
+# --- UNIVERSAL DISCLAIMER ---
 st.markdown("---")
 st.caption("⚠️ **Medical Disclaimer:** This tool is for educational and informational purposes only and does not constitute medical advice. Always verify calculations with a professional. The developers assume no liability for errors or misuse.")
