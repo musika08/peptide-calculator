@@ -124,7 +124,7 @@ PEPTIDE_PRESETS = {
         "storage": "Refrigerate. Stable for ~30-60 days."
     },
     "NAD+": {
-        "vial_mg": 500.0, "dose_mcg": 50000.0, "freq": "2-3x / Week", 
+        "vial_mg": 500.0, "dose_mcg": 25000.0, "freq": "2-3x / Week", # MODIFIED: 25000mcg = 25mg
         "type": "Cellular Energy",
         "desc": "Nicotinamide Adenine Dinucleotide. Critical for cellular energy (ATP) and anti-aging.", 
         "benefits": "Mental clarity, Energy boost, DNA repair, Anti-aging.",
@@ -178,7 +178,7 @@ PEPTIDE_PRESETS = {
         "storage": "Refrigerate. Use within 20-30 days."
     },
     "Tirzepatide": {
-        "vial_mg": 10.0, "dose_mcg": 2500.0, "freq": "Once Weekly", 
+        "vial_mg": 30.0, "dose_mcg": 2500.0, "freq": "Once Weekly", # MODIFIED: VIAL CHANGED TO 30MG
         "type": "Metabolic (GLP-1/GIP)",
         "desc": "Dual GIP/GLP-1 Agonist. Potent weight loss and metabolic regulation.", 
         "benefits": "Potent weight loss, Improved insulin sensitivity, Reduced food noise.",
@@ -272,8 +272,9 @@ with left_col:
         )
         if "_prev_dose_unit" not in st.session_state: st.session_state._prev_dose_unit = dose_unit
     with c4:
-        fmt = "%.4f" if dose_unit in ['mg', 'g'] else "%.1f"
-        step = 0.01 if dose_unit in ['mg', 'g'] else 10.0
+        # MODIFIED: Step logic changed so +/- changes values by 5 for mg and mcg.
+        fmt = "%.4f" if dose_unit == 'g' else "%.1f"
+        step = 5.0 if dose_unit in ['mcg', 'mg'] else 0.005 
         desired_dose = st.number_input("Desired Dose", key="dose_val", min_value=0.0, step=step, format=fmt)
     
     syringe_type = st.radio("Syringe Type", ["U-100 (Standard)", "U-40 (Vet)"], horizontal=True)
