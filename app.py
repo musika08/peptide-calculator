@@ -3,7 +3,7 @@ import math
 
 # --- 1. CONFIGURATION: WIDE MODE ---
 st.set_page_config(
-    page_title="PeptideCalc Pro v2.2",
+    page_title="PeptideCalc Pro v2.3",
     page_icon="🧪",
     layout="wide",
     initial_sidebar_state="expanded"
@@ -58,7 +58,7 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
-# --- EXPANDED KNOWLEDGE BASE (v2.2 - Fixed Formatting & Added Missing Peptides) ---
+# --- EXPANDED KNOWLEDGE BASE (v2.3) ---
 PEPTIDE_PRESETS = {
     "Custom (Enter manually)": {
         "vial_mg": 5.0, "dose_mcg": 250.0, "type": "N/A", "desc": "Manual calculation.",
@@ -649,16 +649,13 @@ if 'dose_unit_index' not in st.session_state: st.session_state.dose_unit_index =
 if 'dose_unit_selection' not in st.session_state: st.session_state.dose_unit_selection = "mcg"
 if 'calc_count' not in st.session_state: st.session_state.calc_count = 0
 
-# --- NAVIGATION SIDEBAR (v2.2 UI) ---
+# --- NAVIGATION SIDEBAR (v2.3 UI) ---
 with st.sidebar:
     st.image("https://img.icons8.com/color/96/000000/biotech.png", width=60) # Placeholder logo
     st.title("Navigation")
     page = st.radio("Go to:", ["🧮 Calculator", "📚 Peptide Database"])
     st.markdown("---")
-    
-    # Ko-fi Button inside the sidebar
-    st.link_button("☕ Support my work (Ko-fi)", "https://ko-fi.com/musika", use_container_width=True)
-    st.caption("v2.2 | by Musika")
+    st.caption("v2.3 | by Musika")
 
 # ==============================================================================
 # PAGE 1: CALCULATOR
@@ -803,7 +800,7 @@ if page == "🧮 Calculator":
         st.markdown("[![Hits](https://hits.sh/peptide-calculator.streamlit.app.svg?style=flat-square&label=Total%20Visits&extraCount=2023&color=79c83d)](https://hits.sh/peptide-calculator.streamlit.app/)")
 
 # ==============================================================================
-# PAGE 2: PEPTIDE DATABASE (Notion-Style / v2.2)
+# PAGE 2: PEPTIDE DATABASE (Notion-Style / v2.3)
 # ==============================================================================
 elif page == "📚 Peptide Database":
     st.subheader("📚 Peptide Database")
