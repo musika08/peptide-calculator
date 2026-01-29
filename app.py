@@ -1,7 +1,3 @@
-I have fixed the formatting issue in the Calculator view.
-The problem was that inside the colored "Warning Box," the browser ignores standard line breaks unless we force it to use HTML break tags (<br>). I have applied a .replace('\n', '<br>') fix to the code so the list renders strictly vertically.
-I have also reverted the version label to v3.5 as requested.
-Updated Script (v3.5)
 import streamlit as st
 import math
 
@@ -1165,4 +1161,3 @@ elif page == "📚 Peptide Database":
                 with st.expander("ℹ️ Description & Mechanism"):
                     st.markdown(f"_{info['desc']}_")
                     st.markdown(f"**❄️ Storage:** {info['storage']}")
-
