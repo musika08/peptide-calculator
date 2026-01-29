@@ -5,14 +5,14 @@ from calculator import perform_calc
 
 st.set_page_config(page_title="PeptideCalc Pro v4.0", page_icon="🧪", layout="wide", initial_sidebar_state="expanded")
 
-# CSS Styling
 st.markdown("""
 <style>
     .syringe-container { border: 2px solid #333; border-radius: 4px; background-color: #f0f0f0; height: 30px; width: 100%; position: relative; margin: 10px 0; }
     .syringe-liquid { background-color: #ff4b4b; height: 100%; border-radius: 2px 0 0 2px; transition: width 0.5s; }
     .syringe-markings { position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: repeating-linear-gradient(90deg, transparent, transparent 19%, #000 20%); opacity: 0.1; }
     .db-tag { background-color: #4b4bff; color: white; padding: 4px 10px; border-radius: 12px; font-size: 0.8em; font-weight: bold; display: inline-block; margin-bottom: 10px; }
-    .side-effect-box { background-color: #3e1818; border-left: 4px solid #ff4b4b; padding: 10px; margin-top: 10px; border-radius: 4px; font-size: 0.9em; line-height: 1.6; color: #ffd1d1; }
+    .side-effect-box { background-color: #3e1818; border-left: 4px solid #ff4b4b; padding: 12px; border-radius: 4px; font-size: 0.9em; line-height: 1.6; color: #ffd1d1; }
+    .benefit-box { background-color: #1e2a1e; border-left: 4px solid #4bff4b; padding: 12px; border-radius: 4px; font-size: 0.9em; line-height: 1.6; color: #d1ffd1; }
 </style>
 """, unsafe_allow_html=True)
 
@@ -29,11 +29,7 @@ def load_preset():
     st.session_state.stock_unit_index = 3 if data.get("default_stock_unit") == "IU" else 0
     st.session_state.dose_unit_selection = data.get("default_dose_unit", "mcg")
     st.session_state.dose_val = float(data["dose_mcg"])
-    # Dynamic Water Defaults
-    if sel == "Oxytocin Acetate":
-        st.session_state.water_val = 3.0
-    else:
-        st.session_state.water_val = 2.0
+    st.session_state.water_val = 3.0 if sel == "Oxytocin Acetate" else 2.0
 
 with st.sidebar:
     st.image("https://img.icons8.com/color/96/000000/biotech.png", width=60)
@@ -61,13 +57,12 @@ if page == "🧮 Calculator":
         syringe = st.radio("Syringe Type", ["U-100 (Standard)", "U-40 (Vet)"], horizontal=True)
         s_factor = 100 if "U-100" in syringe else 40
 
-        # --- HOW TO RECONSTITUTE (MOVED BELOW INPUTS) ---
         st.divider()
         with st.expander("🛠️ How to Reconstitute (Mix)", expanded=True):
-            st.markdown(f"1. **Clean:** Wipe the top of the **{v_qty} {v_unit}** peptide vial and the water vial.\n2. **Withdraw:** Draw exactly **{water} mL** of Bacteriostatic Water.\n3. **Inject:** Slowly aim for the glass wall.\n4. **Mix:** Swirl gently.\n5. **Store:** Refrigerate immediately.")
+            st.markdown(f"1. **Clean:** Wipe vial tops.\n2. **Withdraw:** Draw **{water} mL** Water.\n3. **Inject:** Slowly aim for glass wall.\n4. **Mix:** Swirl gently.\n5. **Store:** Refrigerate.")
 
     with r:
-        st.success("2️⃣ **Results**")
+        st.success("2️⃣ **Results & Clinical Data**")
         if v_qty > 0 and water > 0 and d_qty > 0:
             d_ml, units, per_vial = perform_calc(v_qty, v_unit, water, d_qty, d_unit, s_factor, info)
             
@@ -79,15 +74,16 @@ if page == "🧮 Calculator":
             pct = min(units / s_factor * 100, 100)
             st.markdown(f'<div class="syringe-container"><div class="syringe-liquid" style="width: {pct}%;"></div><div class="syringe-markings"></div></div>', unsafe_allow_html=True)
             
-            with st.expander(f"📖 Profile: {sel_peptide}", expanded=True):
-                st.write(f"**Type:** {info['type']}")
-                st.markdown(f"**🌟 Comprehensive Benefits:**\n{info['benefits_detailed']}")
-                st.info(f"**📋 Dosage & Cycle Protocol:**\n{info['protocol_detailed']}")
+            with st.container():
+                st.markdown(f"### 🌟 Comprehensive Benefits")
+                st.markdown(f'<div class="benefit-box">{info["benefits_detailed"]}</div>', unsafe_allow_html=True)
                 
-                # Render side effects + contraindications vertically
+                st.markdown(f"### 📋 Dosage & Cycle Protocol")
+                st.info(info['protocol_detailed'])
+                
+                # Side Effects and Contraindications vertical formatting
                 se_list = info['side_effects_detailed'].replace("•", "").replace("-", "").strip().split("\n")
                 ci_list = info.get('contraindications', "").replace("•", "").replace("-", "").strip().split("\n")
-                
                 se_content = "<br>".join([f"• {item.strip()}" for item in se_list if item.strip()])
                 ci_content = "<br>".join([f"• {item.strip()}" for item in ci_list if item.strip()])
                 
@@ -100,9 +96,11 @@ if page == "🧮 Calculator":
                 ''', unsafe_allow_html=True)
 
     st.divider()
-    with st.expander("💉 Visual Guide: Injection Sites", expanded=False):
-        st.write("Common subcutaneous injection zones: Abdomen, Upper Thigh, and Back of Arm.")
-        # [Visual guide image here]
+    with st.expander("💉 Visual Guide: Injection Sites", expanded=True):
+        try:
+            st.image("Sites.jpeg", caption="Recommended Subcutaneous Zones", use_container_width=True)
+        except:
+            st.error("⚠️ Sites.jpeg not found in directory.")
 
 elif page == "📚 Peptide Database":
     st.subheader("📚 Peptide Database")
@@ -119,7 +117,6 @@ elif page == "📚 Peptide Database":
                 st.markdown(f"### {name}\n<span class='db-tag'>{i['type']}</span>", unsafe_allow_html=True)
                 st.markdown(f"**🌟 Clinical Benefits:**\n{i['benefits_detailed']}")
                 
-                # Render side effects + contraindications vertically for DB
                 se_list_db = i['side_effects_detailed'].replace("•", "").replace("-", "").strip().split("\n")
                 ci_list_db = i.get('contraindications', "").replace("•", "").replace("-", "").strip().split("\n")
                 se_db = "<br>".join([f"• {item.strip()}" for item in se_list_db if item.strip()])
