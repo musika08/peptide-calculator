@@ -3,7 +3,7 @@ import math
 
 # --- 1. CONFIGURATION: WIDE MODE ---
 st.set_page_config(
-    page_title="PeptideCalc Pro v3.4",
+    page_title="PeptideCalc Pro v3.5",
     page_icon="🧪",
     layout="wide",
     initial_sidebar_state="expanded"
@@ -54,11 +54,12 @@ st.markdown("""
         margin-top: 10px;
         border-radius: 4px;
         font-size: 0.9em;
+        line-height: 1.6; /* Improved spacing for lists */
     }
 </style>
 """, unsafe_allow_html=True)
 
-# --- EXPANDED KNOWLEDGE BASE (v3.4 - Simplified Categories) ---
+# --- EXPANDED KNOWLEDGE BASE (v3.5 - Vertical Database Side Effects) ---
 PEPTIDE_PRESETS = {
     "Custom (Enter manually)": {
         "vial_mg": 5.0, "dose_mcg": 250.0, "type": "N/A", "filter_cat": "All",
@@ -99,7 +100,12 @@ PEPTIDE_PRESETS = {
 
         **Study Note:** Efficacy is significantly boosted when combined with fasted cardio.
         """,
-        "side_effects_detailed": "Extremely well tolerated. Minor injection site reactions (redness/swelling) are the most common complaint. No known hormonal feedback loop suppression.",
+        "side_effects_detailed": """
+        • Extremely well tolerated
+        • Minor injection site reactions (redness)
+        • Mild headache (rare)
+        • No known hormonal feedback loop suppression
+        """,
         "storage": "Refrigerate. Stable."
     },
     "BPC-157": {
@@ -135,7 +141,12 @@ PEPTIDE_PRESETS = {
 
         **Study Note:** Can be taken orally (arg-BPC salt) for gut issues, but injection is superior for musculoskeletal injuries.
         """,
-        "side_effects_detailed": "Generally considered extremely safe. Rare reports of fatigue, mild nausea, or temporary anhedonia (blunted emotions) due to dopamine modulation.",
+        "side_effects_detailed": """
+        • Generally considered extremely safe
+        • Rare reports of fatigue
+        • Mild nausea
+        • Temporary anhedonia (blunted emotions - rare)
+        """,
         "storage": "Refrigerate after mixing. Stable for ~30-45 days."
     },
     "BPC-157 + TB-500 Blend": {
@@ -171,7 +182,11 @@ PEPTIDE_PRESETS = {
 
         **Study Note:** Pre-clinical models show faster wound closure rates when these two are combined vs used alone.
         """,
-        "side_effects_detailed": "Temporary head rush immediately after injection (common with TB-500). Fatigue or lethargy during the healing phase as the body diverts energy to repair.",
+        "side_effects_detailed": """
+        • Temporary head rush immediately after injection
+        • Fatigue or lethargy (body repairing)
+        • Injection site stinging
+        """,
         "storage": "Refrigerate. Use within 30 days."
     },
     "CJC-1295 (No DAC)": {
@@ -207,7 +222,12 @@ PEPTIDE_PRESETS = {
 
         **Study Note:** Must be taken on an empty stomach; insulin spikes (from food) blunt the GH release signal.
         """,
-        "side_effects_detailed": "Immediate head rush (vasodilation) lasting 10-20 mins. Warm/flushed face. Vivid dreams. Mild water retention.",
+        "side_effects_detailed": """
+        • Immediate head rush (vasodilation)
+        • Warm/flushed face (lasts 10-20 mins)
+        • Vivid dreams
+        • Mild water retention
+        """,
         "storage": "Refrigerate. Sensitive to light/heat."
     },
     "CJC-1295 + Ipamorelin Blend": {
@@ -243,7 +263,11 @@ PEPTIDE_PRESETS = {
 
         **Study Note:** Clinical data suggests GHRH+GHRP combinations are far superior to monotherapy for IGF-1 elevation.
         """,
-        "side_effects_detailed": "Head rush. Numbness/tingling in hands (carpal tunnel-like symptoms) if dose is too high. Water weight gain initially.",
+        "side_effects_detailed": """
+        • Head rush/Flushing
+        • Numbness/tingling in hands (Carpal Tunnel symptoms)
+        • Initial water weight gain
+        """,
         "storage": "Refrigerate. Do not shake."
     },
     "Epithalon": {
@@ -279,7 +303,11 @@ PEPTIDE_PRESETS = {
 
         **Study Note:** Based on the Khavinson Protocol (Russian gerontology trials) which showed reduced all-cause mortality.
         """,
-        "side_effects_detailed": "Extremely safe profile. Occasional daytime drowsiness or vivid dreams.",
+        "side_effects_detailed": """
+        • Extremely safe profile
+        • Occasional daytime drowsiness
+        • Vivid dreams
+        """,
         "storage": "Refrigerate."
     },
     "GHK-Cu": {
@@ -315,7 +343,12 @@ PEPTIDE_PRESETS = {
 
         **Study Note:** Monitor copper/zinc balance. Supplement Zinc (50mg) if using long-term to prevent deficiency.
         """,
-        "side_effects_detailed": "High incidence of injection site pain (burning) and large red welts. Systemic copper toxicity risk if overdosed.",
+        "side_effects_detailed": """
+        • High incidence of injection site pain (burning)
+        • Large red welts (post-injection)
+        • Systemic copper toxicity risk if overdosed
+        • Zinc depletion
+        """,
         "storage": "Refrigerate. Protect from light."
     },
     "Glow Blend (GHK-Cu/BPC/TB)": {
@@ -350,7 +383,11 @@ PEPTIDE_PRESETS = {
 
         **Study Note:** Combined protocol targets both aesthetic markers (skin) and biological markers (inflammation).
         """,
-        "side_effects_detailed": "Mild injection site redness. Temporary flushing. Zinc supplementation recommended.",
+        "side_effects_detailed": """
+        • Mild injection site redness
+        • Temporary flushing
+        • Fatigue (healing response)
+        """,
         "storage": "Refrigerate. Protect from light."
     },
     "HCG": {
@@ -386,7 +423,12 @@ PEPTIDE_PRESETS = {
 
         **Study Note:** Essential for maintaining the HPTA axis during exogenous testosterone use.
         """,
-        "side_effects_detailed": "Estrogen spikes (requires AI management), acne, water retention, desensitization if overdosed.",
+        "side_effects_detailed": """
+        • Estrogen spikes (requires AI management)
+        • Acne
+        • Water retention
+        • Desensitization if overdosed
+        """,
         "storage": "Refrigerate. Fragile."
     },
     "Ipamorelin": {
@@ -422,7 +464,11 @@ PEPTIDE_PRESETS = {
 
         **Study Note:** Does not elevate cortisol or prolactin levels in clinical trials.
         """,
-        "side_effects_detailed": "Extremely well tolerated. Slight water retention possible. No 'jittery' feeling.",
+        "side_effects_detailed": """
+        • Extremely well tolerated
+        • Slight water retention possible
+        • No 'jittery' feeling
+        """,
         "storage": "Refrigerate."
     },
     "Kisspeptin": {
@@ -458,7 +504,11 @@ PEPTIDE_PRESETS = {
 
         **Study Note:** Acts upstream of HCG, mimicking natural pulsatile GnRH release.
         """,
-        "side_effects_detailed": "Rare. Slight flushing. Short half-life means effects do not linger.",
+        "side_effects_detailed": """
+        • Mild flushing
+        • Injection site redness
+        • Mild headache
+        """,
         "storage": "Refrigerate."
     },
     "Klow Blend (GHK-Cu/BPC/TB/KPV)": {
@@ -494,7 +544,11 @@ PEPTIDE_PRESETS = {
 
         **Study Note:** KPV data shows significant reduction in inflammatory cytokines (NF-kB pathway).
         """,
-        "side_effects_detailed": "Red welts at injection site (common). Fatigue possible as body detoxes/heals.",
+        "side_effects_detailed": """
+        • Red welts at injection site (common)
+        • Fatigue (body detox/healing)
+        • Flushing
+        """,
         "storage": "Refrigerate. Protect from light."
     },
     "Melanotan II": {
@@ -530,7 +584,12 @@ PEPTIDE_PRESETS = {
 
         **Study Note:** Start very low (50-100mcg) to assess nausea tolerance.
         """,
-        "side_effects_detailed": "Significant nausea (lasts 1-2 hours), facial flushing, spontaneous erections (priapism risk), darkening of freckles/moles.",
+        "side_effects_detailed": """
+        • Significant nausea (lasts 1-2 hours)
+        • Facial flushing
+        • Spontaneous erections (priapism risk)
+        • Darkening of freckles/moles
+        """,
         "storage": "Refrigerate."
     },
     "MOTS-c": {
@@ -566,7 +625,11 @@ PEPTIDE_PRESETS = {
 
         **Study Note:** Research indicates it mimics the physiological effects of aerobic exercise at a cellular level.
         """,
-        "side_effects_detailed": "Injection site pain is very common. Insomnia/high energy if taken too late in the day.",
+        "side_effects_detailed": """
+        • Injection site pain (very common)
+        • Insomnia (if taken late)
+        • High energy/restlessness
+        """,
         "storage": "Refrigerate."
     },
     "NAD+": {
@@ -602,7 +665,12 @@ PEPTIDE_PRESETS = {
 
         **Study Note:** ⚠️ INJECT VERY SLOWLY. Rapid injection causes severe 'NAD Flush' discomfort.
         """,
-        "side_effects_detailed": "Intense chest pressure, abdominal cramping, anxiety, palpitations, nausea. These effects pass within 5-10 minutes but are very unpleasant.",
+        "side_effects_detailed": """
+        • Intense chest pressure
+        • Abdominal cramping/Nausea
+        • Anxiety/Panic sensation
+        • Palpitations (Passes in 5-10 mins)
+        """,
         "storage": "Refrigerate immediately. Very sensitive."
     },
     "Oxytocin Acetate": {
@@ -638,7 +706,12 @@ PEPTIDE_PRESETS = {
 
         **Study Note:** Plays a crucial role in social cognition and fear extinction mechanisms in the brain.
         """,
-        "side_effects_detailed": "Nausea (common at high doses), headache, flushing/warmth. Rare cases of water intoxication with extreme overuse.",
+        "side_effects_detailed": """
+        • Nausea (common at high doses)
+        • Headache
+        • Flushing/warmth
+        • Slight dizziness
+        """,
         "storage": "Refrigerate."
     },
     "PT-141": {
@@ -673,7 +746,12 @@ PEPTIDE_PRESETS = {
 
         **Study Note:** Effects have a delayed onset but can last up to 24 hours.
         """,
-        "side_effects_detailed": "Nausea (40% of users), flushing, headache, elevated blood pressure. Nausea usually subsides after 30-60 mins.",
+        "side_effects_detailed": """
+        • Nausea (40% of users)
+        • Flushing
+        • Headache
+        • Elevated blood pressure
+        """,
         "storage": "Refrigerate."
     },
     "Retatrutide": {
@@ -709,7 +787,12 @@ PEPTIDE_PRESETS = {
 
         **Study Note:** Glucagon component increases resting energy expenditure but also heart rate.
         """,
-        "side_effects_detailed": "Tachycardia (fast heart rate), cutaneous hyperesthesia (sensitive skin to touch), nausea, constipation.",
+        "side_effects_detailed": """
+        • Tachycardia (fast heart rate)
+        • Cutaneous hyperesthesia (sensitive skin)
+        • Nausea
+        • Constipation
+        """,
         "storage": "Refrigerate. Do not freeze."
     },
     "Semaglutide": {
@@ -745,7 +828,12 @@ PEPTIDE_PRESETS = {
 
         **Study Note:** Requires strict protein prioritization and resistance training to prevent muscle wasting.
         """,
-        "side_effects_detailed": "Nausea, vomiting, severe constipation, 'Ozempic face' (rapid fat loss), fatigue.",
+        "side_effects_detailed": """
+        • Nausea/Vomiting
+        • Severe constipation
+        • 'Ozempic face' (rapid fat loss)
+        • Fatigue
+        """,
         "storage": "Refrigerate. Protect from light."
     },
     "TB-500": {
@@ -781,7 +869,11 @@ PEPTIDE_PRESETS = {
 
         **Study Note:** Do not use if active cancer is present (promotes tumor angiogenesis).
         """,
-        "side_effects_detailed": "Very rare. Temporary head rush immediately after injection. Occasional lethargy.",
+        "side_effects_detailed": """
+        • Temporary head rush
+        • Occasional lethargy
+        • Flu-like symptoms (rare)
+        """,
         "storage": "Refrigerate."
     },
     "Tesamorelin": {
@@ -817,7 +909,12 @@ PEPTIDE_PRESETS = {
 
         **Study Note:** FDA approved as Egrifta. Requires 2-hour fasting window for efficacy.
         """,
-        "side_effects_detailed": "High rate of injection site redness/itching. Joint stiffness. Carpal tunnel symptoms. Water retention.",
+        "side_effects_detailed": """
+        • Injection site redness/itching (common)
+        • Joint stiffness
+        • Carpal tunnel symptoms
+        • Water retention
+        """,
         "storage": "Refrigerate. Use within 20-30 days."
     },
     "Tesamorelin + Ipamorelin Blend": {
@@ -852,7 +949,12 @@ PEPTIDE_PRESETS = {
 
         **Study Note:** Monitor for water retention and joint stiffness.
         """,
-        "side_effects_detailed": "Joint pain, carpal tunnel numbness, flushing, injection site reactions.",
+        "side_effects_detailed": """
+        • Joint pain
+        • Carpal tunnel numbness
+        • Flushing
+        • Injection site reactions
+        """,
         "storage": "Refrigerate."
     },
     "Tirzepatide": {
@@ -888,7 +990,12 @@ PEPTIDE_PRESETS = {
 
         **Study Note:** Watch for 'anhedonia' (loss of interest in hobbies).
         """,
-        "side_effects_detailed": "Anhedonia, cold extremities, constipation, hair shedding.",
+        "side_effects_detailed": """
+        • Anhedonia (flat mood)
+        • Cold extremities
+        • Constipation
+        • Hair shedding (Telogen Effluvium)
+        """,
         "storage": "Refrigerate. Do not freeze."
     },
 }
@@ -909,7 +1016,7 @@ with st.sidebar:
     st.title("Navigation")
     page = st.radio("Go to:", ["🧮 Calculator", "📚 Peptide Database"])
     st.markdown("---")
-    st.caption("v3.3 | by Musika")
+    st.caption("v3.5 | by Musika")
 
 # ==============================================================================
 # PAGE 1: CALCULATOR
@@ -1067,7 +1174,7 @@ if page == "🧮 Calculator":
         st.markdown("[![Hits](https://hits.sh/peptide-calculator.streamlit.app.svg?style=flat-square&label=Total%20Visits&extraCount=2023&color=79c83d)](https://hits.sh/peptide-calculator.streamlit.app/)")
 
 # ==============================================================================
-# PAGE 2: PEPTIDE DATABASE (Notion-Style / v3.3)
+# PAGE 2: PEPTIDE DATABASE (Notion-Style / v3.5)
 # ==============================================================================
 elif page == "📚 Peptide Database":
     st.subheader("📚 Peptide Database")
@@ -1117,9 +1224,11 @@ elif page == "📚 Peptide Database":
                 st.markdown("**🌟 Clinical Benefits:**")
                 st.markdown(info['benefits_detailed'])
                 
+                # Use Markdown formatting inside the HTML div to ensure vertical bullets
                 st.markdown(f"""
                 <div class='side-effect-box'>
-                <strong>⚠️ Side Effects:</strong><br>{info['side_effects_detailed']}
+                <strong>⚠️ Side Effects:</strong><br>
+                {info['side_effects_detailed'].replace(chr(10), '<br>')}
                 </div>
                 """, unsafe_allow_html=True)
                 
