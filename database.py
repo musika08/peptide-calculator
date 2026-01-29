@@ -1,4 +1,4 @@
-# database.py - Peptide Knowledge Base v4.0 (Full Clinical Version)
+# database.py
 
 FACTORS = {'mcg': 1, 'mg': 1000, 'g': 1000000, 'IU': 1}
 
@@ -6,507 +6,277 @@ PEPTIDE_PRESETS = {
     "AOD-9604": {
         "vial_mg": 5.0, "dose_mcg": 300.0, "default_dose_unit": "mcg", "default_stock_unit": "mg", "iu_conversion": None,
         "type": "Fat Loss", "filter_cat": "Slimming & Fat Loss",
-        "desc": "Anti-Obesity Drug 9604. A modified fragment of HGH (Human Growth Hormone).",
-        "benefits_summary": "- Targeted fat burning (lipolysis)\n- No blood sugar spikes\n- Cartilage repair support",
-        "benefits_detailed": """
-- **Targeted Lipolysis:** Stimulates the breakdown of fat cells without affecting blood sugar or insulin.
-- **Joint Support:** Aids in cartilage regeneration and systemic repair of connective tissues.
-- **Non-Hormonal:** Does not elevate IGF-1 levels, making it safer for long-term use.
-""",
-        "side_effects_detailed": """
-• **Injection Site:** Mild redness or itching at the site.
-• **Headache:** Rare reports of mild tension headaches.
-• **Gastro:** Occasional stomach upset if not taken on an empty stomach.
-""",
-        "protocol_detailed": """
-**Dosage:** 300mcg (0.3mg) daily.
-**Timing:** Morning (Fasted) or 1 hour before cardio for maximum lipolysis.
-**Cycle:** 3 to 6 Months.
-""",
-        "storage": "Refrigerate. Stable after reconstitution for 30-45 days."
+        "desc": "Anti-Obesity Drug 9604. A modified fragment of the C-terminus of Human Growth Hormone (HGH).",
+        "benefits_summary": "\n- Targeted fat burning (lipolysis)\n- No blood sugar spikes\n- Cartilage repair support\n- Non-hormonal (no IGF-1 impact)\n",
+        "side_effects_summary": "\n- Injection site redness\n- Mild stomach upset (rare)\n- Headache (rare)\n",
+        "protocol_summary": "300mcg daily, morning fasted.",
+        "benefits_detailed": "\n        - **Targeted Lipolysis:** Specifically stimulates the breakdown of fat cells (lipolysis).\n        - **Metabolic Safety:** Does not induce insulin resistance or elevate IGF-1.\n        - **Joint Support:** Aids in cartilage regeneration and repair.\n        ",
+        "protocol_detailed": "\n        **Dosage:** 300mcg (0.3mg)\n\n        **Frequency:** Daily\n\n        **Timing:** Morning (Fasted) or 1 hour before cardio\n\n        **Cycle:** 3 to 6 Months\n        ",
+        "side_effects_detailed": "\n        • Extremely well tolerated\n        • Minor injection site reactions (redness)\n        • Mild headache (rare)\n        ",
+        "storage": "Refrigerate. Stable."
     },
     "BPC-157": {
         "vial_mg": 5.0, "dose_mcg": 250.0, "default_dose_unit": "mcg", "default_stock_unit": "mg", "iu_conversion": None,
         "type": "Regenerative", "filter_cat": "Injury & Repair",
-        "desc": "Body Protection Compound-157. Derived from gastric juice.",
-        "benefits_summary": "- Accelerates tendon/ligament repair\n- Heals gut lining (IBS)\n- Reduces neuro-inflammation",
-        "benefits_detailed": """
-- **Connective Tissue:** Drastically speeds up the healing of soft tissue, tendons, and bone-to-tendon interfaces.
-- **Angiogenesis:** Stimulates the formation of new blood vessels to bypass damaged tissue.
-- **Gastroprotection:** Proven to heal gastric ulcers and intestinal endothelium (Leaky Gut).
-""",
-        "side_effects_detailed": """
-• **Lethargy:** Some users report mild fatigue during the initial healing phase.
-• **Nausea:** Occasional stomach discomfort if taken at high doses.
-• **Interaction:** Generally considered extremely safe with no known major contraindications.
-""",
-        "protocol_detailed": """
-**Dosage:** 250mcg - 500mcg daily.
-**Frequency:** Once or twice daily (AM/PM).
-**Cycle:** 4 to 8 weeks, followed by a 2-week break.
-""",
-        "storage": "Refrigerate. Sensitive to heat. Stable for ~30 days after mixing."
+        "desc": "Body Protection Compound-157. A 15-amino acid chain derived from gastric juice.",
+        "benefits_summary": "\n- Accelerates tendon/ligament repair\n- Heals gut lining (IBS/Leaky Gut)\n- Reduces neuro-inflammation\n- Protects liver and organs\n",
+        "side_effects_summary": "\n- Mild nausea (rare)\n- Injection site irritation\n- Fatigue during healing phase\n",
+        "protocol_summary": "250-500mcg daily or 2x daily.",
+        "benefits_detailed": "\n        - **Connective Tissue:** Drastically speeds up the healing of soft tissue injuries.\n        - **Angiogenesis:** Stimulates the formation of new blood vessels.\n        - **Gastroprotection:** Heals gastric ulcers and protects intestinal endothelium.\n        ",
+        "protocol_detailed": "\n        **Dosage:** 250mcg - 500mcg\n\n        **Frequency:** Daily or Twice Daily (AM/PM)\n\n        **Timing:** SubQ near injury site or belly fat\n\n        **Cycle:** 4 to 6 Weeks on, 2 Weeks off\n        ",
+        "side_effects_detailed": "\n        • Generally considered extremely safe\n        • Rare reports of fatigue\n        • Mild nausea\n        ",
+        "storage": "Refrigerate after mixing. Stable for ~30-45 days."
     },
     "BPC-157 + TB-500 Blend": {
         "vial_mg": 10.0, "dose_mcg": 500.0, "default_dose_unit": "mcg", "default_stock_unit": "mg", "iu_conversion": None,
         "type": "Regenerative Blend", "filter_cat": "Injury & Repair",
-        "desc": "The 'Wolverine Stack'. Synergistic combination for total body repair.",
-        "benefits_summary": "- Maximum surgical/injury recovery\n- Improves joint flexibility\n- Systemic anti-inflammatory",
-        "benefits_detailed": """
-- **Synergy:** BPC-157 handles the localized repair, while TB-500 provides systemic healing and inflammation reduction.
-- **Mobility:** Significant improvements in joint range of motion and reduction in scar tissue.
-- **Cardio:** Some evidence of heart tissue repair and protection.
-""",
-        "side_effects_detailed": """
-• **Head Rush:** TB-500 can cause a temporary rush or flushing immediately after injection.
-• **Lethargy:** Body repairs faster, which can cause increased sleep requirements.
-• **Stinging:** The blend may cause mild stinging depending on the concentration.
-""",
-        "protocol_detailed": """
-**Dosage:** 500mcg - 1000mcg (total fluid volume).
-**Frequency:** Daily for acute injuries, or 3x per week for maintenance.
-**Cycle:** 4 to 6 weeks.
-""",
-        "storage": "Refrigerate. Use within 30 days for maximum potency."
+        "desc": "The 'Wolverine Stack'. Synergistic combination of BPC-157 and TB-500.",
+        "benefits_summary": "\n- Maximum surgical/injury recovery\n- Improves joint flexibility\n- Cardiovascular protection\n- Systemic anti-inflammatory\n",
+        "side_effects_summary": "\n- Head rush (TB-500)\n- Fatigue/Lethargy\n- Injection site stinging\n",
+        "protocol_summary": "500mcg-1mg total fluid daily.",
+        "benefits_detailed": "\n        - **Total Repair:** Targets tendon/bone interface and muscle belly simultaneously.\n        - **Mobility:** Significant improvements in joint range of motion.\n        - **Cardioprotection:** Proven efficacy in reducing scar tissue.\n        ",
+        "protocol_detailed": "\n        **Dosage:** 500mcg - 1000mcg (Total Volume)\n\n        **Frequency:** Daily\n\n        **Timing:** Any time of day\n\n        **Cycle:** 4 to 8 Weeks (Duration of injury)\n        ",
+        "side_effects_detailed": "\n        • Temporary head rush immediately after injection\n        • Fatigue or lethargy (body repairing)\n        • Injection site stinging\n        ",
+        "storage": "Refrigerate. Use within 30 days."
     },
     "CJC-1295 (No DAC)": {
         "vial_mg": 5.0, "dose_mcg": 100.0, "default_dose_unit": "mcg", "default_stock_unit": "mg", "iu_conversion": None,
         "type": "Growth Hormone", "filter_cat": "Muscle & Workout",
-        "desc": "Modified GRF 1-29. A GHRH analog that stimulates pulsatile GH release.",
-        "benefits_summary": "- Increases lean muscle mass\n- Promotes deep slow-wave sleep\n- Improves skin elasticity",
-        "benefits_detailed": """
-- **Sleep Quality:** Dramatically improves Delta-wave (Stage 4) deep sleep, leading to faster recovery.
-- **Hyperplasia:** Stimulates the division of muscle cells for long-term growth.
-- **Anti-Aging:** Increases natural collagen synthesis and skin thickness.
-""",
-        "side_effects_detailed": """
-• **Flushing:** Warmth/redness in the face lasting 10-20 mins (vasodilation).
-• **Vivid Dreams:** Increased REM sleep can lead to very intense dreaming.
-• **Head Rush:** Occasional lightheadedness immediately after injection.
-""",
-        "protocol_detailed": """
-**Dosage:** 100mcg (0.1mg).
-**Frequency:** Daily (5 days on / 2 days off).
-**Timing:** Immediately before bed (Fasted 2+ hours).
-""",
-        "storage": "Refrigerate. Very sensitive to light and heat."
+        "desc": "Modified GRF 1-29. A GHRH analog that stimulates pulsatile Growth Hormone release.",
+        "benefits_summary": "\n- Increases lean muscle mass\n- Promotes deep slow-wave sleep\n- Improves skin elasticity\n- Accelerates fat metabolism\n",
+        "side_effects_summary": "\n- Flushing/Warmth (Vasodilation)\n- Head rush\n- Vivid dreams\n",
+        "protocol_summary": "100mcg nightly, fasted.",
+        "benefits_detailed": "\n        - **Hyperplasia:** Stimulates the division of muscle cells.\n        - **Sleep Architecture:** Dramatically improves Delta-wave (Stage 4) deep sleep.\n        - **Anti-Aging:** Increases collagen synthesis.\n        ",
+        "protocol_detailed": "\n        **Dosage:** 100mcg (0.1mg)\n\n        **Frequency:** Daily (5 days on / 2 days off)\n\n        **Timing:** Immediately before bed (Fasted 2+ hours)\n\n        **Cycle:** 12 Weeks +\n        ",
+        "side_effects_detailed": "\n        • Immediate head rush (vasodilation)\n        • Warm/flushed face (lasts 10-20 mins)\n        • Vivid dreams\n        ",
+        "storage": "Refrigerate. Sensitive to light/heat."
     },
     "CJC-1295 + Ipamorelin Blend": {
         "vial_mg": 10.0, "dose_mcg": 200.0, "default_dose_unit": "mcg", "default_stock_unit": "mg", "iu_conversion": None,
         "type": "Growth Hormone Blend", "filter_cat": "Muscle & Workout",
-        "desc": "The Gold Standard GH Stack. Combines a GHRH and a GHRP.",
-        "benefits_summary": "- Max natural GH secretion\n- Significant body recomposition\n- No cortisol or prolactin spike",
-        "benefits_detailed": """
-- **Synergy:** CJC-1295 sends the signal, Ipamorelin amplifies the pulse size.
-- **Fat Loss:** Highly effective at mobilizing deep visceral abdominal fat.
-- **Safety:** Unlike older GHRPs, it does not cause hunger or stress hormone spikes.
-""",
-        "side_effects_detailed": """
-• **Carpal Tunnel:** High doses can cause tingling or numbness in the hands.
-• **Water Retention:** Initial water weight gain is common (subsides in 2 weeks).
-• **Flushing:** Temporary facial warmth post-injection.
-""",
-        "protocol_detailed": """
-**Dosage:** 200mcg - 300mcg (Total Volume).
-**Timing:** Nightly before bed on a completely empty stomach.
-**Cycle:** 3 to 6 months for best results.
-""",
-        "storage": "Refrigerate. Do not shake the vial."
+        "desc": "The Gold Standard GH Stack. Combines CJC-1295 and Ipamorelin.",
+        "benefits_summary": "\n- Max natural GH secretion\n- Significant body recomposition\n- Superior recovery & sleep\n- No cortisol/prolactin spike\n",
+        "side_effects_summary": "\n- Head rush/Flushing\n- Numb fingers (Carpal Tunnel)\n- Water retention\n",
+        "protocol_summary": "200-300mcg total nightly, fasted.",
+        "benefits_detailed": "\n        - **Synergistic Power:** Maximizes GH secretion naturally.\n        - **Visceral Fat:** Highly effective at mobilizing deep abdominal fat stores.\n        - **Safety Profile:** No trigger of stress hormones (cortisol) or hunger hormones.\n        ",
+        "protocol_detailed": "\n        **Dosage:** 200mcg - 300mcg (Total Volume)\n\n        **Frequency:** Nightly (5 days on / 2 off)\n\n        **Timing:** Immediately before bed (Fasted 2+ hours)\n\n        **Cycle:** 3 to 6 Months\n        ",
+        "side_effects_detailed": "\n        • Head rush/Flushing\n        • Numbness/tingling in hands (Carpal Tunnel symptoms)\n        • Initial water weight gain\n        ",
+        "storage": "Refrigerate. Do not shake."
     },
     "Epithalon": {
-        "vial_mg": 10.0, "dose_mcg": 5.0, "default_dose_unit": "mg", "default_stock_unit": "mg", "iu_conversion": None,
+        "vial_mg": 10.0, "dose_mcg": 5000.0, "default_dose_unit": "mcg", "default_stock_unit": "mg", "iu_conversion": None,
         "type": "Anti-Aging", "filter_cat": "Wellness & Longevity",
         "desc": "Synthetic tetrapeptide that increases telomerase activity.",
-        "benefits_summary": "- Extends lifespan (Telomeres)\n- Resets circadian rhythm\n- Anti-tumor/cancer protective",
-        "benefits_detailed": """
-- **DNA Repair:** Upregulates telomerase to protect and repair DNA strands.
-- **Endocrine Reset:** Restores sensitivity of the hypothalamus and pineal gland.
-- **Sleep Quality:** Normalizes natural melatonin production and sleep-wake cycles.
-""",
-        "side_effects_detailed": """
-• **Drowsiness:** Can cause daytime sleepiness in some users.
-• **Vivid Dreams:** Significant impact on dream intensity.
-• **Safety:** No known toxicities or major contraindications in human trials.
-""",
-        "protocol_detailed": """
-**Dosage:** 5mg - 10mg daily.
-**Cycle:** 10 to 20 Day Course (Repeat every 6-12 months).
-**Timing:** Any time, but evening is preferred for sleep benefits.
-""",
+        "benefits_summary": "\n- Extends lifespan (Telomeres)\n- Resets circadian rhythm\n- Boosts melatonin naturally\n- Anti-tumor/cancer protective\n",
+        "side_effects_summary": "\n- Daytime drowsiness (rare)\n- Vivid dreams\n- Very safe profile\n",
+        "protocol_summary": "5mg-10mg daily for 10-20 days.",
+        "benefits_detailed": "\n        - **Telomere Extension:** Upregulates telomerase to protect DNA.\n        - **Endocrine Reset:** Restores sensitivity of the hypothalamus/pineal gland.\n        - **Sleep Quality:** Normalizes melatonin production.\n        ",
+        "protocol_detailed": "\n        **Dosage:** 5mg - 10mg\n\n        **Frequency:** Daily\n\n        **Timing:** Morning or Evening\n\n        **Cycle:** 10 to 20 Day Course (Repeat every 6-12 months)\n        ",
+        "side_effects_detailed": "\n        • Extremely safe profile\n        • Occasional daytime drowsiness\n        • Vivid dreams\n        ",
         "storage": "Refrigerate."
     },
     "GHK-Cu": {
-        "vial_mg": 50.0, "dose_mcg": 2.0, "default_dose_unit": "mg", "default_stock_unit": "mg", "iu_conversion": None,
+        "vial_mg": 50.0, "dose_mcg": 2000.0, "default_dose_unit": "mg", "default_stock_unit": "mg", "iu_conversion": None,
         "type": "Cosmetic/Repair", "filter_cat": "Skin, Hair & Beauty",
-        "desc": "Copper Tripeptide-1. Genomic modulator.",
-        "benefits_summary": "- Boosts collagen & elastin\n- Tightens loose skin\n- Regrows hair (follicle size)",
-        "benefits_detailed": """
-- **Skin Rejuvenation:** Increases collagen synthesis by 70%; thickens the dermis.
-- **Hair Growth:** Enlarges hair follicles and prolongs the growth (Anagen) phase.
-- **DNA Repair:** Resets activity of over 4,000 genes to a younger state.
-""",
-        "side_effects_detailed": """
-• **Pain:** Significant injection site pain (burning sensation).
-• **Welts:** Common to see red welts or bruising that lasts several days.
-• **Zinc Depletion:** Blocks zinc absorption; supplement 50mg Zinc daily.
-""",
-        "protocol_detailed": """
-**Dosage:** 1mg - 2mg daily.
-**Timing:** Evening (rotate injection sites frequently).
-**Cycle:** 30 Days on, 30 Days off.
-""",
+        "desc": "Copper Tripeptide-1. A genomic modulator that resets over 4,000 genes to a younger state.",
+        "benefits_summary": "\n- Boosts collagen & elastin\n- Tightens loose skin\n- Regrows hair (follicle size)\n- Activates DNA repair genes\n",
+        "side_effects_summary": "\n- Painful injection (Sting)\n- Red welts/bruising\n- Zinc depletion\n",
+        "protocol_summary": "1-2mg daily. Evening.",
+        "benefits_detailed": "\n        - **Skin Rejuvenation:** Increases collagen synthesis by 70%, thickens dermis.\n        - **Hair Growth:** Enlarges hair follicles and prolongs growth phase.\n        - **DNA Repair:** Resets activity of DNA repair genes.\n        ",
+        "protocol_detailed": "\n        **Dosage:** 1mg - 2mg\n\n        **Frequency:** Daily\n\n        **Timing:** Evening (rotate sites)\n\n        **Cycle:** 30 Days on, 30 Days off\n        ",
+        "side_effects_detailed": "\n        • High incidence of injection site pain (burning)\n        • Large red welts (post-injection)\n        • Zinc depletion (Supplement Zinc 50mg)\n        ",
         "storage": "Refrigerate. Protect from light."
     },
     "Glow Blend (GHK-Cu/BPC/TB)": {
-        "vial_mg": 70.0, "dose_mcg": 2.5, "default_dose_unit": "mg", "default_stock_unit": "mg", "iu_conversion": None,
+        "vial_mg": 70.0, "dose_mcg": 2500.0, "default_dose_unit": "mg", "default_stock_unit": "mg", "iu_conversion": None,
         "type": "Cosmetic/Recovery Blend", "filter_cat": "Skin, Hair & Beauty",
-        "desc": "70mg Tri-Blend. Buffered GHK-Cu for reduced pain.",
-        "benefits_summary": "- Painless GHK-Cu injection\n- Total body skin tightening\n- Rapid injury recovery",
-        "benefits_detailed": """
-- **Neutralization:** BPC-157 acts as a buffer to stop the GHK-Cu acidity/sting.
-- **Synergy:** Simultaneously repairs the gut, skin, and connective tissue.
-- **Rejuvenation:** High-dose repair for those with multiple injuries or aging skin.
-""",
-        "side_effects_detailed": """
-• **Redness:** Mild redness at the site, though much less than pure GHK-Cu.
-• **Flushing:** Temporary warmth.
-• **Fatigue:** Healing response can cause sleepiness.
-""",
-        "protocol_detailed": """
-**Dosage:** 2.5mg - 3mg total fluid daily.
-**Timing:** Evening preferred.
-**Cycle:** 4 to 6 weeks.
-""",
+        "desc": "70mg Tri-Blend. BPC-157 and TB-500 are added to buffer the GHK-Cu, reducing the 'sting'.",
+        "benefits_summary": "\n- Painless GHK-Cu injection\n- Total body skin tightening\n- Rapid injury recovery\n- Gut & Heart health\n",
+        "side_effects_summary": "\n- Mild redness\n- Flushing\n- Fatigue\n",
+        "protocol_summary": "2.5mg - 3mg total daily.",
+        "benefits_detailed": "\n        - **Painless Application:** BPC-157 neutralizes acidity of Copper.\n        - **Total Rejuvenation:** Targets skin, hair, gut, and muscle simultaneously.\n        - **Synergy:** Increases Growth Hormone receptors for better repair.\n        ",
+        "protocol_detailed": "\n        **Dosage:** 2.5mg - 3mg (Total Volume)\n\n        **Frequency:** Daily\n\n        **Timing:** Evening\n\n        **Cycle:** 4 to 6 Weeks\n        ",
+        "side_effects_detailed": "\n        • Mild injection site redness\n        • Temporary flushing\n        • Fatigue (healing response)\n        ",
         "storage": "Refrigerate. Protect from light."
     },
     "HCG": {
         "vial_mg": 5000.0, "dose_mcg": 250.0, "default_dose_unit": "IU", "default_stock_unit": "IU", "iu_conversion": 1,
         "type": "Hormonal", "filter_cat": "Libido & Sexual Health",
-        "desc": "Human Chorionic Gonadotropin. Mimics LH.",
-        "benefits_summary": "- Prevents testicular shrinkage\n- Maintains fertility/sperm\n- Boosts libido & mood",
-        "benefits_detailed": """
-- **Testicular Health:** Maintains natural function and volume during TRT cycles.
-- **Fertility:** Essential for maintaining spermatogenesis (sperm production).
-- **Libido:** Provides a unique mood and libido boost separate from testosterone.
-""",
-        "side_effects_detailed": """
-• **Estrogen:** Can cause significant spikes in Estradiol (E2).
-• **Gyno:** Risk of breast tissue growth if E2 is not managed.
-• **Acne:** Hormonal fluctuations can cause skin breakouts.
-""",
-        "protocol_detailed": """
-**Dosage:** 250 IU - 500 IU.
-**Frequency:** 2 to 3 times per week.
-**Cycle:** Continuous with TRT or used as part of a PCT protocol.
-""",
-        "storage": "Refrigerate. Extremely fragile; do not shake."
+        "desc": "Human Chorionic Gonadotropin. Mimics LH to maintain testicular function.",
+        "benefits_summary": "\n- Prevents testicular shrinkage\n- Maintains fertility/sperm\n- Boosts libido & mood\n- TRT adjunct support\n",
+        "side_effects_summary": "\n- Estrogen spikes (High E2)\n- Acne/Water retention\n- Gynecomastia risk\n",
+        "protocol_summary": "250-500 IU 2-3x per week.",
+        "benefits_detailed": "\n        - **Testicular Health:** Prevents atrophy during TRT cycles.\n        - **Fertility:** Crucial for maintaining spermatogenesis.\n        - **Libido:** Provides distinct libido boost separate from testosterone.\n        ",
+        "protocol_detailed": "\n        **Dosage:** 250 IU - 500 IU\n\n        **Frequency:** 2 to 3 times per week\n\n        **Timing:** Morning\n\n        **Cycle:** Continuous with TRT or as PCT\n        ",
+        "side_effects_detailed": "\n        • Estrogen spikes (requires AI management)\n        • Acne\n        • Water retention\n        • Desensitization if overdosed\n        ",
+        "storage": "Refrigerate. Fragile."
     },
     "Ipamorelin": {
         "vial_mg": 5.0, "dose_mcg": 100.0, "default_dose_unit": "mcg", "default_stock_unit": "mg", "iu_conversion": None,
         "type": "Growth Hormone", "filter_cat": "Muscle & Workout",
         "desc": "Selective GH Secretagogue. The mildest and safest GHRP.",
-        "benefits_summary": "- Clean GH release (No hunger)\n- Fat loss & muscle sparing\n- Improved sleep quality",
-        "benefits_detailed": """
-- **Pure Signal:** Stimulates steady GH pulse without affecting hunger (ghrelin).
-- **Catabolic Protection:** Helps maintain muscle tissue during calorie deficits.
-- **Sleep:** Increases both REM and Slow-Wave (Deep) sleep cycles.
-""",
-        "side_effects_detailed": """
-• **Water Retention:** Minimal compared to other GHRPs.
-• **Headache:** Rare reports of mild headaches.
-• **Dizziness:** Can occur if blood sugar is very low at time of injection.
-""",
-        "protocol_detailed": """
-**Dosage:** 100mcg - 300mcg nightly.
-**Timing:** Before bed on an empty stomach.
-**Cycle:** 8 to 12 weeks.
-""",
+        "benefits_summary": "\n- Clean GH release (No hunger)\n- Fat loss & muscle sparing\n- Improved sleep quality\n- Anti-aging support\n",
+        "side_effects_summary": "\n- Very mild\n- Slight water retention\n- Rare dizziness\n",
+        "protocol_summary": "100-300mcg nightly, fasted.",
+        "benefits_detailed": "\n        - **Pure Signal:** Stimulates steady GH pulse without hunger spikes.\n        - **Catabolic Protection:** Preserves lean muscle tissue.\n        - **Sleep:** Increases REM and Slow-Wave sleep stages.\n        ",
+        "protocol_detailed": "\n        **Dosage:** 100mcg - 300mcg\n\n        **Frequency:** Nightly\n\n        **Timing:** Before Bed (Fasted)\n\n        **Cycle:** 8 to 12 Weeks\n        ",
+        "side_effects_detailed": "\n        • Extremely well tolerated\n        • Slight water retention possible\n        • No 'jittery' feeling\n        ",
         "storage": "Refrigerate."
     },
     "Kisspeptin": {
         "vial_mg": 10.0, "dose_mcg": 100.0, "default_dose_unit": "mcg", "default_stock_unit": "mg", "iu_conversion": None,
         "type": "Hormonal", "filter_cat": "Libido & Sexual Health",
-        "desc": "A neuromodulator that stimulates GnRH release.",
-        "benefits_summary": "- Restarts HPTA axis safely\n- Boosts fertility (LH/FSH)\n- Increases libido",
-        "benefits_detailed": """
-- **HPTA Restart:** One of the safest methods to restart natural testosterone production.
-- **Fertility:** Strongly stimulates FSH for sperm maturation.
-- **Neurological:** Influences emotional processing and sexual desire.
-""",
-        "side_effects_detailed": """
-• **Flushing:** Temporary warmth/redness post-injection.
-• **Injection Site:** Mild irritation or itching.
-• **Headache:** Rare but reported in higher doses.
-""",
-        "protocol_detailed": """
-**Dosage:** 100mcg - 200mcg daily.
-**Cycle:** 4 weeks during Post-Cycle Therapy (PCT).
-""",
+        "desc": "A neuromodulator that stimulates the hypothalamus to release GnRH.",
+        "benefits_summary": "\n- Restarts HPTA axis safely\n- Boosts fertility (LH/FSH)\n- Increases libido\n- No testicular desensitization\n",
+        "side_effects_summary": "\n- Flushing/Warmth\n- Injection site redness\n- Mild headache\n",
+        "protocol_summary": "100-200mcg daily.",
+        "benefits_detailed": "\n        - **HPTA Restart:** Safest way to restart natural testosterone.\n        - **Fertility:** Strongly stimulates FSH for sperm maturation.\n        - **Safety:** Does not cause Leydig cell desensitization.\n        ",
+        "protocol_detailed": "\n        **Dosage:** 100mcg - 200mcg\n\n        **Frequency:** Daily\n\n        **Timing:** Any time\n\n        **Cycle:** 4 Weeks (PCT)\n        ",
+        "side_effects_detailed": "\n        • Mild flushing\n        • Injection site redness\n        • Mild headache\n        ",
         "storage": "Refrigerate."
     },
     "Klow Blend (GHK-Cu/BPC/TB/KPV)": {
-        "vial_mg": 80.0, "dose_mcg": 3.0, "default_dose_unit": "mg", "default_stock_unit": "mg", "iu_conversion": None,
+        "vial_mg": 80.0, "dose_mcg": 3000.0, "default_dose_unit": "mg", "default_stock_unit": "mg", "iu_conversion": None,
         "type": "Ultimate Repair/Cosmetic Blend", "filter_cat": "Skin, Hair & Beauty",
-        "desc": "The 80mg Master Stack. Adds KPV for skin/gut health.",
-        "benefits_summary": "- Clears Acne, Psoriasis, Eczema\n- Heals Gut (IBD/Colitis)\n- Systemic anti-inflammatory",
-        "benefits_detailed": """
-- **Dermatology:** KPV is a potent anti-inflammatory for chronic skin conditions.
-- **Gut Health:** Strongest known blend for treating IBD or Ulcerative Colitis.
-- **Mast Cell:** KPV stabilizes mast cells to reduce systemic histamine.
-""",
-        "side_effects_detailed": """
-• **Red Welts:** Common at injection site due to GHK-Cu concentration.
-• **Healing Crisis:** Temporary fatigue (Herxheimer) as the body repairs.
-• **Flushing:** Facial warmth.
-""",
-        "protocol_detailed": """
-**Dosage:** 3mg total volume daily.
-**Timing:** Evening preferred.
-**Cycle:** 4 to 8 weeks.
-""",
+        "desc": "The 80mg Master Stack. Adds KPV to the GHK/BPC/TB trio.",
+        "benefits_summary": "\n- Clears Acne, Psoriasis, Eczema\n- Heals Gut (IBD/Colitis)\n- Systemic anti-inflammatory\n- Total tissue repair\n",
+        "side_effects_summary": "\n- Red welts (Injection site)\n- Fatigue (Herxheimer)\n- Flushing\n",
+        "protocol_summary": "3mg total daily.",
+        "benefits_detailed": "\n        - **Dermatology:** KPV actively treats acne, psoriasis, and eczema.\n        - **Gut Health:** Strongest known peptide stack for IBD/Colitis.\n        - **Mast Cells:** KPV stabilizes mast cells, reducing histamine.\n        ",
+        "protocol_detailed": "\n        **Dosage:** 3mg (Total Volume)\n\n        **Frequency:** Daily\n\n        **Timing:** Evening\n\n        **Cycle:** 4 to 8 Weeks\n        ",
+        "side_effects_detailed": "\n        • Red welts at injection site (common)\n        • Fatigue (body detox/healing)\n        • Flushing\n        ",
         "storage": "Refrigerate. Protect from light."
     },
     "Melanotan II": {
         "vial_mg": 10.0, "dose_mcg": 500.0, "default_dose_unit": "mcg", "default_stock_unit": "mg", "iu_conversion": None,
         "type": "Cosmetic", "filter_cat": "Skin, Hair & Beauty",
-        "desc": "Alpha-MSH analog. Stimulates melanin and arousal.",
-        "benefits_summary": "- Deep, rapid tan\n- Extreme libido boost\n- Appetite suppression",
-        "benefits_detailed": """
-- **Tanning:** Stimulates melanin for a deep tan even with minimal UV.
-- **Libido:** Very potent aphrodisiac for both men and women.
-- **Photoprotection:** Melanin provides a natural barrier against UV damage.
-""",
-        "side_effects_detailed": """
-• **Nausea:** Significant nausea for 1-2 hours after injection (Common).
-• **Mole Darkening:** Freckles and moles will get darker.
-• **Erections:** Can cause spontaneous, long-lasting erections (Priapism risk).
-""",
-        "protocol_detailed": """
-**Dosage:** 100mcg - 500mcg.
-**Frequency:** Start low! Daily until tan achieved, then 1-2x weekly.
-**Timing:** 30 mins before UV exposure.
-""",
+        "desc": "Alpha-MSH analog. Stimulates melanin production and sexual arousal.",
+        "benefits_summary": "\n- Deep, rapid tan\n- Extreme libido boost\n- Appetite suppression\n- UV protection\n",
+        "side_effects_summary": "\n- Severe Nausea\n- Facial Flushing\n- Spontaneous erections\n- Darkening moles\n",
+        "protocol_summary": "100-500mcg before UV exposure.",
+        "benefits_detailed": "\n        - **Photoprotection:** Creates a deep, natural tan that protects the skin.\n        - **Libido:** Potent aphrodisiac for both men and women.\n        - **Metabolic:** Suppresses appetite.\n        ",
+        "protocol_detailed": "\n        **Dosage:** 100mcg - 500mcg\n\n        **Frequency:** As needed (Loading phase: Daily)\n\n        **Timing:** 30 mins before UV exposure\n\n        **Cycle:** Until desired color, then maintenance\n        ",
+        "side_effects_detailed": "\n        • Significant nausea (lasts 1-2 hours)\n        • Facial flushing\n        • Spontaneous erections (priapism risk)\n        • Darkening of freckles/moles\n        ",
         "storage": "Refrigerate."
     },
     "MOTS-c": {
-        "vial_mg": 10.0, "dose_mcg": 5.0, "default_dose_unit": "mg", "default_stock_unit": "mg", "iu_conversion": None,
+        "vial_mg": 10.0, "dose_mcg": 5000.0, "default_dose_unit": "mg", "default_stock_unit": "mg", "iu_conversion": None,
         "type": "Metabolic/Mitochondrial", "filter_cat": "Muscle & Workout",
-        "desc": "Mitochondrial-Derived Peptide. An 'exercise mimetic'.",
-        "benefits_summary": "- Increases VO2 Max/Endurance\n- Prevents weight gain\n- Cellular energy boost",
-        "benefits_detailed": """
-- **Endurance:** Dramatically increases cellular capacity for glucose and oxygen utilization.
-- **Metabolic:** Prevents diet-induced insulin resistance and weight gain.
-- **Biogenesis:** Promotes the creation of new mitochondria in cells.
-""",
-        "side_effects_detailed": """
-• **Stinging:** Known for being a very painful injection.
-• **Insomnia:** Can cause extreme hyperactivity if taken late in the day.
-• **Heart Rate:** May slightly elevate resting heart rate.
-""",
-        "protocol_detailed": """
-**Dosage:** 5mg - 10mg.
-**Frequency:** Once per week.
-**Timing:** Morning (Pre-workout).
-""",
+        "desc": "Mitochondrial-Derived Peptide. Known as an 'exercise mimetic'.",
+        "benefits_summary": "\n- Increases VO2 Max/Endurance\n- Prevents weight gain\n- Improves bone metabolism\n- Cellular energy boost\n",
+        "side_effects_summary": "\n- Painful injection (Sting)\n- Insomnia (if late)\n- Hyperactivity\n",
+        "protocol_summary": "5mg once weekly.",
+        "benefits_detailed": "\n        - **Endurance:** Increases cellular ability to utilize glucose and oxygen.\n        - **Metabolic:** Prevents diet-induced insulin resistance.\n        - **Biogenesis:** Promotes creation of new mitochondria.\n        ",
+        "protocol_detailed": "\n        **Dosage:** 5mg - 10mg\n\n        **Frequency:** Once Weekly\n\n        **Timing:** Morning (Pre-workout preferred)\n\n        **Cycle:** 4 to 8 Weeks\n        ",
+        "side_effects_detailed": "\n        • Injection site pain (very common)\n        • Insomnia (if taken late)\n        • High energy/restlessness\n        ",
         "storage": "Refrigerate."
     },
     "NAD+": {
-        "vial_mg": 500.0, "dose_mcg": 50.0, "default_dose_unit": "mg", "default_stock_unit": "mg", "iu_conversion": None,
+        "vial_mg": 500.0, "dose_mcg": 25000.0, "default_dose_unit": "mg", "default_stock_unit": "mg", "iu_conversion": None,
         "type": "Cellular Energy", "filter_cat": "Wellness & Longevity",
-        "desc": "Nicotinamide Adenine Dinucleotide. Cellular fuel.",
-        "benefits_summary": "- Clears brain fog\n- Restores cellular energy\n- Repairs DNA damage",
-        "benefits_detailed": """
-- **Cognition:** Rapidly restores mental clarity and sharp focus.
-- **Anti-Aging:** Repairs DNA and regulates Sirtuins (longevity genes).
-- **Mitochondria:** Directly fuels the ATP production process.
-""",
-        "side_effects_detailed": """
-• **NAD Flush:** Rapid injection causes intense chest pressure and anxiety.
-• **Cramps:** Abdominal cramping and nausea if injected too fast.
-• **Palpitations:** Temporary racing heart (lasts 5-10 mins).
-""",
-        "protocol_detailed": """
-**Dosage:** 25mg - 50mg.
-**Frequency:** 2-3x per week.
-**Warning:** INJECT VERY SLOWLY (over 60+ seconds).
-""",
-        "storage": "Refrigerate immediately. Highly sensitive."
+        "desc": "Nicotinamide Adenine Dinucleotide. The fuel for cellular engines.",
+        "benefits_summary": "\n- Clears brain fog\n- Restores cellular energy\n- Repairs DNA damage\n- Anti-aging/Longevity\n",
+        "side_effects_summary": "\n- Chest pressure (The Flush)\n- Anxiety/Panic feeling\n- Nausea/Cramps\n",
+        "protocol_summary": "25-50mg 2-3x per week. SLOW INJECTION.",
+        "benefits_detailed": "\n        - **Cognition:** Rapidly clears brain fog and enhances mental sharpness.\n        - **Mitochondria:** Restores efficient ATP production.\n        - **Addiction:** Proven to help restore neurotransmitter balance.\n        ",
+        "protocol_detailed": "\n        **Dosage:** 25mg - 50mg\n\n        **Frequency:** 2-3x / Week\n\n        **Timing:** Morning\n\n        **Cycle:** Ongoing\n\n        **Study Note:** ⚠️ INJECT VERY SLOWLY. Rapid injection causes severe 'NAD Flush'.\n        ",
+        "side_effects_detailed": "\n        • Intense chest pressure\n        • Abdominal cramping/Nausea\n        • Anxiety/Panic sensation\n        • Palpitations (Passes in 5-10 mins)\n        ",
+        "storage": "Refrigerate immediately. Very sensitive."
     },
     "Oxytocin Acetate": {
         "vial_mg": 2.0, "dose_mcg": 20.0, "default_dose_unit": "IU", "default_stock_unit": "mg", "iu_conversion": 600,
         "type": "Hormonal/Wellness", "filter_cat": "Nootropics & Brain",
-        "desc": "The 'Love Hormone'. social interaction regulator.",
-        "benefits_summary": "- Reduces social anxiety\n- Lowers cortisol (Stress)\n- Enhances emotional bonding",
-        "benefits_detailed": """
-- **Social Anxiety:** Significantly reduces fear and stress in social settings.
-- **Analgesia:** Shows natural pain-killing properties.
-- **Trust:** Enhances feelings of empathy, trust, and connection.
-""",
-        "side_effects_detailed": """
-• **Nausea:** Common at higher doses.
-• **Headache:** Occasional tension.
-• **Flushing:** Mild facial warmth.
-""",
-        "protocol_detailed": """
-**Dosage:** 10 IU - 25 IU.
-**Timing:** 30 minutes before social or intimate events.
-**Frequency:** As needed.
-""",
+        "desc": "The 'Love Hormone'. Acts as a neurotransmitter regulating social interaction and bonding.",
+        "benefits_summary": "\n- Reduces social anxiety\n- Lowers cortisol (Stress)\n- Enhances emotional bonding\n- Modulates pain perception\n",
+        "side_effects_summary": "\n- Nausea (at high dose)\n- Headache\n- Flushing\n",
+        "protocol_summary": "20-50 IU as needed.",
+        "benefits_detailed": "\n        - **Psychological:** Significantly reduces social anxiety and stress levels.\n        - **Pain Modulation:** Shows analgesic (pain-killing) properties.\n        - **Intimacy:** Enhances feelings of trust and emotional connection.\n        ",
+        "protocol_detailed": "\n        **Dosage:** 10 IU - 25 IU (Start low)\n\n        **Frequency:** As needed (or Daily for mood support)\n\n        **Timing:** 30 minutes before social/intimate events\n\n        **Cycle:** Can be used continuously or cycled\n        ",
+        "side_effects_detailed": "\n        • Nausea (common at high doses)\n        • Headache\n        • Flushing/warmth\n        • Slight dizziness\n        ",
         "storage": "Refrigerate."
     },
     "PT-141": {
-        "vial_mg": 10.0, "dose_mcg": 1.5, "default_dose_unit": "mg", "default_stock_unit": "mg", "iu_conversion": None,
+        "vial_mg": 10.0, "dose_mcg": 1000.0, "default_dose_unit": "mg", "default_stock_unit": "mg", "iu_conversion": None,
         "type": "Libido", "filter_cat": "Libido & Sexual Health",
-        "desc": "Bremelanotide. Targets the nervous system for arousal.",
-        "benefits_summary": "- Treats ED & Low Libido\n- Works when PDE5i fails\n- For Men & Women",
-        "benefits_detailed": """
-- **Mechanism:** Works on the brain (hypothalamus), not the blood vessels.
-- **Efficacy:** FDA approved (Vyleesi) for female sexual arousal disorder.
-- **Libido:** Direct stimulation of sexual desire and physical arousal.
-""",
-        "side_effects_detailed": """
-• **Nausea:** Occurs in about 40% of users; can be intense.
-• **Blood Pressure:** Temporary elevation in blood pressure.
-• **Flushing:** Facial warmth and redness.
-""",
-        "protocol_detailed": """
-**Dosage:** 1.5mg - 2mg.
-**Timing:** 2 to 4 hours BEFORE activity.
-**Frequency:** Max 8 doses per month.
-""",
+        "desc": "Bremelanotide. Works on the nervous system to treat hypoactive sexual desire.",
+        "benefits_summary": "\n- Treats ED & Low Libido\n- Works when Viagra fails\n- Increases physical arousal\n- For Men & Women\n",
+        "side_effects_summary": "\n- Nausea (Common)\n- Flushing/Warmth\n- Headache\n",
+        "protocol_summary": "1.5-2mg, 2 hours before activity.",
+        "benefits_detailed": "\n        - **Mechanism:** Targets the hypothalamus, not the vascular system.\n        - **Efficacy:** FDA approved (as Vyleesi) for low libido in women.\n        - **Response:** Increases physical arousal and desire.\n        ",
+        "protocol_detailed": "\n        **Dosage:** 1.5mg - 2mg\n\n        **Frequency:** As needed\n\n        **Timing:** 2 to 4 hours BEFORE activity\n\n        **Cycle:** Max 8 doses per month\n        ",
+        "side_effects_detailed": "\n        • Nausea (40% of users)\n        • Flushing\n        • Headache\n        • Elevated blood pressure\n        ",
         "storage": "Refrigerate."
     },
     "Retatrutide": {
-        "vial_mg": 10.0, "dose_mcg": 2.0, "default_dose_unit": "mg", "default_stock_unit": "mg", "iu_conversion": None,
+        "vial_mg": 10.0, "dose_mcg": 2000.0, "default_dose_unit": "mg", "default_stock_unit": "mg", "iu_conversion": None,
         "type": "Metabolic (GLP-1/GIP/Glucagon)", "filter_cat": "Slimming & Fat Loss",
-        "desc": "The 'Triple G' Agonist. Most potent weight loss agent.",
-        "benefits_summary": "- Extreme weight loss (24%+)\n- Burns liver fat (NAFLD)\n- Resets metabolism",
-        "benefits_detailed": """
-- **Weight Loss:** Average 24.2% loss in clinical trials (unprecedented).
-- **Liver Health:** Resolves Fatty Liver Disease by clearing hepatic fat.
-- **Energy Burn:** Glucagon component increases calorie expenditure.
-""",
-        "side_effects_detailed": """
-• **Tachycardia:** Significant increase in heart rate.
-• **Skin Sensitivity:** Cutaneous hyperesthesia (skin hurts to touch).
-• **Gastro:** Nausea and constipation.
-""",
-        "protocol_detailed": """
-**Dosage:** Start 2mg -> Titrate up to 12mg.
-**Frequency:** Once weekly.
-**Cycle:** Continuous.
-""",
+        "desc": "The 'Triple G' Agonist. The most potent weight loss agent currently in trials.",
+        "benefits_summary": "\n- Extreme weight loss (24%+)\n- Burns liver fat (NAFLD)\n- Resets insulin sensitivity\n- Increases metabolism\n",
+        "side_effects_summary": "\n- High Heart Rate\n- Skin sensitivity\n- Nausea/Constipation\n",
+        "protocol_summary": "2mg weekly, titrate up.",
+        "benefits_detailed": "\n        - **Efficacy:** 24.2% average weight loss in clinical trials.\n        - **Liver Health:** Resolves Fatty Liver Disease (NAFLD).\n        - **Energy:** Glucagon component increases calorie burn.\n        ",
+        "protocol_detailed": "\n        **Dosage:** Start 2mg -> Titrate to Max 12mg\n\n        **Frequency:** Once Weekly\n\n        **Timing:** Any time\n\n        **Cycle:** Continuous\n        ",
+        "side_effects_detailed": "\n        • Tachycardia (fast heart rate)\n        • Cutaneous hyperesthesia (sensitive skin)\n        • Nausea\n        • Constipation\n        ",
         "storage": "Refrigerate. Do not freeze."
     },
     "Semaglutide": {
-        "vial_mg": 5.0, "dose_mcg": 0.25, "default_dose_unit": "mg", "default_stock_unit": "mg", "iu_conversion": None,
+        "vial_mg": 5.0, "dose_mcg": 250.0, "default_dose_unit": "mg", "default_stock_unit": "mg", "iu_conversion": None,
         "type": "Metabolic (GLP-1)", "filter_cat": "Slimming & Fat Loss",
-        "desc": "GLP-1 Agonist. Standard medical weight loss.",
-        "benefits_summary": "- 15% weight loss\n- Controls blood sugar\n- Cardioprotective",
-        "benefits_detailed": """
-- **Satiety:** Slows gastric emptying, making you feel full longer.
-- **Heart:** 20% reduction in major adverse cardiac events.
-- **Addiction:** Reduces cravings for alcohol, sugar, and nicotine.
-""",
-        "side_effects_detailed": """
-• **Gastro:** Nausea, vomiting, and severe constipation.
-• **Fatigue:** Common during initial titration.
-• **Ozempic Face:** Rapid fat loss in facial area.
-""",
-        "protocol_detailed": """
-**Dosage:** Start 0.25mg -> Max 2.4mg.
-**Frequency:** Once weekly.
-**Cycle:** Continuous.
-""",
+        "desc": "GLP-1 Agonist. The standard for medical weight loss.",
+        "benefits_summary": "\n- Significant weight loss (15%)\n- Controls blood sugar\n- Cardioprotective\n- Reduces addiction cravings\n",
+        "side_effects_summary": "\n- Nausea/Vomiting\n- Severe Constipation\n- Fatigue\n- Muscle loss\n",
+        "protocol_summary": "0.25mg weekly, titrate up.",
+        "benefits_detailed": "\n        - **Satiety:** Slows gastric emptying, keeping you full longer.\n        - **Heart:** Proven 20% reduction in major adverse cardiac events.\n        - **Addiction:** Reduces cravings for alcohol and sugar.\n        ",
+        "protocol_detailed": "\n        **Dosage:** Start 0.25mg -> Max 2.4mg\n\n        **Frequency:** Once Weekly\n\n        **Timing:** Any time\n\n        **Cycle:** Continuous\n        ",
+        "side_effects_detailed": "\n        • Nausea/Vomiting\n        • Severe constipation\n        • 'Ozempic face' (rapid fat loss)\n        • Fatigue\n        ",
         "storage": "Refrigerate. Protect from light."
     },
     "TB-500": {
-        "vial_mg": 5.0, "dose_mcg": 2.5, "default_dose_unit": "mg", "default_stock_unit": "mg", "iu_conversion": None,
+        "vial_mg": 5.0, "dose_mcg": 2500.0, "default_dose_unit": "mg", "default_stock_unit": "mg", "iu_conversion": None,
         "type": "Regenerative", "filter_cat": "Injury & Repair",
-        "desc": "Synthetic Thymosin Beta-4. Muscle repair peptide.",
-        "benefits_summary": "- Heals muscle tears\n- Improves flexibility\n- Cardiac repair",
-        "benefits_detailed": """
-- **Muscle Repair:** Primary peptide for torn muscles, strains, and pulls.
-- **Inflammation:** Systemic reduction of inflammatory markers.
-- **Flexibility:** Softens scar tissue and increases joint mobility.
-""",
-        "side_effects_detailed": """
-• **Head Rush:** Temporary feeling of pressure in the head post-injection.
-• **Lethargy:** Intense fatigue as the body focuses on repair.
-• **Flu-like Symptoms:** Occasional reports of mild malaise.
-""",
-        "protocol_detailed": """
-**Dosage:** 2.5mg (2500mcg).
-**Frequency:** 2x per week.
-**Cycle:** 4 to 6 weeks.
-""",
+        "desc": "Synthetic Thymosin Beta-4. The 'Muscle Repair' peptide.",
+        "benefits_summary": "\n- Heals muscle tears\n- Improves flexibility\n- Reduces scar tissue\n- Cardiac repair\n",
+        "side_effects_summary": "\n- Head rush (common)\n- Lethargy\n- Flu-like symptoms\n",
+        "protocol_summary": "2.5mg twice weekly.",
+        "benefits_detailed": "\n        - **Muscle Repair:** The primary peptide for torn muscles and strains.\n        - **Flexibility:** Improves range of motion by reducing inflammation.\n        - **Cardiac:** Repairs heart tissue and reduces scarring.\n        ",
+        "protocol_detailed": "\n        **Dosage:** 2.5mg (2500mcg)\n\n        **Frequency:** 2x Per Week (e.g., Mon/Thu)\n\n        **Timing:** Any time\n\n        **Cycle:** 4 to 6 Weeks\n        ",
+        "side_effects_detailed": "\n        • Temporary head rush\n        • Occasional lethargy\n        • Flu-like symptoms (rare)\n        ",
         "storage": "Refrigerate."
     },
     "Tesamorelin": {
-        "vial_mg": 2.0, "dose_mcg": 1.0, "default_dose_unit": "mg", "default_stock_unit": "mg", "iu_conversion": None,
+        "vial_mg": 2.0, "dose_mcg": 1000.0, "default_dose_unit": "mg", "default_stock_unit": "mg", "iu_conversion": None,
         "type": "Growth Hormone", "filter_cat": "Slimming & Fat Loss",
         "desc": "FDA Approved GHRH for visceral fat reduction.",
-        "benefits_summary": "- Burns visceral belly fat\n- Increases muscle tone\n- Nootropic effects",
-        "benefits_detailed": """
-- **Visceral Fat:** Specifically targets the "hard" fat around internal organs.
-- **Cognition:** Improves executive function and memory in aging adults.
-- **Triglycerides:** Significantly improves lipid profiles.
-""",
-        "side_effects_detailed": """
-• **Joint Stiffness:** "Achy" joints are a common side effect of GH elevation.
-• **Injection Site:** Itching or redness (more common than others).
-• **Water Retention:** Mild swelling in extremities.
-""",
-        "protocol_detailed": """
-**Dosage:** 1mg - 2mg nightly.
-**Timing:** Before bed (Fasted).
-**Cycle:** 8 to 12 weeks.
-""",
+        "benefits_summary": "\n- Burns belly fat (Visceral)\n- Increases muscle tone\n- Nootropic effects\n- Lowers triglycerides\n",
+        "side_effects_summary": "\n- Injection redness\n- Joint stiffness\n- Carpal Tunnel\n",
+        "protocol_summary": "1-2mg nightly, fasted.",
+        "benefits_detailed": "\n        - **Visceral Fat:** Specifically targets stubborn adipose tissue around organs.\n        - **Cognition:** Improves executive function and memory.\n        - **Cardio:** Drastically lowers triglycerides.\n        ",
+        "protocol_detailed": "\n        **Dosage:** 1mg - 2mg\n\n        **Frequency:** Daily\n\n        **Timing:** Before Bed (Fasted)\n\n        **Cycle:** 8 to 12 Weeks\n        ",
+        "side_effects_detailed": "\n        • Injection site redness/itching (common)\n        • Joint stiffness\n        • Carpal tunnel symptoms\n        • Water retention\n        ",
         "storage": "Refrigerate. Use within 20-30 days."
     },
     "Tesamorelin + Ipamorelin Blend": {
         "vial_mg": 12.0, "dose_mcg": 350.0, "default_dose_unit": "mcg", "default_stock_unit": "mg", "iu_conversion": None,
         "type": "Growth Hormone/Fat Loss Blend", "filter_cat": "Slimming & Fat Loss",
-        "desc": "The 'Shred Stack'. High potency fat burner.",
-        "benefits_summary": "- Max visceral fat loss\n- Muscle definition\n- Deep sleep",
-        "benefits_detailed": """
-- **Recomposition:** Powerful combo for burning abdominal fat while maintaining muscle.
-- **Fasting Synergy:** Amplifies the fat-burning effects of overnight fasting.
-- **Sleep:** Ipamorelin component improves sleep depth.
-""",
-        "side_effects_detailed": """
-• **Numbness:** Carpal tunnel-like tingling in hands.
-• **Joint Pain:** Mild aches in knees and wrists.
-• **Flushing:** Post-injection warmth.
-""",
-        "protocol_detailed": """
-**Dosage:** 350mcg - 500mcg (Total Volume).
-**Frequency:** Daily (5 on / 2 off).
-**Timing:** Nightly (Fasted).
-""",
+        "desc": "The 'Shred Stack'. Targets visceral fat + systemic GH elevation.",
+        "benefits_summary": "\n- Max fat loss (Visceral)\n- Muscle definition\n- Deep sleep\n- Systemic anti-aging\n",
+        "side_effects_summary": "\n- Flushing/Redness\n- Joint stiffness\n- Water retention\n",
+        "protocol_summary": "350-500mcg total nightly, fasted.",
+        "benefits_detailed": "\n        - **Recomposition:** Powerful combo for burning fat and building muscle.\n        - **Metabolic:** Amplifies the fat-burning effects of fasting.\n        - **Synergy:** Ipamorelin smooths out the pulse and adds sleep benefits.\n        ",
+        "protocol_detailed": "\n        **Dosage:** 350mcg - 500mcg (Total Volume)\n\n        **Frequency:** Daily (5 days on / 2 off)\n\n        **Timing:** Before Bed (Fasted)\n\n        **Cycle:** 8 to 12 Weeks\n        ",
+        "side_effects_detailed": "\n        • Joint pain\n        • Carpal tunnel numbness\n        • Flushing\n        • Injection site reactions\n        ",
         "storage": "Refrigerate."
     },
     "Tirzepatide": {
         "vial_mg": 30.0, "dose_mcg": 2.5, "default_dose_unit": "mg", "default_stock_unit": "mg", "iu_conversion": None,
         "type": "Metabolic (GLP-1/GIP)", "filter_cat": "Slimming & Fat Loss",
         "desc": "Dual Agonist (Mounjaro). GIP + GLP-1. Superior to Semaglutide.",
-        "benefits_summary": "- Massive weight loss (22%)\n- Eliminates 'Food Noise'\n- Metabolic repair",
-        "benefits_detailed": """
-- **Weight Loss:** 22%+ average loss in clinical trials.
-- **Food Noise:** Complete suppression of obsessive food thoughts.
-- **Tolerability:** GIP component reduces nausea compared to Semaglutide.
-""",
-        "side_effects_detailed": """
-• **Anhedonia:** Feeling "flat" or losing joy in hobbies/food.
-• **Cold Extremities:** Hands and feet feeling unusually cold.
-• **Constipation:** Can be severe; requires high fiber/water intake.
-• **Hair Shedding:** Telogen effluvium due to rapid weight loss.
-""",
-        "protocol_detailed": """
-**Dosage:** Start 2.5mg -> Max 15mg.
-**Frequency:** Once weekly.
-**Cycle:** Continuous.
-""",
+        "benefits_summary": "\n- Massive weight loss (22%)\n- Eliminates 'Food Noise'\n- Less nausea than Semaglutide\n- Metabolic repair\n",
+        "side_effects_summary": "\n- Anhedonia (No joy)\n- Constipation\n- Hair shedding\n- Cold hands/feet\n",
+        "protocol_summary": "2.5mg weekly, titrate up.",
+        "benefits_detailed": "\n        - **Weight Loss:** 20%+ average loss in SURMOUNT-1 trials.\n        - **Food Noise:** Eliminates obsessive food thoughts.\n        - **Tolerability:** GIP component reduces nausea severity compared to Semaglutide.\n        ",
+        "protocol_detailed": "\n        **Dosage:** Start 2.5mg -> Max 15mg\n\n        **Frequency:** Once Weekly\n\n        **Timing:** Any time\n\n        **Cycle:** Continuous\n        ",
+        "side_effects_detailed": "\n        • Anhedonia (flat mood)\n        • Cold extremities\n        • Constipation\n        • Hair shedding\n        ",
         "storage": "Refrigerate. Do not freeze."
-    }
+    },
 }
