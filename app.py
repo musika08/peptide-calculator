@@ -60,11 +60,6 @@ st.markdown("""
 
 # --- EXPANDED KNOWLEDGE BASE (v3.4) ---
 PEPTIDE_PRESETS = {
-    "Custom (Enter manually)": {
-        "vial_mg": 5.0, "dose_mcg": 250.0, "type": "N/A", "desc": "Manual calculation.",
-        "benefits_summary": "N/A", "side_effects_summary": "Unknown.", "protocol_summary": "As directed.",
-        "benefits_detailed": "N/A", "protocol_detailed": "N/A", "side_effects_detailed": "N/A", "storage": "Dependant on compound."
-    },
     "AOD-9604": {
         "vial_mg": 5.0, "dose_mcg": 300.0,
         "type": "Fat Loss",
@@ -514,7 +509,7 @@ PEPTIDE_PRESETS = {
 """,
         "protocol_summary": "100-500mcg before UV exposure.",
         "benefits_detailed": """
-        - **Photoprotection:** Creates a deep, natural tan that protects the skin from UV damage and burning.
+        - **Tanning:** Activates melanocytes to produce protective melanin (tan) with minimal UV.
         - **Libido:** Acts as a potent central nervous system aphrodisiac for both men and women.
         - **Metabolic:** Suppresses appetite and increases energy expenditure via MC4 receptors.
         """,
@@ -894,12 +889,12 @@ PEPTIDE_PRESETS = {
 
 FACTORS = {'mcg': 1, 'mg': 1000, 'g': 1000000}
 
-# Initialize State
-if 'vial_val' not in st.session_state: st.session_state.vial_val = 5.0
-if 'dose_val' not in st.session_state: st.session_state.dose_val = 250.0
+# Initialize State (Default to Tirzepatide settings)
+if 'vial_val' not in st.session_state: st.session_state.vial_val = 30.0
+if 'dose_val' not in st.session_state: st.session_state.dose_val = 2.5
 if 'stock_unit_index' not in st.session_state: st.session_state.stock_unit_index = 0
 if 'dose_unit_index' not in st.session_state: st.session_state.dose_unit_index = 0
-if 'dose_unit_selection' not in st.session_state: st.session_state.dose_unit_selection = "mcg"
+if 'dose_unit_selection' not in st.session_state: st.session_state.dose_unit_selection = "mg"
 if 'calc_count' not in st.session_state: st.session_state.calc_count = 0
 
 # --- NAVIGATION SIDEBAR ---
@@ -953,8 +948,15 @@ if page == "🧮 Calculator":
     with left_col:
         st.info("1️⃣ **Configuration**")
         
+        # Ensure dropdown includes ALL presets sorted
         sorted_presets = sorted(list(PEPTIDE_PRESETS.keys()))
-        selected_peptide = st.selectbox("Select Peptide Profile", sorted_presets, key="peptide_selector", on_change=load_preset)
+        # Find index of Tirzepatide for default
+        try:
+            default_ix = sorted_presets.index("Tirzepatide")
+        except ValueError:
+            default_ix = 0
+            
+        selected_peptide = st.selectbox("Select Peptide Profile", sorted_presets, index=default_ix, key="peptide_selector", on_change=load_preset)
         
         st.write("📦 **Stock & Water**")
         c1, c2, c3 = st.columns([1.5, 1, 1.5])
@@ -1024,11 +1026,12 @@ if page == "🧮 Calculator":
                 else:
                     st.markdown(f"**Type:** {peptide_info['type']}")
                     st.markdown(f"**🌟 Key Benefits:**")
-                    st.markdown(peptide_info['benefits_summary']) # Vertical formatting
-                    
-                    # Using st.error for side effects to ensure vertical list formatting + Red Box
-                    st.error(f"**⚠️ Common Side Effects:**\n{peptide_info['side_effects_summary']}")
-                    
+                    st.markdown(peptide_info['benefits_summary']) # Fixed vertical formatting
+                    st.markdown(f"""
+                    <div style="margin-top:10px; padding:10px; background-color:#3e1818; border-left:4px solid #ff4b4b; border-radius:4px;">
+                    <strong>⚠️ Common Side Effects:</strong><br>{peptide_info['side_effects_summary'].replace(chr(10), '<br>')}
+                    </div>
+                    """, unsafe_allow_html=True)
                     st.write("")
                     st.info(f"**📋 Quick Protocol:** {peptide_info['protocol_summary']}")
                     st.markdown(f"**❄️ Storage:** {peptide_info['storage']}")
