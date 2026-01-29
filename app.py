@@ -3,7 +3,7 @@ import math
 
 # --- 1. CONFIGURATION: WIDE MODE ---
 st.set_page_config(
-    page_title="PeptideCalc Pro v3.6",
+    page_title="PeptideCalc Pro v3.7",
     page_icon="🧪",
     layout="wide",
     initial_sidebar_state="expanded"
@@ -59,7 +59,7 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
-# --- EXPANDED KNOWLEDGE BASE (v3.6 - Custom Removed) ---
+# --- EXPANDED KNOWLEDGE BASE (v3.7) ---
 PEPTIDE_PRESETS = {
     "AOD-9604": {
         "vial_mg": 5.0, "dose_mcg": 300.0,
@@ -1010,7 +1010,7 @@ with st.sidebar:
     st.title("Navigation")
     page = st.radio("Go to:", ["🧮 Calculator", "📚 Peptide Database"])
     st.markdown("---")
-    st.caption("v3.6 | by Musika")
+    st.caption("v3.7 | by Musika")
 
 # ==============================================================================
 # PAGE 1: CALCULATOR
@@ -1131,10 +1131,14 @@ if page == "🧮 Calculator":
                 # Always show profile for known peptides
                 st.markdown(f"**Type:** {peptide_info['type']}")
                 st.markdown(f"**🌟 Key Benefits:**")
-                st.markdown(peptide_info['benefits_summary']) # Vertical Markdown List
+                # Force Markdown list format for benefits
+                st.markdown(peptide_info['benefits_summary']) 
+                
+                # Use HTML replace for side effects inside the warning box
                 st.markdown(f"""
                 <div style="margin-top:10px; padding:10px; background-color:#3e1818; border-left:4px solid #ff4b4b; border-radius:4px;">
-                <strong>⚠️ Common Side Effects:</strong><br>{peptide_info['side_effects_summary']}
+                <strong>⚠️ Common Side Effects:</strong><br>
+                {peptide_info['side_effects_summary'].replace(chr(10), '<br>')}
                 </div>
                 """, unsafe_allow_html=True)
                 st.write("")
@@ -1173,7 +1177,7 @@ if page == "🧮 Calculator":
         st.markdown("[![Hits](https://hits.sh/peptide-calculator.streamlit.app.svg?style=flat-square&label=Total%20Visits&extraCount=2023&color=79c83d)](https://hits.sh/peptide-calculator.streamlit.app/)")
 
 # ==============================================================================
-# PAGE 2: PEPTIDE DATABASE (Notion-Style / v3.6)
+# PAGE 2: PEPTIDE DATABASE (Notion-Style / v3.7)
 # ==============================================================================
 elif page == "📚 Peptide Database":
     st.subheader("📚 Peptide Database")
