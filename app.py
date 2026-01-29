@@ -3,7 +3,7 @@ import math
 
 # --- 1. CONFIGURATION: WIDE MODE ---
 st.set_page_config(
-    page_title="PeptideCalc Pro v2.3",
+    page_title="PeptideCalc Pro v3.0",
     page_icon="🧪",
     layout="wide",
     initial_sidebar_state="expanded"
@@ -58,7 +58,7 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
-# --- EXPANDED KNOWLEDGE BASE (v2.3) ---
+# --- EXPANDED KNOWLEDGE BASE (v3.0) ---
 PEPTIDE_PRESETS = {
     "Custom (Enter manually)": {
         "vial_mg": 5.0, "dose_mcg": 250.0, "type": "N/A", "desc": "Manual calculation.",
@@ -455,6 +455,33 @@ PEPTIDE_PRESETS = {
         "side_effects_detailed": "Intense chest pressure, abdominal cramping, anxiety, palpitations. Lasts 5-10 minutes.",
         "storage": "Refrigerate immediately."
     },
+    "Oxytocin Acetate": {
+        "vial_mg": 5.0, "dose_mcg": 50.0,
+        "type": "Hormonal/Wellness",
+        "desc": "The 'Love Hormone'. A powerful neuropeptide produced in the hypothalamus that acts as a neurotransmitter in the brain.",
+        "benefits_summary": "Social bonding, anxiety reduction, enhanced intimacy, mood lift.",
+        "side_effects_summary": "Nausea, headache, mild flushing.",
+        "protocol_summary": "10-50mcg as needed.",
+        "benefits_detailed": """
+        - **Psychological:** Significantly reduces social anxiety and stress levels (cortisol reduction).
+        - **Bonding:** Enhances feelings of trust, empathy, and bonding with partners.
+        - **Sexual Wellness:** Can increase orgasm intensity and emotional intimacy.
+        - **Pain:** Shows potential in modulation of pain perception.
+        """,
+        "protocol_detailed": """
+        **Dosage:** 10mcg - 50mcg (Equivalent to approx 5iu - 25iu depending on conversion)
+
+        **Frequency:** As needed (or Daily for mood support)
+
+        **Timing:** 30 minutes before social/intimate events
+
+        **Cycle:** Can be used continuously or cycled
+
+        **Study Note:** Plays a crucial role in social cognition and fear extinction.
+        """,
+        "side_effects_detailed": "Nausea (if dose is too high), headache, flushing/warmth, slight dizziness.",
+        "storage": "Refrigerate."
+    },
     "PT-141": {
         "vial_mg": 10.0, "dose_mcg": 1000.0, 
         "type": "Libido",
@@ -649,13 +676,13 @@ if 'dose_unit_index' not in st.session_state: st.session_state.dose_unit_index =
 if 'dose_unit_selection' not in st.session_state: st.session_state.dose_unit_selection = "mcg"
 if 'calc_count' not in st.session_state: st.session_state.calc_count = 0
 
-# --- NAVIGATION SIDEBAR (v2.3 UI) ---
+# --- NAVIGATION SIDEBAR ---
 with st.sidebar:
-    st.image("https://img.icons8.com/color/96/000000/biotech.png", width=60) # Placeholder logo
+    st.image("https://img.icons8.com/color/96/000000/biotech.png", width=60)
     st.title("Navigation")
     page = st.radio("Go to:", ["🧮 Calculator", "📚 Peptide Database"])
     st.markdown("---")
-    st.caption("v2.3 | by Musika")
+    st.caption("v3.0 | by Musika")
 
 # ==============================================================================
 # PAGE 1: CALCULATOR
@@ -693,14 +720,20 @@ if page == "🧮 Calculator":
     st.subheader("🧪 Reconstitution Calculator")
     st.divider()
 
-    # --- MAIN DASHBOARD ---
+    # --- MAIN LAYOUT LOGIC (MOBILE OPTIMIZED) ---
+    # To force the specific order on mobile (Inputs -> Results -> Profile -> Guides),
+    # we CANNOT use simple columns for the guides. They must follow the result column flow.
+    
+    # 1. TOP SECTION: INPUTS & RESULTS (Split columns on Desktop, Stacked on Mobile)
     left_col, right_col = st.columns([1, 1.2], gap="large")
 
-    # === LEFT COLUMN: INPUTS & GUIDES ===
+    # === LEFT COLUMN: INPUTS ONLY ===
     with left_col:
         st.info("1️⃣ **Configuration**")
         
-        selected_peptide = st.selectbox("Select Peptide Profile", list(PEPTIDE_PRESETS.keys()), key="peptide_selector", on_change=load_preset)
+        # Ensure dropdown includes ALL presets sorted
+        sorted_presets = sorted(list(PEPTIDE_PRESETS.keys()))
+        selected_peptide = st.selectbox("Select Peptide Profile", sorted_presets, key="peptide_selector", on_change=load_preset)
         
         st.write("📦 **Stock & Water**")
         c1, c2, c3 = st.columns([1.5, 1, 1.5])
@@ -730,18 +763,7 @@ if page == "🧮 Calculator":
         syringe_type = st.radio("Syringe Type", ["U-100 (Standard)", "U-40 (Vet)"], horizontal=True)
         syringe_factor = 100 if "U-100" in syringe_type else 40
 
-        st.divider()
-
-        with st.expander("🛠️ How to Reconstitute (Mix)"):
-            st.markdown(f"1. **Clean:** Wipe the top of the **{vial_qty} {vial_unit}** peptide vial and the water vial with an alcohol swab.\n2. **Withdraw:** Draw exactly **{water_ml} mL** of Bacteriostatic Water.\n3. **Inject:** Slowly inject the **{water_ml} mL** of water into the peptide vial. Aim for the glass wall, not the powder directly.\n4. **Mix:** **Do not shake.** Gently swirl the vial until dissolved.\n5. **Store:** Refrigerate immediately.")
-
-        with st.expander("💉 Visual Guide: Injection Sites", expanded=True):
-            try:
-                st.image("injection_sites.png", caption="Recommended Subcutaneous Zones", use_container_width=True)
-            except:
-                st.warning("⚠️ Image not found. Please upload 'injection_sites.png' to your GitHub repository.")
-
-    # === RIGHT COLUMN: RESULTS ===
+    # === RIGHT COLUMN: RESULTS + PROFILE ===
     with right_col:
         st.success("2️⃣ **Profile & Results**")
 
@@ -755,21 +777,7 @@ if page == "🧮 Calculator":
             doses_per_vial = total_peptide_mcg / desired_dose_mcg
             peptide_info = PEPTIDE_PRESETS[selected_peptide]
 
-            # --- CALCULATOR VIEW (SUMMARIZED) ---
-            with st.expander(f"📖 **Profile: {selected_peptide}**", expanded=True):
-                if selected_peptide == "Custom (Enter manually)":
-                     st.write("Manual mode selected.")
-                else:
-                    st.markdown(f"**Type:** {peptide_info['type']}")
-                    # Use Summarized Data for Calc View
-                    st.markdown(f"**🌟 Key Benefits:** {peptide_info['benefits_summary']}")
-                    st.warning(f"**⚠️ Common Side Effects:** {peptide_info['side_effects_summary']}")
-                    st.info(f"**📋 Quick Protocol:** {peptide_info['protocol_summary']}")
-                    st.markdown(f"**❄️ Storage:** {peptide_info['storage']}")
-                    st.caption("*For full details, visit the 'Peptide Database' tab.*")
-
-            st.divider()
-
+            # --- A. METRICS & VISUALS (First) ---
             c1, c2, c3 = st.columns(3)
             c1.metric("Draw Volume", f"{draw_ml:.4f} mL")
             c2.metric("Syringe Units", f"{units:.1f} Units")
@@ -787,11 +795,42 @@ if page == "🧮 Calculator":
                 st.markdown(f"""<div style="margin-bottom:5px; font-weight:bold;">Visual Syringe Fill ({units:.1f} Units):</div><div class="syringe-container"><div class="syringe-liquid" style="width: {percentage}%;"></div><div class="syringe-markings"></div></div>""", unsafe_allow_html=True)
                 st.caption(f"Draw to the **{units:.1f}** mark on your {syringe_type} syringe.")
 
+            # --- B. PEPTIDE PROFILE (Second) ---
+            st.write("") # Spacer
+            with st.expander(f"📖 **Profile: {selected_peptide}**", expanded=True):
+                if selected_peptide == "Custom (Enter manually)":
+                     st.write("Manual mode selected.")
+                else:
+                    st.markdown(f"**Type:** {peptide_info['type']}")
+                    st.markdown(f"**🌟 Key Benefits:** {peptide_info['benefits_summary']}")
+                    st.warning(f"**⚠️ Common Side Effects:** {peptide_info['side_effects_summary']}")
+                    st.info(f"**📋 Quick Protocol:** {peptide_info['protocol_summary']}")
+                    st.markdown(f"**❄️ Storage:** {peptide_info['storage']}")
+                    st.caption("*For full details, visit the 'Peptide Database' tab.*")
+
             protocol_text = f"Peptide: {selected_peptide}\nType: {peptide_info['type']}\nStock: {vial_qty}{vial_unit} + {water_ml}mL Water\nConc: {concentration_mg_ml:.2f} mg/mL\nDose: {desired_dose}{dose_unit} = {units:.1f} Units ({syringe_type})\nSupply: 1 vial lasts approx {int(doses_per_vial)} doses.\n\nQuick Protocol: {peptide_info['protocol_summary']}\nBenefits: {peptide_info['benefits_summary']}\nStorage: {peptide_info['storage']}"
             st.download_button("💾 Save Protocol", protocol_text, "protocol.txt", use_container_width=True)
         else:
             st.info("Enter inputs to see results.")
 
+    # 2. BOTTOM SECTION: GUIDES (Rendered AFTER results on all devices)
+    st.divider()
+    
+    # --- RECONSTITUTE GUIDE ---
+    with st.expander("🛠️ How to Reconstitute (Mix)", expanded=True):
+         if vial_qty > 0 and water_ml > 0:
+            st.markdown(f"1. **Clean:** Wipe the top of the **{vial_qty} {vial_unit}** peptide vial and the water vial with an alcohol swab.\n2. **Withdraw:** Draw exactly **{water_ml} mL** of Bacteriostatic Water.\n3. **Inject:** Slowly inject the **{water_ml} mL** of water into the peptide vial. Aim for the glass wall, not the powder directly.\n4. **Mix:** **Do not shake.** Gently swirl the vial until dissolved.\n5. **Store:** Refrigerate immediately.")
+         else:
+             st.write("Enter Stock and Water amounts to see specific instructions.")
+
+    # --- VISUAL GUIDE (Auto-Hidden) ---
+    with st.expander("💉 Visual Guide: Injection Sites", expanded=False):
+        try:
+            st.image("injection_sites.png", caption="Recommended Subcutaneous Zones", use_container_width=True)
+        except:
+            st.warning("⚠️ Image not found. Please upload 'injection_sites.png' to your GitHub repository.")
+
+    # Footer
     st.divider()
     c_foot1, c_foot2 = st.columns([1,1])
     with c_foot1:
@@ -800,7 +839,7 @@ if page == "🧮 Calculator":
         st.markdown("[![Hits](https://hits.sh/peptide-calculator.streamlit.app.svg?style=flat-square&label=Total%20Visits&extraCount=2023&color=79c83d)](https://hits.sh/peptide-calculator.streamlit.app/)")
 
 # ==============================================================================
-# PAGE 2: PEPTIDE DATABASE (Notion-Style / v2.3)
+# PAGE 2: PEPTIDE DATABASE (Notion-Style / v3.0)
 # ==============================================================================
 elif page == "📚 Peptide Database":
     st.subheader("📚 Peptide Database")
