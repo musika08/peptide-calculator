@@ -9,10 +9,10 @@ def perform_calc(vial_qty, vial_unit, water_ml, desired_dose, dose_unit, syringe
     elif vial_unit == 'mcg': stock_mg = vial_qty / 1000
     elif vial_unit == 'g': stock_mg = vial_qty * 1000
     
-    # LOGIC BRANCH A: Peptide has defined IU conversion
-    if conversion and conversion > 1:
+    # LOGIC BRANCH A: Peptide has defined IU conversion (Oxytocin/HCG)
+    if conversion and conversion > 0:
         if vial_unit in ['mg', 'mcg', 'g']:
-            total_stock_units = stock_mg * conversion
+            total_stock_units = stock_mg * (conversion if conversion > 1 else 1)
         else:
             total_stock_units = vial_qty
         
@@ -21,12 +21,7 @@ def perform_calc(vial_qty, vial_unit, water_ml, desired_dose, dose_unit, syringe
         elif dose_unit == 'mcg': target_dose_units = (desired_dose / 1000) * conversion
         else: target_dose_units = 0
             
-    # LOGIC BRANCH B: Peptide is naturally IU (HCG)
-    elif conversion == 1: 
-        total_stock_units = vial_qty 
-        target_dose_units = desired_dose
-        
-    # LOGIC BRANCH C: Standard Mass-Based
+    # LOGIC BRANCH B: Standard Mass-Based
     else:
         if vial_unit == 'mg': total_stock_units = vial_qty * 1000
         elif vial_unit == 'g': total_stock_units = vial_qty * 1000000
