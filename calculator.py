@@ -1,57 +1,50 @@
-# calculator.py - The Calculation Engine v4.0
+# calculator.py
+from database import FACTORS
 
-# Define factors locally to break circular import dependencies
-FACTORS = {'mcg': 1, 'mg': 1000, 'g': 1000000, 'IU': 1}
-
-def calculate_dosage(vial_qty, vial_unit, water_ml, desired_dose, dose_unit, syringe_factor, peptide_info):
-    """
-    Handles reconstitution math for mass-based and IU-based peptides.
-    Returns: draw_ml, units, doses_per_vial, display_strength
-    """
+def perform_calc(vial_qty, vial_unit, water_ml, desired_dose, dose_unit, syringe_factor, peptide_info):
     conversion = peptide_info.get("iu_conversion")
     total_stock_units = 0
-    display_strength = ""
-
-    # Logic for Peptides with IU Conversion (e.g., Oxytocin: 600, HCG: 1)
-    if conversion:
-        if vial_unit in ['mg', 'mcg', 'g']:
-            # Convert input mass to mg, then to IU
-            stock_mg = vial_qty * (FACTORS[vial_unit] / 1000)
-            total_stock_units = stock_mg * conversion
-            display_strength = f"{stock_mg:.1f}mg ≈ {int(total_stock_units)} IU"
-        else:
-            # User input is already in IU
-            total_stock_units = vial_qty
-            display_strength = f"{int(vial_qty)} IU"
-
-        # Calculate target dose in IU
-        if dose_unit == 'IU':
-            target_dose_units = desired_dose
-        elif dose_unit == 'mg':
-            target_dose_units = desired_dose * conversion
-        else: # mcg
-            target_dose_units = (desired_dose / 1000) * conversion
-
-    # Logic for standard Mass-Based peptides (e.g., Tirzepatide, BPC-157)
-    else:
-        total_stock_units = vial_qty * FACTORS[vial_unit]
-        target_dose_units = desired_dose * FACTORS[dose_unit]
-        display_strength = f"{total_stock_units / 1000:.1f} mg"
-
-    # Final Volume Calculations
-    if total_stock_units > 0 and water_ml > 0 and target_dose_units > 0:
-        # Concentration = total units / total ml
-        concentration_per_ml = total_stock_units / water_ml
-        
-        # mL to draw = target dose / concentration
-        draw_ml = target_dose_units / concentration_per_ml
-        
-        # Syringe units = ml * syringe type (100 or 40)
-        units = draw_ml * syringe_factor
-        
-        # Total doses available in this vial
-        doses_per_vial = total_stock_units / target_dose_units
-        
-        return draw_ml, units, doses_per_vial, display_strength
     
-    return 0.0, 0.0, 0.0, ""
+    # Helper to get pure mass in mg
+    stock_mg = 0 
+    if vial_unit == 'mg': stock_mg = vial_qty
+    elif vial_unit == 'mcg': stock_mg = vial_qty / 1000
+    elif vial_unit == 'g': stock_mg = vial_qty * 1000
+    
+    # LOGIC BRANCH A: Peptide has defined IU conversion
+    if conversion and conversion > 1:
+        if vial_unit in ['mg', 'mcg', 'g']:
+            total_stock_units = stock_mg * conversion
+        else:
+            total_stock_units = vial_qty
+        
+        if dose_unit == 'IU': target_dose_units = desired_dose
+        elif dose_unit == 'mg': target_dose_units = desired_dose * conversion
+        elif dose_unit == 'mcg': target_dose_units = (desired_dose / 1000) * conversion
+        else: target_dose_units = 0
+            
+    # LOGIC BRANCH B: Peptide is naturally IU (HCG)
+    elif conversion == 1: 
+        total_stock_units = vial_qty 
+        target_dose_units = desired_dose
+        
+    # LOGIC BRANCH C: Standard Mass-Based
+    else:
+        if vial_unit == 'mg': total_stock_units = vial_qty * 1000
+        elif vial_unit == 'g': total_stock_units = vial_qty * 1000000
+        elif vial_unit == 'mcg': total_stock_units = vial_qty
+        else: total_stock_units = 0
+        
+        if dose_unit == 'mg': target_dose_units = desired_dose * 1000
+        elif dose_unit == 'g': target_dose_units = desired_dose * 1000000
+        elif dose_unit == 'mcg': target_dose_units = desired_dose
+        else: target_dose_units = 0
+
+    if total_stock_units > 0 and target_dose_units > 0:
+        concentration_per_ml = total_stock_units / water_ml
+        draw_ml = target_dose_units / concentration_per_ml
+        units = draw_ml * syringe_factor
+        per_vial = total_stock_units / target_dose_units
+        return draw_ml, units, per_vial
+    
+    return 0, 0, 0
