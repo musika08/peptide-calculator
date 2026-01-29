@@ -56,24 +56,35 @@ st.markdown("""
         font-size: 0.9em;
         line-height: 1.6;
     }
+    .contra-header {
+        color: #ff4b4b;
+        font-weight: bold;
+        margin-top: 10px;
+        display: block;
+        border-top: 1px solid #555;
+        padding-top: 5px;
+    }
 </style>
 """, unsafe_allow_html=True)
 
-# --- KNOWLEDGE BASE (v3.5) ---
+# --- KNOWLEDGE BASE (Updated with Contraindications) ---
 PEPTIDE_PRESETS = {
     "AOD-9604": {
         "vial_mg": 5.0, "dose_mcg": 300.0, "default_dose_unit": "mcg", "default_stock_unit": "mg", "iu_conversion": None,
         "type": "Fat Loss", "filter_cat": "Slimming & Fat Loss",
         "desc": "Anti-Obesity Drug 9604. A modified fragment of the C-terminus of Human Growth Hormone (HGH) designed specifically to burn fat without the blood sugar effects of full HGH.",
         "benefits_summary": """
-• Targeted fat burning (lipolysis)
-• No blood sugar spikes
-• Cartilage repair support
-• Non-hormonal (no IGF-1 impact)""",
+- Targeted fat burning (lipolysis)
+- No blood sugar spikes
+- Cartilage repair support
+- Non-hormonal (no IGF-1 impact)
+""",
         "side_effects_summary": """
-• Injection site redness
-• Mild stomach upset (rare)
-• Headache (rare)""",
+- Injection site redness
+- Mild stomach upset (rare)
+- Headache (rare)
+""",
+        "contraindications": "None specifically reported, but avoid if pregnant or breastfeeding.",
         "protocol_summary": "300mcg daily, morning fasted.",
         "benefits_detailed": """
         - **Targeted Lipolysis:** Specifically stimulates the breakdown of fat cells (lipolysis) and inhibits the formation of new fat (lipogenesis).
@@ -105,14 +116,17 @@ PEPTIDE_PRESETS = {
         "type": "Regenerative", "filter_cat": "Injury & Repair",
         "desc": "Body Protection Compound-157. A 15-amino acid chain derived from gastric juice. It modulates the nitric oxide system and promotes angiogenesis.",
         "benefits_summary": """
-• Accelerates tendon/ligament repair
-• Heals gut lining (IBS/Leaky Gut)
-• Reduces neuro-inflammation
-• Protects liver and organs""",
+- Accelerates tendon/ligament repair
+- Heals gut lining (IBS/Leaky Gut)
+- Reduces neuro-inflammation
+- Protects liver and organs
+""",
         "side_effects_summary": """
-• Mild nausea (rare)
-• Injection site irritation
-• Fatigue during healing phase""",
+- Mild nausea (rare)
+- Injection site irritation
+- Fatigue during healing phase
+""",
+        "contraindications": "Known active cancer (due to angiogenesis properties).",
         "protocol_summary": "250-500mcg daily or 2x daily.",
         "benefits_detailed": """
         - **Connective Tissue:** Drastically speeds up the healing of soft tissue injuries (tendons, ligaments, fascia) by promoting fibroblast migration.
@@ -142,16 +156,19 @@ PEPTIDE_PRESETS = {
     "BPC-157 + TB-500 Blend": {
         "vial_mg": 10.0, "dose_mcg": 500.0, "default_dose_unit": "mcg", "default_stock_unit": "mg", "iu_conversion": None,
         "type": "Regenerative Blend", "filter_cat": "Injury & Repair",
-        "desc": "The 'Wolverine Stack'. Synergistic combination of BPC-157 and TB-500.",
+        "desc": "The 'Wolverine Stack'. Synergistic combination where BPC-157 works on connective tissue/gut, while TB-500 works on muscle tissue.",
         "benefits_summary": """
-• Maximum surgical/injury recovery
-• Improves joint flexibility
-• Cardiovascular protection
-• Systemic anti-inflammatory""",
+- Maximum surgical/injury recovery
+- Improves joint flexibility
+- Cardiovascular protection
+- Systemic anti-inflammatory
+""",
         "side_effects_summary": """
-• Head rush (TB-500)
-• Fatigue/Lethargy
-• Injection site stinging""",
+- Head rush (TB-500)
+- Fatigue/Lethargy
+- Injection site stinging
+""",
+        "contraindications": "Active cancer or history of malignancy (TB-500 promotes cell migration).",
         "protocol_summary": "500mcg-1mg total fluid daily.",
         "benefits_detailed": """
         - **Total Repair:** BPC targets the tendon/bone interface, while TB-500 targets muscle belly and actin filaments.
@@ -178,21 +195,25 @@ PEPTIDE_PRESETS = {
     "CJC-1295 (No DAC)": {
         "vial_mg": 5.0, "dose_mcg": 100.0, "default_dose_unit": "mcg", "default_stock_unit": "mg", "iu_conversion": None,
         "type": "Growth Hormone", "filter_cat": "Muscle & Workout",
-        "desc": "Modified GRF 1-29. A GHRH analog that stimulates pulsatile Growth Hormone release.",
+        "desc": "Modified GRF 1-29. A GHRH analog that acts on the pituitary gland to stimulate pulsatile Growth Hormone release.",
         "benefits_summary": """
-• Increases lean muscle mass
-• Promotes deep slow-wave sleep
-• Improves skin elasticity
-• Accelerates fat metabolism""",
+- Increases lean muscle mass
+- Promotes deep slow-wave sleep
+- Improves skin elasticity
+- Accelerates fat metabolism
+""",
         "side_effects_summary": """
-• Flushing/Warmth (Vasodilation)
-• Head rush
-• Vivid dreams""",
+- Flushing/Warmth (Vasodilation)
+- Head rush
+- Vivid dreams
+""",
+        "contraindications": "Active cancer, history of pituitary tumors.",
         "protocol_summary": "100mcg nightly, fasted.",
         "benefits_detailed": """
-        - **Hyperplasia:** Stimulates the division of muscle cells.
-        - **Sleep Architecture:** Dramatically improves Delta-wave (Stage 4) deep sleep.
-        - **Anti-Aging:** Increases collagen synthesis.
+        - **Hyperplasia:** Stimulates the division of muscle cells, increasing the total number of fibers.
+        - **Sleep Architecture:** Dramatically improves Delta-wave (Stage 4) deep sleep, critical for physical recovery.
+        - **Anti-Aging:** Increases collagen synthesis, leading to thicker skin and reduced wrinkles.
+        - **Lipolysis:** Enhances the body's use of fat for fuel during the night.
         """,
         "protocol_detailed": """
         **Dosage:** 100mcg (0.1mg)
@@ -202,11 +223,14 @@ PEPTIDE_PRESETS = {
         **Timing:** Immediately before bed (Fasted 2+ hours)
 
         **Cycle:** 12 Weeks +
+
+        **Study Note:** Must be taken on an empty stomach; insulin spikes (from food) blunt the GH release signal.
         """,
         "side_effects_detailed": """
         • Immediate head rush (vasodilation)
         • Warm/flushed face (lasts 10-20 mins)
         • Vivid dreams
+        • Mild water retention
         """,
         "storage": "Refrigerate. Sensitive to light/heat."
     },
@@ -215,14 +239,17 @@ PEPTIDE_PRESETS = {
         "type": "Growth Hormone Blend", "filter_cat": "Muscle & Workout",
         "desc": "The Gold Standard GH Stack. Combines CJC-1295 and Ipamorelin.",
         "benefits_summary": """
-• Max natural GH secretion
-• Significant body recomposition
-• Superior recovery & sleep
-• No cortisol/prolactin spike""",
+- Max natural GH secretion
+- Significant body recomposition
+- Superior recovery & sleep
+- No cortisol/prolactin spike
+""",
         "side_effects_summary": """
-• Head rush/Flushing
-• Numb fingers (Carpal Tunnel)
-• Water retention""",
+- Head rush/Flushing
+- Numb fingers (Carpal Tunnel)
+- Water retention
+""",
+        "contraindications": "Active cancer, history of pituitary tumors.",
         "protocol_summary": "200-300mcg total nightly, fasted.",
         "benefits_detailed": """
         - **Synergistic Power:** Maximizes GH secretion naturally.
@@ -248,16 +275,19 @@ PEPTIDE_PRESETS = {
     "Epithalon": {
         "vial_mg": 10.0, "dose_mcg": 5000.0, "default_dose_unit": "mcg", "default_stock_unit": "mg", "iu_conversion": None,
         "type": "Anti-Aging", "filter_cat": "Wellness & Longevity",
-        "desc": "Synthetic tetrapeptide that increases telomerase activity.",
+        "desc": "Synthetic tetrapeptide that increases telomerase activity, potentially lengthening telomeres.",
         "benefits_summary": """
-• Extends lifespan (Telomeres)
-• Resets circadian rhythm
-• Boosts melatonin naturally
-• Anti-tumor/cancer protective""",
+- Extends lifespan (Telomeres)
+- Resets circadian rhythm
+- Boosts melatonin naturally
+- Anti-tumor/cancer protective
+""",
         "side_effects_summary": """
-• Daytime drowsiness (rare)
-• Vivid dreams
-• Very safe profile""",
+- Daytime drowsiness (rare)
+- Vivid dreams
+- Very safe profile
+""",
+        "contraindications": "None reported in studies.",
         "protocol_summary": "5mg-10mg daily for 10-20 days.",
         "benefits_detailed": """
         - **Telomere Extension:** Upregulates telomerase to protect DNA.
@@ -285,14 +315,17 @@ PEPTIDE_PRESETS = {
         "type": "Cosmetic/Repair", "filter_cat": "Skin, Hair & Beauty",
         "desc": "Copper Tripeptide-1. A genomic modulator that resets over 4,000 genes to a younger state.",
         "benefits_summary": """
-• Boosts collagen & elastin
-• Tightens loose skin
-• Regrows hair (follicle size)
-• Activates DNA repair genes""",
+- Boosts collagen & elastin
+- Tightens loose skin
+- Regrows hair (follicle size)
+- Activates DNA repair genes
+""",
         "side_effects_summary": """
-• Painful injection (Sting)
-• Red welts/bruising
-• Zinc depletion""",
+- Painful injection (Sting)
+- Red welts/bruising
+- Zinc depletion
+""",
+        "contraindications": "Wilson's Disease (Copper storage disease).",
         "protocol_summary": "1-2mg daily. Evening.",
         "benefits_detailed": """
         - **Skin Rejuvenation:** Increases collagen synthesis by 70%, thickens dermis.
@@ -320,14 +353,17 @@ PEPTIDE_PRESETS = {
         "type": "Cosmetic/Recovery Blend", "filter_cat": "Skin, Hair & Beauty",
         "desc": "70mg Tri-Blend. BPC-157 and TB-500 are added to buffer the GHK-Cu, reducing the 'sting'.",
         "benefits_summary": """
-• Painless GHK-Cu injection
-• Total body skin tightening
-• Rapid injury recovery
-• Gut & Heart health""",
+- Painless GHK-Cu injection
+- Total body skin tightening
+- Rapid injury recovery
+- Gut & Heart health
+""",
         "side_effects_summary": """
-• Mild redness
-• Flushing
-• Fatigue""",
+- Mild redness
+- Flushing
+- Fatigue
+""",
+        "contraindications": "Wilson's Disease, Active Cancer.",
         "protocol_summary": "2.5mg - 3mg total daily.",
         "benefits_detailed": """
         - **Painless Application:** BPC-157 neutralizes acidity of Copper.
@@ -355,14 +391,17 @@ PEPTIDE_PRESETS = {
         "type": "Hormonal", "filter_cat": "Libido & Sexual Health",
         "desc": "Human Chorionic Gonadotropin. Mimics LH to maintain testicular function.",
         "benefits_summary": """
-• Prevents testicular shrinkage
-• Maintains fertility/sperm
-• Boosts libido & mood
-• TRT adjunct support""",
+- Prevents testicular shrinkage
+- Maintains fertility/sperm
+- Boosts libido & mood
+- TRT adjunct support
+""",
         "side_effects_summary": """
-• Estrogen spikes (High E2)
-• Acne/Water retention
-• Gynecomastia risk""",
+- Estrogen spikes (High E2)
+- Acne/Water retention
+- Gynecomastia risk
+""",
+        "contraindications": "Prostate cancer, androgen-dependent tumors.",
         "protocol_summary": "250-500 IU 2-3x per week.",
         "benefits_detailed": """
         - **Testicular Health:** Prevents atrophy during TRT cycles.
@@ -391,14 +430,17 @@ PEPTIDE_PRESETS = {
         "type": "Growth Hormone", "filter_cat": "Muscle & Workout",
         "desc": "Selective GH Secretagogue. The mildest and safest GHRP.",
         "benefits_summary": """
-• Clean GH release (No hunger)
-• Fat loss & muscle sparing
-• Improved sleep quality
-• Anti-aging support""",
+- Clean GH release (No hunger)
+- Fat loss & muscle sparing
+- Improved sleep quality
+- Anti-aging support
+""",
         "side_effects_summary": """
-• Very mild
-• Slight water retention
-• Rare dizziness""",
+- Very mild
+- Slight water retention
+- Rare dizziness
+""",
+        "contraindications": "Active cancer.",
         "protocol_summary": "100-300mcg nightly, fasted.",
         "benefits_detailed": """
         - **Pure Signal:** Stimulates steady GH pulse without hunger spikes.
@@ -426,14 +468,17 @@ PEPTIDE_PRESETS = {
         "type": "Hormonal", "filter_cat": "Libido & Sexual Health",
         "desc": "A neuromodulator that stimulates the hypothalamus to release GnRH.",
         "benefits_summary": """
-• Restarts HPTA axis safely
-• Boosts fertility (LH/FSH)
-• Increases libido
-• No testicular desensitization""",
+- Restarts HPTA axis safely
+- Boosts fertility (LH/FSH)
+- Increases libido
+- No testicular desensitization
+""",
         "side_effects_summary": """
-• Flushing/Warmth
-• Injection site redness
-• Mild headache""",
+- Flushing/Warmth
+- Injection site redness
+- Mild headache
+""",
+        "contraindications": "None specifically reported.",
         "protocol_summary": "100-200mcg daily.",
         "benefits_detailed": """
         - **HPTA Restart:** Safest way to restart natural testosterone.
@@ -461,14 +506,17 @@ PEPTIDE_PRESETS = {
         "type": "Ultimate Repair/Cosmetic Blend", "filter_cat": "Skin, Hair & Beauty",
         "desc": "The 80mg Master Stack. Adds KPV to the GHK/BPC/TB trio.",
         "benefits_summary": """
-• Clears Acne, Psoriasis, Eczema
-• Heals Gut (IBD/Colitis)
-• Systemic anti-inflammatory
-• Total tissue repair""",
+- Clears Acne, Psoriasis, Eczema
+- Heals Gut (IBD/Colitis)
+- Systemic anti-inflammatory
+- Total tissue repair
+""",
         "side_effects_summary": """
-• Red welts (Injection site)
-• Fatigue (Herxheimer)
-• Flushing""",
+- Red welts (Injection site)
+- Fatigue (Herxheimer)
+- Flushing
+""",
+        "contraindications": "Wilson's Disease, Active Cancer.",
         "protocol_summary": "3mg total daily.",
         "benefits_detailed": """
         - **Dermatology:** KPV actively treats acne, psoriasis, and eczema.
@@ -496,15 +544,18 @@ PEPTIDE_PRESETS = {
         "type": "Cosmetic", "filter_cat": "Skin, Hair & Beauty",
         "desc": "Alpha-MSH analog. Stimulates melanin production and sexual arousal.",
         "benefits_summary": """
-• Deep, rapid tan
-• Extreme libido boost
-• Appetite suppression
-• UV protection""",
+- Deep, rapid tan
+- Extreme libido boost
+- Appetite suppression
+- UV protection
+""",
         "side_effects_summary": """
-• Severe Nausea
-• Facial Flushing
-• Spontaneous erections
-• Darkening moles""",
+- Severe Nausea
+- Facial Flushing
+- Spontaneous erections
+- Darkening moles
+""",
+        "contraindications": "Melanoma, history of skin cancer, uncontrolled hypertension.",
         "protocol_summary": "100-500mcg before UV exposure.",
         "benefits_detailed": """
         - **Photoprotection:** Creates a deep, natural tan that protects the skin.
@@ -533,14 +584,17 @@ PEPTIDE_PRESETS = {
         "type": "Metabolic/Mitochondrial", "filter_cat": "Muscle & Workout",
         "desc": "Mitochondrial-Derived Peptide. Known as an 'exercise mimetic'.",
         "benefits_summary": """
-• Increases VO2 Max/Endurance
-• Prevents weight gain
-• Improves bone metabolism
-• Cellular energy boost""",
+- Increases VO2 Max/Endurance
+- Prevents weight gain
+- Improves bone metabolism
+- Cellular energy boost
+""",
         "side_effects_summary": """
-• Painful injection (Sting)
-• Insomnia (if late)
-• Hyperactivity""",
+- Painful injection (Sting)
+- Insomnia (if late)
+- Hyperactivity
+""",
+        "contraindications": "None reported, but avoid late night administration.",
         "protocol_summary": "5mg once weekly.",
         "benefits_detailed": """
         - **Endurance:** Increases cellular ability to utilize glucose and oxygen.
@@ -568,14 +622,17 @@ PEPTIDE_PRESETS = {
         "type": "Cellular Energy", "filter_cat": "Wellness & Longevity",
         "desc": "Nicotinamide Adenine Dinucleotide. The fuel for cellular engines.",
         "benefits_summary": """
-• Clears brain fog
-• Restores cellular energy
-• Repairs DNA damage
-• Anti-aging/Longevity""",
+- Clears brain fog
+- Restores cellular energy
+- Repairs DNA damage
+- Anti-aging/Longevity
+""",
         "side_effects_summary": """
-• Chest pressure (The Flush)
-• Anxiety/Panic feeling
-• Nausea/Cramps""",
+- Chest pressure (The Flush)
+- Anxiety/Panic feeling
+- Nausea/Cramps
+""",
+        "contraindications": "Active cancer (theoretical risk).",
         "protocol_summary": "25-50mg 2-3x per week. SLOW INJECTION.",
         "benefits_detailed": """
         - **Cognition:** Rapidly clears brain fog and enhances mental sharpness.
@@ -606,14 +663,17 @@ PEPTIDE_PRESETS = {
         "type": "Hormonal/Wellness", "filter_cat": "Nootropics & Brain",
         "desc": "The 'Love Hormone'. Acts as a neurotransmitter regulating social interaction and bonding.",
         "benefits_summary": """
-• Reduces social anxiety
-• Lowers cortisol (Stress)
-• Enhances emotional bonding
-• Modulates pain perception""",
+- Reduces social anxiety
+- Lowers cortisol (Stress)
+- Enhances emotional bonding
+- Modulates pain perception
+""",
         "side_effects_summary": """
-• Nausea (at high dose)
-• Headache
-• Flushing""",
+- Nausea (at high dose)
+- Headache
+- Flushing
+""",
+        "contraindications": "Pregnancy (induces labor), severe cardiovascular disease.",
         "protocol_summary": "20-50 IU as needed.",
         "benefits_detailed": """
         - **Psychological:** Significantly reduces social anxiety and stress levels.
@@ -642,14 +702,17 @@ PEPTIDE_PRESETS = {
         "type": "Libido", "filter_cat": "Libido & Sexual Health",
         "desc": "Bremelanotide. Works on the nervous system to treat hypoactive sexual desire.",
         "benefits_summary": """
-• Treats ED & Low Libido
-• Works when Viagra fails
-• Increases physical arousal
-• For Men & Women""",
+- Treats ED & Low Libido
+- Works when Viagra fails
+- Increases physical arousal
+- For Men & Women
+""",
         "side_effects_summary": """
-• Nausea (Common)
-• Flushing/Warmth
-• Headache""",
+- Nausea (Common)
+- Flushing/Warmth
+- Headache
+""",
+        "contraindications": "Uncontrolled hypertension (raises BP).",
         "protocol_summary": "1.5-2mg, 2 hours before activity.",
         "benefits_detailed": """
         - **Mechanism:** Targets the hypothalamus, not the vascular system.
@@ -678,14 +741,17 @@ PEPTIDE_PRESETS = {
         "type": "Metabolic (GLP-1/GIP/Glucagon)", "filter_cat": "Slimming & Fat Loss",
         "desc": "The 'Triple G' Agonist. The most potent weight loss agent currently in trials.",
         "benefits_summary": """
-• Extreme weight loss (24%+)
-• Burns liver fat (NAFLD)
-• Resets insulin sensitivity
-• Increases metabolism""",
+- Extreme weight loss (24%+)
+- Burns liver fat (NAFLD)
+- Resets insulin sensitivity
+- Increases metabolism
+""",
         "side_effects_summary": """
-• High Heart Rate
-• Skin sensitivity
-• Nausea/Constipation""",
+- High Heart Rate
+- Skin sensitivity
+- Nausea/Constipation
+""",
+        "contraindications": "MEN2, Medullary Thyroid Cancer history.",
         "protocol_summary": "2mg weekly, titrate up.",
         "benefits_detailed": """
         - **Efficacy:** The most potent agent currently known; 24.2% average weight loss in trials.
@@ -717,15 +783,18 @@ PEPTIDE_PRESETS = {
         "type": "Metabolic (GLP-1)", "filter_cat": "Slimming & Fat Loss",
         "desc": "GLP-1 Agonist. The standard for medical weight loss.",
         "benefits_summary": """
-• Significant weight loss (15%)
-• Controls blood sugar
-• Cardioprotective
-• Reduces addiction cravings""",
+- Significant weight loss (15%)
+- Controls blood sugar
+- Cardioprotective
+- Reduces addiction cravings
+""",
         "side_effects_summary": """
-• Nausea/Vomiting
-• Severe Constipation
-• Fatigue
-• Muscle loss""",
+- Nausea/Vomiting
+- Severe Constipation
+- Fatigue
+- Muscle loss
+""",
+        "contraindications": "MEN2, Medullary Thyroid Cancer history.",
         "protocol_summary": "0.25mg weekly, titrate up.",
         "benefits_detailed": """
         - **Satiety:** Slows gastric emptying, keeping you feeling full for much longer.
@@ -756,14 +825,17 @@ PEPTIDE_PRESETS = {
         "type": "Regenerative", "filter_cat": "Injury & Repair",
         "desc": "Synthetic Thymosin Beta-4. The 'Muscle Repair' peptide.",
         "benefits_summary": """
-• Heals muscle tears
-• Improves flexibility
-• Reduces scar tissue
-• Cardiac repair""",
+- Heals muscle tears
+- Improves flexibility
+- Reduces scar tissue
+- Cardiac repair
+""",
         "side_effects_summary": """
-• Head rush (common)
-• Lethargy
-• Flu-like symptoms""",
+- Head rush (common)
+- Lethargy
+- Flu-like symptoms
+""",
+        "contraindications": "Active cancer (promotes cell migration).",
         "protocol_summary": "2.5mg twice weekly.",
         "benefits_detailed": """
         - **Muscle Repair:** The primary peptide for torn muscles, strains, and deep tissue bruising.
@@ -794,14 +866,17 @@ PEPTIDE_PRESETS = {
         "type": "Growth Hormone", "filter_cat": "Slimming & Fat Loss",
         "desc": "FDA Approved GHRH for visceral fat reduction.",
         "benefits_summary": """
-• Burns belly fat (Visceral)
-• Increases muscle tone
-• Nootropic effects
-• Lowers triglycerides""",
+- Burns belly fat (Visceral)
+- Increases muscle tone
+- Nootropic effects
+- Lowers triglycerides
+""",
         "side_effects_summary": """
-• Injection redness
-• Joint stiffness
-• Carpal Tunnel""",
+- Injection redness
+- Joint stiffness
+- Carpal Tunnel
+""",
+        "contraindications": "Active cancer, history of pituitary tumors.",
         "protocol_summary": "1-2mg nightly, fasted.",
         "benefits_detailed": """
         - **Visceral Fat:** Specifically targets and destroys stubborn adipose tissue around the organs.
@@ -833,14 +908,17 @@ PEPTIDE_PRESETS = {
         "type": "Growth Hormone/Fat Loss Blend", "filter_cat": "Slimming & Fat Loss",
         "desc": "The 'Shred Stack'. Targets visceral fat + systemic GH elevation.",
         "benefits_summary": """
-• Max fat loss (Visceral)
-• Muscle definition
-• Deep sleep
-• Systemic anti-aging""",
+- Max fat loss (Visceral)
+- Muscle definition
+- Deep sleep
+- Systemic anti-aging
+""",
         "side_effects_summary": """
-• Flushing/Redness
-• Joint stiffness
-• Water retention""",
+- Flushing/Redness
+- Joint stiffness
+- Water retention
+""",
+        "contraindications": "Active cancer.",
         "protocol_summary": "350-500mcg total nightly, fasted.",
         "benefits_detailed": """
         - **Recomposition:** The most powerful non-synthetic combo for simultaneously burning fat and building muscle.
@@ -871,15 +949,18 @@ PEPTIDE_PRESETS = {
         "type": "Metabolic (GLP-1/GIP)", "filter_cat": "Slimming & Fat Loss",
         "desc": "Dual Agonist (Mounjaro). GIP + GLP-1. Superior to Semaglutide.",
         "benefits_summary": """
-• Massive weight loss (22%)
-• Eliminates 'Food Noise'
-• Less nausea than Semaglutide
-• Metabolic repair""",
+- Massive weight loss (22%)
+- Eliminates 'Food Noise'
+- Less nausea than Semaglutide
+- Metabolic repair
+""",
         "side_effects_summary": """
-• Anhedonia (No joy)
-• Constipation
-• Hair shedding
-• Cold hands/feet""",
+- Anhedonia (No joy)
+- Constipation
+- Hair shedding
+- Cold hands/feet
+""",
+        "contraindications": "MEN2, Medullary Thyroid Cancer history.",
         "protocol_summary": "2.5mg weekly, titrate up.",
         "benefits_detailed": """
         - **Weight Loss:** 20%+ average loss in SURMOUNT-1 trials.
@@ -919,6 +1000,7 @@ if 'calc_count' not in st.session_state: st.session_state.calc_count = 0
 
 # --- NAVIGATION SIDEBAR ---
 with st.sidebar:
+    st.image("Sites.jpeg", caption="Injection Guide", width=200) # Replaced with new image requirement per user request if available in folder, otherwise fallback to text. Wait, user asked to change the visual guide image at the bottom, not sidebar logo. Reverting sidebar logo to placeholder.
     st.image("https://img.icons8.com/color/96/000000/biotech.png", width=60)
     st.title("Navigation")
     page = st.radio("Go to:", ["🧮 Calculator", "📚 Peptide Database"])
@@ -937,8 +1019,8 @@ if page == "🧮 Calculator":
         
         # Set Vial
         if data.get("default_stock_unit") == "IU":
-             st.session_state.vial_val = float(data["vial_mg"]) # Treat as IU
-             st.session_state.stock_unit_index = 3 # Index for IU
+             st.session_state.vial_val = float(data["vial_mg"]) 
+             st.session_state.stock_unit_index = 3 # Index for IU in the ["mg", "mcg", "g", "IU"] list
         else:
              st.session_state.vial_val = float(data["vial_mg"])
              st.session_state.stock_unit_index = 0 # mg
@@ -966,6 +1048,7 @@ if page == "🧮 Calculator":
     st.subheader("🧪 Reconstitution Calculator")
     st.divider()
 
+    # --- MAIN LAYOUT LOGIC (MOBILE OPTIMIZED) ---
     left_col, right_col = st.columns([1, 1.2], gap="large")
 
     # === LEFT COLUMN: INPUTS ===
@@ -1005,7 +1088,16 @@ if page == "🧮 Calculator":
         syringe_type = st.radio("Syringe Type", ["U-100 (Standard)", "U-40 (Vet)"], horizontal=True)
         syringe_factor = 100 if "U-100" in syringe_type else 40
 
-    # === RIGHT COLUMN: RESULTS ===
+        st.divider()
+        
+        # MOVED TO LEFT COLUMN PER REQUEST
+        with st.expander("🛠️ How to Reconstitute (Mix)", expanded=True):
+             if vial_qty > 0 and water_ml > 0:
+                st.markdown(f"1. **Clean:** Wipe the top of the **{vial_qty} {vial_unit}** peptide vial and the water vial with an alcohol swab.\n2. **Withdraw:** Draw exactly **{water_ml} mL** of Bacteriostatic Water.\n3. **Inject:** Slowly inject the **{water_ml} mL** of water into the peptide vial. Aim for the glass wall, not the powder directly.\n4. **Mix:** **Do not shake.** Gently swirl the vial until dissolved.\n5. **Store:** Refrigerate immediately.")
+             else:
+                 st.write("Enter Stock and Water amounts to see specific instructions.")
+
+    # === RIGHT COLUMN: RESULTS + PROFILE ===
     with right_col:
         st.success("2️⃣ **Profile & Results**")
 
@@ -1081,44 +1173,38 @@ if page == "🧮 Calculator":
             with st.expander(f"📖 **Profile: {selected_peptide}**", expanded=True):
                 st.markdown(f"**Type:** {peptide_info['type']}")
                 st.markdown(f"**🌟 Key Benefits:**")
-                # Benefits (Markdown list handles itself usually, but we ensure it works)
-                st.markdown(peptide_info['benefits_summary'].strip()) 
+                st.markdown(peptide_info['benefits_summary'].strip()) # Strip ensures leading newline is respected
                 
-                # Side Effects (HTML Box NEEDS .replace)
-                # FIX APPLIED HERE:
+                # Added Contraindications inside the warning box
                 st.markdown(f"""
                 <div style="margin-top:10px; padding:10px; background-color:#3e1818; border-left:4px solid #ff4b4b; border-radius:4px;">
                 <strong>⚠️ Common Side Effects:</strong><br>
                 {peptide_info['side_effects_summary'].strip().replace(chr(10), '<br>')}
+                <br><br>
+                <span style="color:#ff4b4b; font-weight:bold; border-top:1px solid #555; padding-top:5px; display:block;">⛔ Contraindications:</span>
+                {peptide_info['contraindications']}
                 </div>
                 """, unsafe_allow_html=True)
                 
                 st.write("")
                 st.info(f"**📋 Quick Protocol:** {peptide_info['protocol_summary']}")
+                st.markdown(f"**❄️ Storage:** {peptide_info['storage']}")
                 st.caption("*For clinical details, visit the 'Peptide Database' tab.*")
 
-            # Download
-            protocol_text = f"Peptide: {selected_peptide}\nStock: {vial_qty}{vial_unit} + {water_ml}mL Water\nDose: {desired_dose}{dose_unit} = {units:.1f} Units\nProtocol: {peptide_info['protocol_summary']}"
+            protocol_text = f"Peptide: {selected_peptide}\nType: {peptide_info['type']}\nStock: {vial_qty}{vial_unit} + {water_ml}mL Water\nDose: {desired_dose}{dose_unit} = {units:.1f} Units\nProtocol: {peptide_info['protocol_summary']}"
             st.download_button("💾 Save Protocol", protocol_text, "protocol.txt", use_container_width=True)
 
         else:
             st.info("Enter inputs to see results.")
 
+    # 3. BOTTOM: VISUAL GUIDE
     st.divider()
-    
-    with st.expander("🛠️ How to Reconstitute (Mix)", expanded=True):
-         if vial_qty > 0 and water_ml > 0:
-            st.markdown(f"1. **Clean:** Wipe the top of the **{vial_qty} {vial_unit}** peptide vial and the water vial with an alcohol swab.\n2. **Withdraw:** Draw exactly **{water_ml} mL** of Bacteriostatic Water.\n3. **Inject:** Slowly inject the **{water_ml} mL** of water into the peptide vial. Aim for the glass wall, not the powder directly.\n4. **Mix:** **Do not shake.** Gently swirl the vial until dissolved.\n5. **Store:** Refrigerate immediately.")
-         else:
-             st.write("Enter Stock and Water amounts.")
-
     with st.expander("💉 Visual Guide: Injection Sites", expanded=False):
         try:
-            st.image("injection_sites.png", caption="Recommended Subcutaneous Zones", use_container_width=True)
+            st.image("Sites.jpeg", caption="Recommended Subcutaneous Zones", use_container_width=True)
         except:
-            st.warning("⚠️ Image not found.")
+            st.warning("⚠️ Image 'Sites.jpeg' not found. Please upload it to your GitHub repository.")
 
-    st.divider()
     st.caption(f"v3.5 | Calculations: {st.session_state.calc_count}")
 
 # ==============================================================================
@@ -1153,8 +1239,18 @@ elif page == "📚 Peptide Database":
                 st.write("")
                 st.markdown("**🌟 Clinical Benefits:**")
                 st.markdown(info['benefits_detailed'])
-                # Database view also needs correct formatting for side effects
-                st.markdown(f"""<div class='side-effect-box'><strong>⚠️ Side Effects:</strong><br>{info['side_effects_detailed'].strip().replace(chr(10), '<br>')}</div>""", unsafe_allow_html=True)
+                
+                # Added Contraindications to Database View as well
+                st.markdown(f"""
+                <div class='side-effect-box'>
+                <strong>⚠️ Side Effects:</strong><br>
+                {info['side_effects_detailed'].strip().replace(chr(10), '<br>')}
+                <br><br>
+                <span class='contra-header'>⛔ Contraindications:</span>
+                {info['contraindications']}
+                </div>
+                """, unsafe_allow_html=True)
+                
                 st.write("")
                 with st.expander("📋 Detailed Protocol", expanded=True):
                      st.markdown(info['protocol_detailed'])
