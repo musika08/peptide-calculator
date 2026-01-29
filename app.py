@@ -58,11 +58,17 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
-# --- EXPANDED KNOWLEDGE BASE (v3.4) ---
+# --- EXPANDED KNOWLEDGE BASE (v3.4 - Simplified Categories) ---
 PEPTIDE_PRESETS = {
+    "Custom (Enter manually)": {
+        "vial_mg": 5.0, "dose_mcg": 250.0, "type": "N/A", "filter_cat": "All",
+        "desc": "Manual calculation.",
+        "benefits_summary": "N/A", "side_effects_summary": "Unknown.", "protocol_summary": "As directed.",
+        "benefits_detailed": "N/A", "protocol_detailed": "N/A", "side_effects_detailed": "N/A", "storage": "Dependant on compound."
+    },
     "AOD-9604": {
         "vial_mg": 5.0, "dose_mcg": 300.0,
-        "type": "Fat Loss",
+        "type": "Fat Loss", "filter_cat": "Slimming & Fat Loss",
         "desc": "Anti-Obesity Drug 9604. A modified fragment of the C-terminus of Human Growth Hormone (HGH) designed specifically to burn fat without the blood sugar effects of full HGH.",
         "benefits_summary": """
 - Targeted fat burning (lipolysis)
@@ -98,7 +104,7 @@ PEPTIDE_PRESETS = {
     },
     "BPC-157": {
         "vial_mg": 5.0, "dose_mcg": 250.0, 
-        "type": "Regenerative",
+        "type": "Regenerative", "filter_cat": "Injury & Repair",
         "desc": "Body Protection Compound-157. A 15-amino acid chain derived from gastric juice. It modulates the nitric oxide system and promotes angiogenesis.",
         "benefits_summary": """
 - Accelerates tendon/ligament repair
@@ -134,7 +140,7 @@ PEPTIDE_PRESETS = {
     },
     "BPC-157 + TB-500 Blend": {
         "vial_mg": 10.0, "dose_mcg": 500.0, 
-        "type": "Regenerative Blend",
+        "type": "Regenerative Blend", "filter_cat": "Injury & Repair",
         "desc": "The 'Wolverine Stack'. Synergistic combination where BPC-157 works on connective tissue/gut, while TB-500 works on muscle tissue.",
         "benefits_summary": """
 - Maximum surgical/injury recovery
@@ -170,7 +176,7 @@ PEPTIDE_PRESETS = {
     },
     "CJC-1295 (No DAC)": {
         "vial_mg": 5.0, "dose_mcg": 100.0, 
-        "type": "Growth Hormone",
+        "type": "Growth Hormone", "filter_cat": "Muscle & Workout",
         "desc": "Modified GRF 1-29. A GHRH analog that acts on the pituitary gland to stimulate pulsatile Growth Hormone release.",
         "benefits_summary": """
 - Increases lean muscle mass
@@ -206,7 +212,7 @@ PEPTIDE_PRESETS = {
     },
     "CJC-1295 + Ipamorelin Blend": {
         "vial_mg": 10.0, "dose_mcg": 200.0, 
-        "type": "Growth Hormone Blend",
+        "type": "Growth Hormone Blend", "filter_cat": "Muscle & Workout",
         "desc": "The Gold Standard GH Stack. Combines a Releasing Hormone (CJC) with a Releasing Peptide (Ipamorelin) for a synergistic 5x-10x GH pulse.",
         "benefits_summary": """
 - Max natural GH secretion
@@ -242,7 +248,7 @@ PEPTIDE_PRESETS = {
     },
     "Epithalon": {
         "vial_mg": 10.0, "dose_mcg": 5000.0, 
-        "type": "Anti-Aging",
+        "type": "Anti-Aging", "filter_cat": "Wellness & Longevity",
         "desc": "Synthetic tetrapeptide that increases telomerase activity, potentially lengthening telomeres.",
         "benefits_summary": """
 - Extends lifespan (Telomeres)
@@ -278,7 +284,7 @@ PEPTIDE_PRESETS = {
     },
     "GHK-Cu": {
         "vial_mg": 50.0, "dose_mcg": 2000.0, 
-        "type": "Cosmetic/Repair",
+        "type": "Cosmetic/Repair", "filter_cat": "Skin, Hair & Beauty",
         "desc": "Copper Tripeptide-1. A naturally occurring peptide that declines with age. It modulates over 4,000 genes to a younger state.",
         "benefits_summary": """
 - Boosts collagen & elastin
@@ -314,7 +320,7 @@ PEPTIDE_PRESETS = {
     },
     "Glow Blend (GHK-Cu/BPC/TB)": {
         "vial_mg": 70.0, "dose_mcg": 2500.0, 
-        "type": "Cosmetic/Recovery Blend",
+        "type": "Cosmetic/Recovery Blend", "filter_cat": "Skin, Hair & Beauty",
         "desc": "70mg Tri-Blend. BPC-157 and TB-500 are added to buffer the GHK-Cu, significantly reducing the 'sting' while adding systemic recovery benefits.",
         "benefits_summary": """
 - Painless GHK-Cu injection
@@ -349,7 +355,7 @@ PEPTIDE_PRESETS = {
     },
     "HCG": {
         "vial_mg": 5.0, "dose_mcg": 250.0, 
-        "type": "Hormonal",
+        "type": "Hormonal", "filter_cat": "Libido & Sexual Health",
         "desc": "Human Chorionic Gonadotropin. Mimics LH to maintain testicular function.",
         "benefits_summary": """
 - Prevents testicular shrinkage
@@ -385,7 +391,7 @@ PEPTIDE_PRESETS = {
     },
     "Ipamorelin": {
         "vial_mg": 5.0, "dose_mcg": 100.0, 
-        "type": "Growth Hormone",
+        "type": "Growth Hormone", "filter_cat": "Muscle & Workout",
         "desc": "Selective GH Secretagogue. The mildest and safest GHRP.",
         "benefits_summary": """
 - Clean GH release (No hunger)
@@ -421,7 +427,7 @@ PEPTIDE_PRESETS = {
     },
     "Kisspeptin": {
         "vial_mg": 10.0, "dose_mcg": 100.0, 
-        "type": "Hormonal",
+        "type": "Hormonal", "filter_cat": "Libido & Sexual Health",
         "desc": "A neuromodulator that stimulates the hypothalamus to release GnRH, restarting the HPTA axis.",
         "benefits_summary": """
 - Restarts HPTA axis safely
@@ -457,7 +463,7 @@ PEPTIDE_PRESETS = {
     },
     "Klow Blend (GHK-Cu/BPC/TB/KPV)": {
         "vial_mg": 80.0, "dose_mcg": 3000.0, 
-        "type": "Ultimate Repair/Cosmetic Blend",
+        "type": "Ultimate Repair/Cosmetic Blend", "filter_cat": "Skin, Hair & Beauty",
         "desc": "The 80mg Master Stack. Adds **KPV** to the GHK/BPC/TB trio. KPV is a potent anti-inflammatory.",
         "benefits_summary": """
 - Clears Acne, Psoriasis, Eczema
@@ -493,7 +499,7 @@ PEPTIDE_PRESETS = {
     },
     "Melanotan II": {
         "vial_mg": 10.0, "dose_mcg": 500.0, 
-        "type": "Cosmetic",
+        "type": "Cosmetic", "filter_cat": "Skin, Hair & Beauty",
         "desc": "Alpha-MSH analog. Stimulates melanin production and sexual arousal centers.",
         "benefits_summary": """
 - Deep, rapid tan
@@ -509,7 +515,7 @@ PEPTIDE_PRESETS = {
 """,
         "protocol_summary": "100-500mcg before UV exposure.",
         "benefits_detailed": """
-        - **Tanning:** Activates melanocytes to produce protective melanin (tan) with minimal UV.
+        - **Photoprotection:** Creates a deep, natural tan that protects the skin from UV damage and burning.
         - **Libido:** Acts as a potent central nervous system aphrodisiac for both men and women.
         - **Metabolic:** Suppresses appetite and increases energy expenditure via MC4 receptors.
         """,
@@ -529,7 +535,7 @@ PEPTIDE_PRESETS = {
     },
     "MOTS-c": {
         "vial_mg": 10.0, "dose_mcg": 5000.0,
-        "type": "Metabolic/Mitochondrial",
+        "type": "Metabolic/Mitochondrial", "filter_cat": "Muscle & Workout",
         "desc": "Mitochondrial-Derived Peptide. Known as an 'exercise mimetic', it regulates metabolic functions and promotes endurance.",
         "benefits_summary": """
 - Increases VO2 Max/Endurance
@@ -565,7 +571,7 @@ PEPTIDE_PRESETS = {
     },
     "NAD+": {
         "vial_mg": 500.0, "dose_mcg": 25000.0, 
-        "type": "Cellular Energy",
+        "type": "Cellular Energy", "filter_cat": "Wellness & Longevity",
         "desc": "Nicotinamide Adenine Dinucleotide. The fuel for cellular engines (mitochondria).",
         "benefits_summary": """
 - Clears brain fog
@@ -601,7 +607,7 @@ PEPTIDE_PRESETS = {
     },
     "Oxytocin Acetate": {
         "vial_mg": 2.0, "dose_mcg": 20.0,
-        "type": "Hormonal/Wellness",
+        "type": "Hormonal/Wellness", "filter_cat": "Nootropics & Brain",
         "desc": "The 'Love Hormone'. A powerful nine-amino acid neuropeptide produced in the hypothalamus. It acts as a neurotransmitter that regulates social interaction, emotional bonding, and sexual reproduction.",
         "benefits_summary": """
 - Reduces social anxiety
@@ -637,7 +643,7 @@ PEPTIDE_PRESETS = {
     },
     "PT-141": {
         "vial_mg": 10.0, "dose_mcg": 1000.0, 
-        "type": "Libido",
+        "type": "Libido", "filter_cat": "Libido & Sexual Health",
         "desc": "Bremelanotide. Works on the nervous system to treat hypoactive sexual desire.",
         "benefits_summary": """
 - Treats ED & Low Libido
@@ -672,7 +678,7 @@ PEPTIDE_PRESETS = {
     },
     "Retatrutide": {
         "vial_mg": 10.0, "dose_mcg": 2000.0, 
-        "type": "Metabolic (GLP-1/GIP/Glucagon)",
+        "type": "Metabolic (GLP-1/GIP/Glucagon)", "filter_cat": "Slimming & Fat Loss",
         "desc": "The 'Triple G' Agonist. The most potent weight loss agent currently in trials.",
         "benefits_summary": """
 - Extreme weight loss (24%+)
@@ -708,7 +714,7 @@ PEPTIDE_PRESETS = {
     },
     "Semaglutide": {
         "vial_mg": 5.0, "dose_mcg": 250.0, 
-        "type": "Metabolic (GLP-1)",
+        "type": "Metabolic (GLP-1)", "filter_cat": "Slimming & Fat Loss",
         "desc": "GLP-1 Agonist. The standard for medical weight loss.",
         "benefits_summary": """
 - Significant weight loss (15%)
@@ -744,7 +750,7 @@ PEPTIDE_PRESETS = {
     },
     "TB-500": {
         "vial_mg": 5.0, "dose_mcg": 2500.0, 
-        "type": "Regenerative",
+        "type": "Regenerative", "filter_cat": "Injury & Repair",
         "desc": "Synthetic Thymosin Beta-4. The 'Muscle Repair' peptide.",
         "benefits_summary": """
 - Heals muscle tears
@@ -780,7 +786,7 @@ PEPTIDE_PRESETS = {
     },
     "Tesamorelin": {
         "vial_mg": 2.0, "dose_mcg": 1000.0, 
-        "type": "Growth Hormone",
+        "type": "Growth Hormone", "filter_cat": "Slimming & Fat Loss",
         "desc": "FDA Approved GHRH for visceral fat reduction.",
         "benefits_summary": """
 - Burns belly fat (Visceral)
@@ -816,7 +822,7 @@ PEPTIDE_PRESETS = {
     },
     "Tesamorelin + Ipamorelin Blend": {
         "vial_mg": 12.0, "dose_mcg": 350.0, 
-        "type": "Growth Hormone/Fat Loss Blend",
+        "type": "Growth Hormone/Fat Loss Blend", "filter_cat": "Slimming & Fat Loss",
         "desc": "The 'Shred Stack'. Targets visceral fat + systemic GH elevation.",
         "benefits_summary": """
 - Max fat loss (Visceral)
@@ -851,7 +857,7 @@ PEPTIDE_PRESETS = {
     },
     "Tirzepatide": {
         "vial_mg": 30.0, "dose_mcg": 2500.0, 
-        "type": "Metabolic (GLP-1/GIP)",
+        "type": "Metabolic (GLP-1/GIP)", "filter_cat": "Slimming & Fat Loss",
         "desc": "Dual Agonist (Mounjaro). GIP + GLP-1. Superior to Semaglutide.",
         "benefits_summary": """
 - Massive weight loss (22%)
@@ -889,12 +895,12 @@ PEPTIDE_PRESETS = {
 
 FACTORS = {'mcg': 1, 'mg': 1000, 'g': 1000000}
 
-# Initialize State (Default to Tirzepatide settings)
-if 'vial_val' not in st.session_state: st.session_state.vial_val = 30.0
-if 'dose_val' not in st.session_state: st.session_state.dose_val = 2.5
+# Initialize State
+if 'vial_val' not in st.session_state: st.session_state.vial_val = 5.0
+if 'dose_val' not in st.session_state: st.session_state.dose_val = 250.0
 if 'stock_unit_index' not in st.session_state: st.session_state.stock_unit_index = 0
 if 'dose_unit_index' not in st.session_state: st.session_state.dose_unit_index = 0
-if 'dose_unit_selection' not in st.session_state: st.session_state.dose_unit_selection = "mg"
+if 'dose_unit_selection' not in st.session_state: st.session_state.dose_unit_selection = "mcg"
 if 'calc_count' not in st.session_state: st.session_state.calc_count = 0
 
 # --- NAVIGATION SIDEBAR ---
@@ -948,15 +954,8 @@ if page == "🧮 Calculator":
     with left_col:
         st.info("1️⃣ **Configuration**")
         
-        # Ensure dropdown includes ALL presets sorted
         sorted_presets = sorted(list(PEPTIDE_PRESETS.keys()))
-        # Find index of Tirzepatide for default
-        try:
-            default_ix = sorted_presets.index("Tirzepatide")
-        except ValueError:
-            default_ix = 0
-            
-        selected_peptide = st.selectbox("Select Peptide Profile", sorted_presets, index=default_ix, key="peptide_selector", on_change=load_preset)
+        selected_peptide = st.selectbox("Select Peptide Profile", sorted_presets, key="peptide_selector", on_change=load_preset)
         
         st.write("📦 **Stock & Water**")
         c1, c2, c3 = st.columns([1.5, 1, 1.5])
@@ -1026,10 +1025,10 @@ if page == "🧮 Calculator":
                 else:
                     st.markdown(f"**Type:** {peptide_info['type']}")
                     st.markdown(f"**🌟 Key Benefits:**")
-                    st.markdown(peptide_info['benefits_summary']) # Fixed vertical formatting
+                    st.markdown(peptide_info['benefits_summary']) # Vertical Markdown List
                     st.markdown(f"""
                     <div style="margin-top:10px; padding:10px; background-color:#3e1818; border-left:4px solid #ff4b4b; border-radius:4px;">
-                    <strong>⚠️ Common Side Effects:</strong><br>{peptide_info['side_effects_summary'].replace(chr(10), '<br>')}
+                    <strong>⚠️ Common Side Effects:</strong><br>{peptide_info['side_effects_summary']}
                     </div>
                     """, unsafe_allow_html=True)
                     st.write("")
@@ -1079,15 +1078,14 @@ elif page == "📚 Peptide Database":
     db_items = {k: v for k, v in PEPTIDE_PRESETS.items() if k != "Custom (Enter manually)"}
 
     # Extract unique categories for the filter
-    all_types = sorted(list(set([v['type'] for v in db_items.values()])))
-    all_types.insert(0, "All")
+    all_categories = ["All", "Slimming & Fat Loss", "Skin, Hair & Beauty", "Muscle & Workout", "Nootropics & Brain", "Injury & Repair", "Wellness & Longevity", "Libido & Sexual Health"]
 
     # Filters
     col_search, col_filter = st.columns([3, 1])
     with col_search:
         search_query = st.text_input("🔍 Search Peptides", placeholder="Search by name, benefit, or type...").lower()
     with col_filter:
-        category_filter = st.selectbox("🏷️ Filter by Category", all_types)
+        category_filter = st.selectbox("🏷️ Filter by Category", all_categories)
 
     st.markdown("---")
 
@@ -1095,7 +1093,7 @@ elif page == "📚 Peptide Database":
     filtered_items = {}
     for name, data in db_items.items():
         # Match Category
-        if category_filter != "All" and data['type'] != category_filter:
+        if category_filter != "All" and data['filter_cat'] != category_filter:
             continue
         # Match Search
         if search_query not in name.lower() and search_query not in data['benefits_detailed'].lower() and search_query not in data['desc'].lower():
