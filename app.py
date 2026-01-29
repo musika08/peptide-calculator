@@ -67,15 +67,15 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
-# --- KNOWLEDGE BASE (Updated HCG & Detailed Benefits) ---
+# --- KNOWLEDGE BASE ---
 PEPTIDE_PRESETS = {
     "AOD-9604": {
         "vial_mg": 5.0, "dose_mcg": 300.0, "default_dose_unit": "mcg", "default_stock_unit": "mg", "iu_conversion": None,
         "type": "Fat Loss", "filter_cat": "Slimming & Fat Loss",
-        "desc": "Anti-Obesity Drug 9604. A modified fragment of the C-terminus of Human Growth Hormone (HGH) designed specifically to burn fat without the blood sugar effects of full HGH.",
+        "desc": "Anti-Obesity Drug 9604. A modified fragment of the C-terminus of Human Growth Hormone (HGH).",
         "benefits_summary": """
-- **Targeted Lipolysis:** Stimulates fat breakdown specifically in adipose tissue.
-- **Metabolic Safety:** No impact on blood sugar or insulin (unlike HGH).
+- **Targeted Lipolysis:** Specifically stimulates the breakdown of fat cells.
+- **Metabolic Safety:** No impact on blood sugar or insulin.
 - **Joint Support:** Aids in cartilage regeneration and repair.
 - **Visceral Fat:** Shows affinity for reducing stubborn abdominal fat.
 """,
@@ -84,7 +84,7 @@ PEPTIDE_PRESETS = {
 - Mild stomach upset (rare)
 - Headache (rare)
 """,
-        "contraindications": "None specifically reported, but avoid if pregnant or breastfeeding.",
+        "contraindications": "None specifically reported, avoid if pregnant.",
         "protocol_summary": "300mcg daily, morning fasted.",
         "benefits_detailed": """
         - **Targeted Lipolysis:** Specifically stimulates the breakdown of fat cells (lipolysis) and inhibits the formation of new fat (lipogenesis).
@@ -114,19 +114,19 @@ PEPTIDE_PRESETS = {
     "BPC-157": {
         "vial_mg": 5.0, "dose_mcg": 250.0, "default_dose_unit": "mcg", "default_stock_unit": "mg", "iu_conversion": None,
         "type": "Regenerative", "filter_cat": "Injury & Repair",
-        "desc": "Body Protection Compound-157. A 15-amino acid chain derived from gastric juice. It modulates the nitric oxide system and promotes angiogenesis.",
+        "desc": "Body Protection Compound-157. A 15-amino acid chain derived from gastric juice.",
         "benefits_summary": """
 - **Tissue Repair:** Rapidly heals tendons, ligaments, and bone fractures.
 - **Gut Health:** Potent cytoprotective effects for IBS, leaky gut, and ulcers.
 - **Angiogenesis:** Stimulates new blood vessel formation (VEGF).
-- **Neuroprotection:** Modulates dopamine/serotonin systems for brain health.
+- **Neuroprotection:** Modulates dopamine/serotonin systems.
 """,
         "side_effects_summary": """
 - Mild nausea (rare)
 - Injection site irritation
 - Fatigue during healing phase
 """,
-        "contraindications": "Known active cancer (due to angiogenesis properties).",
+        "contraindications": "Known active cancer (due to angiogenesis).",
         "protocol_summary": "250-500mcg daily or 2x daily.",
         "benefits_detailed": """
         - **Connective Tissue:** Drastically speeds up the healing of soft tissue injuries (tendons, ligaments, fascia) by promoting fibroblast migration.
@@ -156,9 +156,9 @@ PEPTIDE_PRESETS = {
     "BPC-157 + TB-500 Blend": {
         "vial_mg": 10.0, "dose_mcg": 500.0, "default_dose_unit": "mcg", "default_stock_unit": "mg", "iu_conversion": None,
         "type": "Regenerative Blend", "filter_cat": "Injury & Repair",
-        "desc": "The 'Wolverine Stack'. Synergistic combination where BPC-157 works on connective tissue/gut, while TB-500 works on muscle tissue.",
+        "desc": "The 'Wolverine Stack'. Synergistic combination of BPC-157 and TB-500.",
         "benefits_summary": """
-- **Total Repair:** Synergistic healing of bone, tendon, and muscle belly.
+- **Total Repair:** Synergistic healing of bone, tendon, and muscle.
 - **Flexibility:** Significant improvements in joint range of motion.
 - **Cardioprotection:** TB-500 reduces scar tissue in heart/organs.
 - **Anti-Inflammatory:** Systemic reduction of chronic inflammation.
@@ -168,7 +168,7 @@ PEPTIDE_PRESETS = {
 - Fatigue/Lethargy
 - Injection site stinging
 """,
-        "contraindications": "Active cancer or history of malignancy (TB-500 promotes cell migration).",
+        "contraindications": "Active cancer or history of malignancy.",
         "protocol_summary": "500mcg-1mg total fluid daily.",
         "benefits_detailed": """
         - **Total Repair:** BPC targets the tendon/bone interface, while TB-500 targets muscle belly and actin filaments.
@@ -195,7 +195,7 @@ PEPTIDE_PRESETS = {
     "CJC-1295 (No DAC)": {
         "vial_mg": 5.0, "dose_mcg": 100.0, "default_dose_unit": "mcg", "default_stock_unit": "mg", "iu_conversion": None,
         "type": "Growth Hormone", "filter_cat": "Muscle & Workout",
-        "desc": "Modified GRF 1-29. A GHRH analog that acts on the pituitary gland to stimulate pulsatile Growth Hormone release.",
+        "desc": "Modified GRF 1-29. A GHRH analog that stimulates pulsatile GH release.",
         "benefits_summary": """
 - **Hyperplasia:** Increases total number of muscle cells.
 - **Sleep Architecture:** Promotes deep slow-wave (Delta) sleep.
@@ -275,7 +275,7 @@ PEPTIDE_PRESETS = {
     "Epithalon": {
         "vial_mg": 10.0, "dose_mcg": 5000.0, "default_dose_unit": "mcg", "default_stock_unit": "mg", "iu_conversion": None,
         "type": "Anti-Aging", "filter_cat": "Wellness & Longevity",
-        "desc": "Synthetic tetrapeptide that increases telomerase activity, potentially lengthening telomeres.",
+        "desc": "Synthetic tetrapeptide that increases telomerase activity.",
         "benefits_summary": """
 - **Longevity:** Upregulates telomerase to extend cell life.
 - **Endocrine Reset:** Restores pineal gland sensitivity.
@@ -287,7 +287,7 @@ PEPTIDE_PRESETS = {
 - Vivid dreams
 - Very safe profile
 """,
-        "contraindications": "None reported in studies.",
+        "contraindications": "None reported.",
         "protocol_summary": "5mg-10mg daily for 10-20 days.",
         "benefits_detailed": """
         - **Telomere Extension:** Upregulates telomerase to protect DNA.
@@ -313,7 +313,7 @@ PEPTIDE_PRESETS = {
     "GHK-Cu": {
         "vial_mg": 50.0, "dose_mcg": 2000.0, "default_dose_unit": "mg", "default_stock_unit": "mg", "iu_conversion": None,
         "type": "Cosmetic/Repair", "filter_cat": "Skin, Hair & Beauty",
-        "desc": "Copper Tripeptide-1. A genomic modulator that resets over 4,000 genes to a younger state.",
+        "desc": "Copper Tripeptide-1. A genomic modulator that resets genes to a younger state.",
         "benefits_summary": """
 - **Skin Rejuvenation:** Boosts collagen (70%) and elastin.
 - **Hair Growth:** Enlarges follicles and extends growth phase.
@@ -351,7 +351,7 @@ PEPTIDE_PRESETS = {
     "Glow Blend (GHK-Cu/BPC/TB)": {
         "vial_mg": 70.0, "dose_mcg": 2500.0, "default_dose_unit": "mg", "default_stock_unit": "mg", "iu_conversion": None,
         "type": "Cosmetic/Recovery Blend", "filter_cat": "Skin, Hair & Beauty",
-        "desc": "70mg Tri-Blend. BPC-157 and TB-500 are added to buffer the GHK-Cu, reducing the 'sting'.",
+        "desc": "70mg Tri-Blend. BPC-157 and TB-500 are added to buffer the GHK-Cu.",
         "benefits_summary": """
 - **Painless GHK-Cu:** BPC reduces acidity and inflammation.
 - **Total Rejuvenation:** Targets skin, hair, gut, and muscle.
@@ -593,7 +593,7 @@ PEPTIDE_PRESETS = {
 - Insomnia (if late)
 - Hyperactivity
 """,
-        "contraindications": "None reported, but avoid late night administration.",
+        "contraindications": "None reported, avoid late night administration.",
         "protocol_summary": "5mg once weekly.",
         "benefits_detailed": """
         - **Endurance:** Increases cellular ability to utilize glucose and oxygen.
@@ -660,7 +660,7 @@ PEPTIDE_PRESETS = {
     "Oxytocin Acetate": {
         "vial_mg": 2.0, "dose_mcg": 20.0, "default_dose_unit": "IU", "default_stock_unit": "mg", "iu_conversion": 600,
         "type": "Hormonal/Wellness", "filter_cat": "Nootropics & Brain",
-        "desc": "The 'Love Hormone'. Acts as a neurotransmitter regulating social interaction and bonding.",
+        "desc": "The 'Love Hormone'. Acts as a neurotransmitter regulating social interaction.",
         "benefits_summary": """
 - **Psychological:** Reduces social anxiety and cortisol.
 - **Intimacy:** Enhances trust and emotional bonding.
@@ -672,7 +672,7 @@ PEPTIDE_PRESETS = {
 - Headache
 - Flushing
 """,
-        "contraindications": "Pregnancy (induces labor), severe cardiovascular disease.",
+        "contraindications": "Pregnancy, severe cardiovascular disease.",
         "protocol_summary": "20-50 IU as needed.",
         "benefits_detailed": """
         - **Psychological:** Significantly reduces social anxiety and stress levels.
@@ -711,7 +711,7 @@ PEPTIDE_PRESETS = {
 - Flushing/Warmth
 - Headache
 """,
-        "contraindications": "Uncontrolled hypertension (raises BP).",
+        "contraindications": "Uncontrolled hypertension.",
         "protocol_summary": "1.5-2mg, 2 hours before activity.",
         "benefits_detailed": """
         - **Mechanism:** Targets the hypothalamus, not the vascular system.
@@ -834,7 +834,7 @@ PEPTIDE_PRESETS = {
 - Lethargy
 - Flu-like symptoms
 """,
-        "contraindications": "Active cancer (promotes cell migration).",
+        "contraindications": "Active cancer.",
         "protocol_summary": "2.5mg twice weekly.",
         "benefits_detailed": """
         - **Muscle Repair:** The primary peptide for torn muscles, strains, and deep tissue bruising.
@@ -989,12 +989,13 @@ PEPTIDE_PRESETS = {
 
 FACTORS = {'mcg': 1, 'mg': 1000, 'g': 1000000}
 
-# Initialize State
+# Initialize State (Default to Tirzepatide)
 if 'vial_val' not in st.session_state: st.session_state.vial_val = 30.0
 if 'dose_val' not in st.session_state: st.session_state.dose_val = 2.5
 if 'stock_unit_index' not in st.session_state: st.session_state.stock_unit_index = 0
 if 'dose_unit_index' not in st.session_state: st.session_state.dose_unit_index = 0
 if 'dose_unit_selection' not in st.session_state: st.session_state.dose_unit_selection = "mg"
+if 'stock_unit_selection' not in st.session_state: st.session_state.stock_unit_selection = "mg"
 if 'calc_count' not in st.session_state: st.session_state.calc_count = 0
 
 # --- NAVIGATION SIDEBAR ---
@@ -1015,27 +1016,15 @@ if page == "🧮 Calculator":
         selection = st.session_state.peptide_selector
         data = PEPTIDE_PRESETS[selection]
         
-        # Set Vial
-        if data.get("default_stock_unit") == "IU":
-             st.session_state.vial_val = float(data["vial_mg"]) 
-             st.session_state.stock_unit_index = 3 # Index for IU in the ["mg", "mcg", "g", "IU"] list
-        else:
-             st.session_state.vial_val = float(data["vial_mg"])
-             st.session_state.stock_unit_index = 0 # mg
+        # FIX: Directly set the widget state value for Stock Unit
+        target_stock_unit = data.get("default_stock_unit", "mg")
+        st.session_state.stock_unit_selection = target_stock_unit
+        st.session_state.vial_val = float(data["vial_mg"])
 
-        # Set Dose
-        target_val = float(data["dose_mcg"]) 
-        unit_pref = data.get("default_dose_unit", "mcg")
-        
-        if unit_pref == "mg":
-             st.session_state.dose_unit_selection = "mg"
-             st.session_state.dose_val = target_val 
-        elif unit_pref == "IU":
-             st.session_state.dose_unit_selection = "IU"
-             st.session_state.dose_val = target_val
-        else:
-             st.session_state.dose_unit_selection = "mcg"
-             st.session_state.dose_val = target_val
+        # FIX: Directly set the widget state value for Dose Unit
+        target_dose_unit = data.get("default_dose_unit", "mcg")
+        st.session_state.dose_unit_selection = target_dose_unit
+        st.session_state.dose_val = float(data["dose_mcg"])
 
         st.session_state.calc_count += 1
 
@@ -1046,7 +1035,6 @@ if page == "🧮 Calculator":
     st.subheader("🧪 Reconstitution Calculator")
     st.divider()
 
-    # --- MAIN LAYOUT LOGIC (MOBILE OPTIMIZED) ---
     left_col, right_col = st.columns([1, 1.2], gap="large")
 
     # === LEFT COLUMN: INPUTS ===
@@ -1066,7 +1054,7 @@ if page == "🧮 Calculator":
         with c1:
             vial_qty = st.number_input("Stock Amount", key="vial_val", min_value=0.0, step=1.0, format="%.1f")
         with c2:
-            vial_unit = st.selectbox("Unit", ["mg", "mcg", "g", "IU"], index=st.session_state.stock_unit_index, key="stock_unit_selection")
+            vial_unit = st.selectbox("Unit", ["mg", "mcg", "g", "IU"], key="stock_unit_selection")
         with c3:
             water_ml = st.number_input("Water Added (mL)", value=2.0, step=0.5, min_value=0.1, format="%.1f")
 
