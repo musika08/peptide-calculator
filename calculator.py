@@ -1,5 +1,4 @@
-# calculator.py
-from database import FACTORS
+FACTORS = {'mcg': 1, 'mg': 1000, 'g': 1000000, 'IU': 1}
 
 def calculate_dosage(vial_qty, vial_unit, water_ml, desired_dose, dose_unit, syringe_factor, peptide_info):
     """
@@ -47,3 +46,4 @@ def calculate_dosage(vial_qty, vial_unit, water_ml, desired_dose, dose_unit, syr
         return draw_ml, units, doses_per_vial, display_strength
     
     return 0, 0, 0, ""
+
