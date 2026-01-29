@@ -1,3 +1,4 @@
+# app.py
 import streamlit as st
 from database import PEPTIDE_PRESETS, FACTORS
 from calculator import perform_calc
