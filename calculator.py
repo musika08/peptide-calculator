@@ -38,49 +38,35 @@ def render_calculator_page(PEPTIDE_PRESETS):
         with c5:
             dose_unit = st.selectbox("Dose Unit", ["mcg", "mg", "g", "IU"], key="dose_unit_selection")
         with c4:
-            if dose_unit == 'mg': step = 0.5
-            elif dose_unit == 'mcg': step = 50.0
-            else: step = 0.1
+            step = 0.5 if dose_unit == 'mg' else 50.0
             desired_dose = st.number_input("Desired Dose", key="dose_val", min_value=0.0, step=step, format="%.2f")
         
         syringe_type = st.radio("Syringe Type", ["U-100 (Standard)", "U-40 (Vet)"], horizontal=True)
         syringe_factor = 100 if "U-100" in syringe_type else 40
 
     with right_col:
-        st.success("2️⃣ **Profile & Results**")
+        st.success("2️⃣ **Results**")
         if vial_qty > 0 and water_ml > 0 and desired_dose > 0:
-            # Simple conversion to base (mcg/units)
-            if vial_unit == 'mg': total_stock = vial_qty * 1000
-            elif vial_unit == 'g': total_stock = vial_qty * 1000000
-            elif vial_unit == 'mcg': total_stock = vial_qty
-            else: total_stock = vial_qty 
-            
-            if dose_unit == 'mg': target_dose = desired_dose * 1000
-            elif dose_unit == 'g': target_dose = desired_dose * 1000000
-            elif dose_unit == 'mcg': target_dose = desired_dose
-            else: target_dose = desired_dose
+            # Normalize to mcg
+            total_stock = vial_qty * 1000 if vial_unit == 'mg' else vial_qty
+            target_dose = desired_dose * 1000 if dose_unit == 'mg' else desired_dose
 
-            draw_ml = (target_dose / (total_stock / water_ml))
+            draw_ml = target_dose / (total_stock / water_ml)
             units = draw_ml * syringe_factor
-            doses_per_vial = total_stock / target_dose if target_dose > 0 else 0
-
-            c_res1, c_res2, c_res3 = st.columns(3)
+            
+            c_res1, c_res2 = st.columns(2)
             c_res1.metric("Draw Volume", f"{draw_ml:.4f} mL")
             c_res2.metric("Syringe Units", f"{units:.1f} Units")
-            c_res3.metric("Doses / Vial", f"{int(doses_per_vial)}")
             
-            percentage = min(units / syringe_factor * 100, 100)
-            st.markdown(f"""<div class="syringe-container"><div class="syringe-liquid" style="width: {percentage}%;"></div><div class="syringe-markings"></div></div>""", unsafe_allow_html=True)
+            # Visual Fill
+            perc = min(units / syringe_factor * 100, 100)
+            st.markdown(f"""<div class="syringe-container"><div class="syringe-liquid" style="width: {perc}%;"></div><div class="syringe-markings"></div></div>""", unsafe_allow_html=True)
             st.caption(f"Draw to **{units:.1f}** on your {syringe_type} syringe.")
-
-            with st.expander(f"📖 **Profile Summary**", expanded=True):
-                st.markdown(f"**Type:** {peptide_info['type']}")
-                st.markdown("**🌟 Benefits:**")
-                st.markdown(peptide_info['benefits_summary'])
-                st.markdown(f"<div class='side-effect-box'><strong>⚠️ Side Effects:</strong><br>{peptide_info['side_effects_summary'].replace(chr(10), '<br>')}</div>", unsafe_allow_html=True)
         else:
-            st.info("Adjust inputs to calculate.")
+            st.info("Input values to see result.")
 
     st.divider()
     with st.expander("🛠️ Reconstitution Steps", expanded=True):
-         st.markdown(f"1. Wipe vial tops with alcohol.\n2. Draw **{water_ml} mL** of BAC Water.\n3. Inject slowly into the **{vial_qty} {vial_unit}** peptide vial.\n4. Gently swirl. Refrigerate immediately.")
+         st.markdown(f"1. Wipe tops with alcohol.\n2. Draw **{water_ml} mL** BAC Water.\n3. Inject slowly into vial.\n4. Gently swirl. Store in fridge.")
+
+
