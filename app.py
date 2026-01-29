@@ -3,71 +3,56 @@ import streamlit as st
 import sys
 import os
 
-# Fix for path issues on Cloud
-sys.path.append(os.path.dirname(__file__))
+# FORCE PATH RECOGNITION
+sys.path.append(os.path.abspath(os.path.dirname(__file__)))
 
 try:
     from database import get_peptide_data
     from calculator import render_calculator_page
-except ImportError:
-    st.error("Missing logic files. Ensure database.py and calculator.py are in the same folder as app.py")
+except ImportError as e:
+    st.error(f"Critical Error: {e}. Ensure database.py and calculator.py are in the same folder as app.py.")
     st.stop()
 
-# --- CONFIG ---
+# --- APP CONFIG ---
 st.set_page_config(page_title="PeptideCalc Pro", page_icon="🧪", layout="wide")
 
-# --- STYLES ---
+# --- CSS STYLES ---
 st.markdown("""
 <style>
-    .syringe-container { border: 2px solid #333; border-radius: 4px; background-color: #f0f0f0; height: 30px; width: 100%; position: relative; margin: 10px 0; }
-    .syringe-liquid { background-color: #ff4b4b; height: 100%; transition: width 0.5s ease-in-out; }
-    .syringe-markings { position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: repeating-linear-gradient(90deg, transparent, transparent 19%, #000 20%); opacity: 0.1; }
-    .db-tag { background-color: #4b4bff; color: white; padding: 4px 10px; border-radius: 12px; font-size: 0.8em; font-weight: bold; display: inline-block; margin-bottom: 10px; }
-    .side-effect-box { background-color: #3e1818; border-left: 4px solid #ff4b4b; padding: 10px; margin-top: 10px; border-radius: 4px; font-size: 0.9em; line-height: 1.6; }
+    .syringe-container { border: 2px solid #333; border-radius: 4px; background: #f0f0f0; height: 30px; width: 100%; position: relative; margin: 10px 0; }
+    .syringe-liquid { background: #ff4b4b; height: 100%; transition: width 0.5s; }
+    .syringe-markings { position: absolute; inset: 0; background: repeating-linear-gradient(90deg, transparent, transparent 19%, #000 20%); opacity: 0.1; }
+    .db-tag { background: #4b4bff; color: white; padding: 4px 10px; border-radius: 12px; font-size: 0.8em; font-weight: bold; display: inline-block; }
 </style>
 """, unsafe_allow_html=True)
 
-# --- LOAD DATA ---
+# --- LOAD ---
 PEPTIDE_PRESETS, FACTORS = get_peptide_data()
 
-# --- STATE ---
+# --- INITIALIZE STATE ---
 if 'vial_val' not in st.session_state: st.session_state.vial_val = 30.0
 if 'dose_val' not in st.session_state: st.session_state.dose_val = 2.5
 if 'calc_count' not in st.session_state: st.session_state.calc_count = 0
 
-# --- NAVIGATION ---
-st.sidebar.title("Navigation")
-page = st.sidebar.radio("Go to:", ["🧮 Calculator", "📚 Peptide Database"])
+# --- SIDEBAR ---
+page = st.sidebar.radio("Navigation", ["🧮 Calculator", "📚 Peptide Database"])
 st.sidebar.divider()
-st.sidebar.caption("v4.0 | Modular Copy-Paste")
+st.sidebar.caption("v4.0 | Modular")
 
 if page == "🧮 Calculator":
     render_calculator_page(PEPTIDE_PRESETS)
-
-elif page == "📚 Peptide Database":
+else:
     st.subheader("📚 Peptide Database")
-    st.divider()
+    query = st.text_input("🔍 Search", placeholder="Search peptides...").lower()
     
-    col_search, col_filter = st.columns([3, 1])
-    query = col_search.text_input("🔍 Search Peptides", placeholder="Search...").lower()
-    all_cats = ["All", "Slimming & Fat Loss", "Skin, Hair & Beauty", "Muscle & Workout", "Nootropics & Brain", "Injury & Repair", "Wellness & Longevity", "Libido & Sexual Health"]
-    cat_filter = col_filter.selectbox("🏷️ Filter", all_cats)
-
-    items = {n: d for n, d in PEPTIDE_PRESETS.items() 
-             if (cat_filter == "All" or d.get('filter_cat') == cat_filter)
-             and (query in n.lower() or query in d['benefits_detailed'].lower())}
-
+    items = {n: d for n, d in PEPTIDE_PRESETS.items() if query in n.lower() or query in d['desc'].lower()}
+    
     cols = st.columns(3)
     for idx, (name, info) in enumerate(items.items()):
         with cols[idx % 3]:
             with st.container(border=True):
                 st.markdown(f"### {name}")
                 st.markdown(f"<span class='db-tag'>{info['type']}</span>", unsafe_allow_html=True)
-                st.markdown("**🌟 Benefits:**")
-                st.markdown(info['benefits_detailed'])
-                st.markdown(f"<div class='side-effect-box'><strong>⚠️ Side Effects:</strong><br>{info['side_effects_detailed'].replace(chr(10), '<br>')}</div>", unsafe_allow_html=True)
-                with st.expander("📋 Protocol"):
-                     st.markdown(info['protocol_detailed'])
-                with st.expander("ℹ️ Info"):
-                    st.markdown(f"_{info['desc']}_")
-                    st.markdown(f"**❄️ Storage:** {info['storage']}")
+                st.write(info['desc'])
+                with st.expander("Show Details"):
+                    st.markdown(info['benefits_detailed'])
