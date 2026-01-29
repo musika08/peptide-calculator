@@ -3,7 +3,7 @@ import math
 
 # --- 1. CONFIGURATION: WIDE MODE ---
 st.set_page_config(
-    page_title="PeptideCalc Pro v3.5",
+    page_title="PeptideCalc Pro v3.6",
     page_icon="🧪",
     layout="wide",
     initial_sidebar_state="expanded"
@@ -54,19 +54,13 @@ st.markdown("""
         margin-top: 10px;
         border-radius: 4px;
         font-size: 0.9em;
-        line-height: 1.6; /* Improved spacing for lists */
+        line-height: 1.6;
     }
 </style>
 """, unsafe_allow_html=True)
 
-# --- EXPANDED KNOWLEDGE BASE (v3.5 - Vertical Database Side Effects) ---
+# --- EXPANDED KNOWLEDGE BASE (v3.6 - Custom Removed) ---
 PEPTIDE_PRESETS = {
-    "Custom (Enter manually)": {
-        "vial_mg": 5.0, "dose_mcg": 250.0, "type": "N/A", "filter_cat": "All",
-        "desc": "Manual calculation.",
-        "benefits_summary": "N/A", "side_effects_summary": "Unknown.", "protocol_summary": "As directed.",
-        "benefits_detailed": "N/A", "protocol_detailed": "N/A", "side_effects_detailed": "N/A", "storage": "Dependant on compound."
-    },
     "AOD-9604": {
         "vial_mg": 5.0, "dose_mcg": 300.0,
         "type": "Fat Loss", "filter_cat": "Slimming & Fat Loss",
@@ -789,7 +783,7 @@ PEPTIDE_PRESETS = {
         """,
         "side_effects_detailed": """
         • Tachycardia (fast heart rate)
-        • Cutaneous hyperesthesia (sensitive skin)
+        • Cutaneous hyperesthesia (sensitive skin to touch)
         • Nausea
         • Constipation
         """,
@@ -1003,11 +997,11 @@ PEPTIDE_PRESETS = {
 FACTORS = {'mcg': 1, 'mg': 1000, 'g': 1000000}
 
 # Initialize State
-if 'vial_val' not in st.session_state: st.session_state.vial_val = 5.0
-if 'dose_val' not in st.session_state: st.session_state.dose_val = 250.0
+if 'vial_val' not in st.session_state: st.session_state.vial_val = 30.0 # Default to Tirzepatide
+if 'dose_val' not in st.session_state: st.session_state.dose_val = 2.5 # Default to Tirzepatide
 if 'stock_unit_index' not in st.session_state: st.session_state.stock_unit_index = 0
 if 'dose_unit_index' not in st.session_state: st.session_state.dose_unit_index = 0
-if 'dose_unit_selection' not in st.session_state: st.session_state.dose_unit_selection = "mcg"
+if 'dose_unit_selection' not in st.session_state: st.session_state.dose_unit_selection = "mg" # Default to Tirzepatide
 if 'calc_count' not in st.session_state: st.session_state.calc_count = 0
 
 # --- NAVIGATION SIDEBAR ---
@@ -1016,7 +1010,7 @@ with st.sidebar:
     st.title("Navigation")
     page = st.radio("Go to:", ["🧮 Calculator", "📚 Peptide Database"])
     st.markdown("---")
-    st.caption("v3.5 | by Musika")
+    st.caption("v3.6 | by Musika")
 
 # ==============================================================================
 # PAGE 1: CALCULATOR
@@ -1061,8 +1055,15 @@ if page == "🧮 Calculator":
     with left_col:
         st.info("1️⃣ **Configuration**")
         
+        # Sort keys, but make Tirzepatide default if index logic allows
         sorted_presets = sorted(list(PEPTIDE_PRESETS.keys()))
-        selected_peptide = st.selectbox("Select Peptide Profile", sorted_presets, key="peptide_selector", on_change=load_preset)
+        
+        # Determine default index for Tirzepatide
+        default_index = 0
+        if "Tirzepatide" in sorted_presets:
+            default_index = sorted_presets.index("Tirzepatide")
+
+        selected_peptide = st.selectbox("Select Peptide Profile", sorted_presets, index=default_index, key="peptide_selector", on_change=load_preset)
         
         st.write("📦 **Stock & Water**")
         c1, c2, c3 = st.columns([1.5, 1, 1.5])
@@ -1127,21 +1128,19 @@ if page == "🧮 Calculator":
             # --- B. PEPTIDE PROFILE (Second) ---
             st.write("") # Spacer
             with st.expander(f"📖 **Profile: {selected_peptide}**", expanded=True):
-                if selected_peptide == "Custom (Enter manually)":
-                     st.write("Manual mode selected.")
-                else:
-                    st.markdown(f"**Type:** {peptide_info['type']}")
-                    st.markdown(f"**🌟 Key Benefits:**")
-                    st.markdown(peptide_info['benefits_summary']) # Vertical Markdown List
-                    st.markdown(f"""
-                    <div style="margin-top:10px; padding:10px; background-color:#3e1818; border-left:4px solid #ff4b4b; border-radius:4px;">
-                    <strong>⚠️ Common Side Effects:</strong><br>{peptide_info['side_effects_summary']}
-                    </div>
-                    """, unsafe_allow_html=True)
-                    st.write("")
-                    st.info(f"**📋 Quick Protocol:** {peptide_info['protocol_summary']}")
-                    st.markdown(f"**❄️ Storage:** {peptide_info['storage']}")
-                    st.caption("*For clinical details, visit the 'Peptide Database' tab.*")
+                # Always show profile for known peptides
+                st.markdown(f"**Type:** {peptide_info['type']}")
+                st.markdown(f"**🌟 Key Benefits:**")
+                st.markdown(peptide_info['benefits_summary']) # Vertical Markdown List
+                st.markdown(f"""
+                <div style="margin-top:10px; padding:10px; background-color:#3e1818; border-left:4px solid #ff4b4b; border-radius:4px;">
+                <strong>⚠️ Common Side Effects:</strong><br>{peptide_info['side_effects_summary']}
+                </div>
+                """, unsafe_allow_html=True)
+                st.write("")
+                st.info(f"**📋 Quick Protocol:** {peptide_info['protocol_summary']}")
+                st.markdown(f"**❄️ Storage:** {peptide_info['storage']}")
+                st.caption("*For clinical details, visit the 'Peptide Database' tab.*")
 
             protocol_text = f"Peptide: {selected_peptide}\nType: {peptide_info['type']}\nStock: {vial_qty}{vial_unit} + {water_ml}mL Water\nConc: {concentration_mg_ml:.2f} mg/mL\nDose: {desired_dose}{dose_unit} = {units:.1f} Units ({syringe_type})\nSupply: 1 vial lasts approx {int(doses_per_vial)} doses.\n\nQuick Protocol: {peptide_info['protocol_summary']}\nBenefits: {peptide_info['benefits_summary']}\nStorage: {peptide_info['storage']}"
             st.download_button("💾 Save Protocol", protocol_text, "protocol.txt", use_container_width=True)
@@ -1174,15 +1173,15 @@ if page == "🧮 Calculator":
         st.markdown("[![Hits](https://hits.sh/peptide-calculator.streamlit.app.svg?style=flat-square&label=Total%20Visits&extraCount=2023&color=79c83d)](https://hits.sh/peptide-calculator.streamlit.app/)")
 
 # ==============================================================================
-# PAGE 2: PEPTIDE DATABASE (Notion-Style / v3.5)
+# PAGE 2: PEPTIDE DATABASE (Notion-Style / v3.6)
 # ==============================================================================
 elif page == "📚 Peptide Database":
     st.subheader("📚 Peptide Database")
     st.caption("Comprehensive clinical data, mechanisms, and protocols. *Disclaimer: For educational purposes only.*")
     st.divider()
 
-    # Get all peptides except the "Custom" entry
-    db_items = {k: v for k, v in PEPTIDE_PRESETS.items() if k != "Custom (Enter manually)"}
+    # Get all peptides
+    db_items = PEPTIDE_PRESETS
 
     # Extract unique categories for the filter
     all_categories = ["All", "Slimming & Fat Loss", "Skin, Hair & Beauty", "Muscle & Workout", "Nootropics & Brain", "Injury & Repair", "Wellness & Longevity", "Libido & Sexual Health"]
@@ -1224,7 +1223,6 @@ elif page == "📚 Peptide Database":
                 st.markdown("**🌟 Clinical Benefits:**")
                 st.markdown(info['benefits_detailed'])
                 
-                # Use Markdown formatting inside the HTML div to ensure vertical bullets
                 st.markdown(f"""
                 <div class='side-effect-box'>
                 <strong>⚠️ Side Effects:</strong><br>
