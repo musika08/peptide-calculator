@@ -67,17 +67,17 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
-# --- KNOWLEDGE BASE (Updated with Contraindications) ---
+# --- KNOWLEDGE BASE (Updated HCG & Detailed Benefits) ---
 PEPTIDE_PRESETS = {
     "AOD-9604": {
         "vial_mg": 5.0, "dose_mcg": 300.0, "default_dose_unit": "mcg", "default_stock_unit": "mg", "iu_conversion": None,
         "type": "Fat Loss", "filter_cat": "Slimming & Fat Loss",
         "desc": "Anti-Obesity Drug 9604. A modified fragment of the C-terminus of Human Growth Hormone (HGH) designed specifically to burn fat without the blood sugar effects of full HGH.",
         "benefits_summary": """
-- Targeted fat burning (lipolysis)
-- No blood sugar spikes
-- Cartilage repair support
-- Non-hormonal (no IGF-1 impact)
+- **Targeted Lipolysis:** Stimulates fat breakdown specifically in adipose tissue.
+- **Metabolic Safety:** No impact on blood sugar or insulin (unlike HGH).
+- **Joint Support:** Aids in cartilage regeneration and repair.
+- **Visceral Fat:** Shows affinity for reducing stubborn abdominal fat.
 """,
         "side_effects_summary": """
 - Injection site redness
@@ -116,10 +116,10 @@ PEPTIDE_PRESETS = {
         "type": "Regenerative", "filter_cat": "Injury & Repair",
         "desc": "Body Protection Compound-157. A 15-amino acid chain derived from gastric juice. It modulates the nitric oxide system and promotes angiogenesis.",
         "benefits_summary": """
-- Accelerates tendon/ligament repair
-- Heals gut lining (IBS/Leaky Gut)
-- Reduces neuro-inflammation
-- Protects liver and organs
+- **Tissue Repair:** Rapidly heals tendons, ligaments, and bone fractures.
+- **Gut Health:** Potent cytoprotective effects for IBS, leaky gut, and ulcers.
+- **Angiogenesis:** Stimulates new blood vessel formation (VEGF).
+- **Neuroprotection:** Modulates dopamine/serotonin systems for brain health.
 """,
         "side_effects_summary": """
 - Mild nausea (rare)
@@ -158,10 +158,10 @@ PEPTIDE_PRESETS = {
         "type": "Regenerative Blend", "filter_cat": "Injury & Repair",
         "desc": "The 'Wolverine Stack'. Synergistic combination where BPC-157 works on connective tissue/gut, while TB-500 works on muscle tissue.",
         "benefits_summary": """
-- Maximum surgical/injury recovery
-- Improves joint flexibility
-- Cardiovascular protection
-- Systemic anti-inflammatory
+- **Total Repair:** Synergistic healing of bone, tendon, and muscle belly.
+- **Flexibility:** Significant improvements in joint range of motion.
+- **Cardioprotection:** TB-500 reduces scar tissue in heart/organs.
+- **Anti-Inflammatory:** Systemic reduction of chronic inflammation.
 """,
         "side_effects_summary": """
 - Head rush (TB-500)
@@ -197,10 +197,10 @@ PEPTIDE_PRESETS = {
         "type": "Growth Hormone", "filter_cat": "Muscle & Workout",
         "desc": "Modified GRF 1-29. A GHRH analog that acts on the pituitary gland to stimulate pulsatile Growth Hormone release.",
         "benefits_summary": """
-- Increases lean muscle mass
-- Promotes deep slow-wave sleep
-- Improves skin elasticity
-- Accelerates fat metabolism
+- **Hyperplasia:** Increases total number of muscle cells.
+- **Sleep Architecture:** Promotes deep slow-wave (Delta) sleep.
+- **Anti-Aging:** Improves skin elasticity and collagen density.
+- **Lipolysis:** Accelerates fat metabolism during sleep.
 """,
         "side_effects_summary": """
 - Flushing/Warmth (Vasodilation)
@@ -239,10 +239,10 @@ PEPTIDE_PRESETS = {
         "type": "Growth Hormone Blend", "filter_cat": "Muscle & Workout",
         "desc": "The Gold Standard GH Stack. Combines CJC-1295 and Ipamorelin.",
         "benefits_summary": """
-- Max natural GH secretion
-- Significant body recomposition
-- Superior recovery & sleep
-- No cortisol/prolactin spike
+- **Max GH Pulse:** 5-10x stronger release than single peptides.
+- **Visceral Fat:** Mobilizes deep abdominal fat stores.
+- **Recomposition:** Builds lean muscle while burning fat.
+- **Safety:** No spike in cortisol or hunger hormones.
 """,
         "side_effects_summary": """
 - Head rush/Flushing
@@ -277,10 +277,10 @@ PEPTIDE_PRESETS = {
         "type": "Anti-Aging", "filter_cat": "Wellness & Longevity",
         "desc": "Synthetic tetrapeptide that increases telomerase activity, potentially lengthening telomeres.",
         "benefits_summary": """
-- Extends lifespan (Telomeres)
-- Resets circadian rhythm
-- Boosts melatonin naturally
-- Anti-tumor/cancer protective
+- **Longevity:** Upregulates telomerase to extend cell life.
+- **Endocrine Reset:** Restores pineal gland sensitivity.
+- **Sleep Quality:** Normalizes natural melatonin production.
+- **Immunity:** Enhances T-cell function and cancer protection.
 """,
         "side_effects_summary": """
 - Daytime drowsiness (rare)
@@ -315,10 +315,10 @@ PEPTIDE_PRESETS = {
         "type": "Cosmetic/Repair", "filter_cat": "Skin, Hair & Beauty",
         "desc": "Copper Tripeptide-1. A genomic modulator that resets over 4,000 genes to a younger state.",
         "benefits_summary": """
-- Boosts collagen & elastin
-- Tightens loose skin
-- Regrows hair (follicle size)
-- Activates DNA repair genes
+- **Skin Rejuvenation:** Boosts collagen (70%) and elastin.
+- **Hair Growth:** Enlarges follicles and extends growth phase.
+- **DNA Repair:** Resets activity of DNA repair genes.
+- **Wound Healing:** Accelerates closure and reduces scarring.
 """,
         "side_effects_summary": """
 - Painful injection (Sting)
@@ -353,10 +353,10 @@ PEPTIDE_PRESETS = {
         "type": "Cosmetic/Recovery Blend", "filter_cat": "Skin, Hair & Beauty",
         "desc": "70mg Tri-Blend. BPC-157 and TB-500 are added to buffer the GHK-Cu, reducing the 'sting'.",
         "benefits_summary": """
-- Painless GHK-Cu injection
-- Total body skin tightening
-- Rapid injury recovery
-- Gut & Heart health
+- **Painless GHK-Cu:** BPC reduces acidity and inflammation.
+- **Total Rejuvenation:** Targets skin, hair, gut, and muscle.
+- **Synergy:** Increases GH receptors for enhanced repair.
+- **Systemic Health:** Lowers inflammation while beautifying.
 """,
         "side_effects_summary": """
 - Mild redness
@@ -391,10 +391,10 @@ PEPTIDE_PRESETS = {
         "type": "Hormonal", "filter_cat": "Libido & Sexual Health",
         "desc": "Human Chorionic Gonadotropin. Mimics LH to maintain testicular function.",
         "benefits_summary": """
-- Prevents testicular shrinkage
-- Maintains fertility/sperm
-- Boosts libido & mood
-- TRT adjunct support
+- **Testicular Health:** Prevents atrophy during TRT.
+- **Fertility:** Restores spermatogenesis for conception.
+- **Mood Support:** Maintains neurosteroid pathways (DHEA).
+- **Libido:** Provides distinct libido boost.
 """,
         "side_effects_summary": """
 - Estrogen spikes (High E2)
@@ -430,10 +430,10 @@ PEPTIDE_PRESETS = {
         "type": "Growth Hormone", "filter_cat": "Muscle & Workout",
         "desc": "Selective GH Secretagogue. The mildest and safest GHRP.",
         "benefits_summary": """
-- Clean GH release (No hunger)
-- Fat loss & muscle sparing
-- Improved sleep quality
-- Anti-aging support
+- **Clean Signal:** Stimulates GH without hunger/cortisol spikes.
+- **Catabolic Protection:** Spares muscle during dieting.
+- **Sleep Quality:** Increases REM and Deep Sleep duration.
+- **Bone Density:** Improves calcium retention.
 """,
         "side_effects_summary": """
 - Very mild
@@ -468,10 +468,10 @@ PEPTIDE_PRESETS = {
         "type": "Hormonal", "filter_cat": "Libido & Sexual Health",
         "desc": "A neuromodulator that stimulates the hypothalamus to release GnRH.",
         "benefits_summary": """
-- Restarts HPTA axis safely
-- Boosts fertility (LH/FSH)
-- Increases libido
-- No testicular desensitization
+- **HPTA Restart:** Safely restores natural testosterone production.
+- **Fertility:** Strongly stimulates FSH for sperm maturation.
+- **Safety:** No Leydig cell desensitization (unlike HCG).
+- **Psychogenic:** Boosts emotional/sexual arousal.
 """,
         "side_effects_summary": """
 - Flushing/Warmth
@@ -506,10 +506,10 @@ PEPTIDE_PRESETS = {
         "type": "Ultimate Repair/Cosmetic Blend", "filter_cat": "Skin, Hair & Beauty",
         "desc": "The 80mg Master Stack. Adds KPV to the GHK/BPC/TB trio.",
         "benefits_summary": """
-- Clears Acne, Psoriasis, Eczema
-- Heals Gut (IBD/Colitis)
-- Systemic anti-inflammatory
-- Total tissue repair
+- **Dermatology:** Clears Acne, Psoriasis, and Eczema.
+- **Gut Health:** Strongest stack for IBD, SIBO, Colitis.
+- **Mast Cells:** Stabilizes histamine response.
+- **Total Repair:** Combines structural healing with cosmetic renewal.
 """,
         "side_effects_summary": """
 - Red welts (Injection site)
@@ -544,10 +544,9 @@ PEPTIDE_PRESETS = {
         "type": "Cosmetic", "filter_cat": "Skin, Hair & Beauty",
         "desc": "Alpha-MSH analog. Stimulates melanin production and sexual arousal.",
         "benefits_summary": """
-- Deep, rapid tan
-- Extreme libido boost
-- Appetite suppression
-- UV protection
+- **Photoprotection:** Deep, natural tan protects skin from UV.
+- **Libido:** Potent central aphrodisiac for men/women.
+- **Metabolic:** Suppresses appetite (MC4 receptor).
 """,
         "side_effects_summary": """
 - Severe Nausea
@@ -584,10 +583,10 @@ PEPTIDE_PRESETS = {
         "type": "Metabolic/Mitochondrial", "filter_cat": "Muscle & Workout",
         "desc": "Mitochondrial-Derived Peptide. Known as an 'exercise mimetic'.",
         "benefits_summary": """
-- Increases VO2 Max/Endurance
-- Prevents weight gain
-- Improves bone metabolism
-- Cellular energy boost
+- **Endurance:** Increases VO2 Max and glucose utilization.
+- **Metabolic:** Prevents diet-induced insulin resistance.
+- **Bone Health:** Promotes osteoblast differentiation.
+- **Biogenesis:** Creates new mitochondria.
 """,
         "side_effects_summary": """
 - Painful injection (Sting)
@@ -622,10 +621,10 @@ PEPTIDE_PRESETS = {
         "type": "Cellular Energy", "filter_cat": "Wellness & Longevity",
         "desc": "Nicotinamide Adenine Dinucleotide. The fuel for cellular engines.",
         "benefits_summary": """
-- Clears brain fog
-- Restores cellular energy
-- Repairs DNA damage
-- Anti-aging/Longevity
+- **Cognition:** Clears brain fog and enhances focus.
+- **Mitochondria:** Restores efficient ATP production.
+- **DNA Repair:** Fuels PARP enzymes for genomic stability.
+- **Addiction:** Reduces cravings and withdrawals.
 """,
         "side_effects_summary": """
 - Chest pressure (The Flush)
@@ -663,10 +662,10 @@ PEPTIDE_PRESETS = {
         "type": "Hormonal/Wellness", "filter_cat": "Nootropics & Brain",
         "desc": "The 'Love Hormone'. Acts as a neurotransmitter regulating social interaction and bonding.",
         "benefits_summary": """
-- Reduces social anxiety
-- Lowers cortisol (Stress)
-- Enhances emotional bonding
-- Modulates pain perception
+- **Psychological:** Reduces social anxiety and cortisol.
+- **Intimacy:** Enhances trust and emotional bonding.
+- **Pain:** Analgesic and anti-inflammatory properties.
+- **Metabolic:** Suppresses appetite.
 """,
         "side_effects_summary": """
 - Nausea (at high dose)
@@ -702,10 +701,10 @@ PEPTIDE_PRESETS = {
         "type": "Libido", "filter_cat": "Libido & Sexual Health",
         "desc": "Bremelanotide. Works on the nervous system to treat hypoactive sexual desire.",
         "benefits_summary": """
-- Treats ED & Low Libido
-- Works when Viagra fails
-- Increases physical arousal
-- For Men & Women
+- **Mechanism:** Targets brain/hypothalamus, not vascular.
+- **Efficacy:** Effective for non-vascular ED (Viagra resistant).
+- **Women:** FDA approved for low libido.
+- **Response:** Increases physical arousal and desire.
 """,
         "side_effects_summary": """
 - Nausea (Common)
@@ -741,10 +740,10 @@ PEPTIDE_PRESETS = {
         "type": "Metabolic (GLP-1/GIP/Glucagon)", "filter_cat": "Slimming & Fat Loss",
         "desc": "The 'Triple G' Agonist. The most potent weight loss agent currently in trials.",
         "benefits_summary": """
-- Extreme weight loss (24%+)
-- Burns liver fat (NAFLD)
-- Resets insulin sensitivity
-- Increases metabolism
+- **Efficacy:** Extreme weight loss (24%+).
+- **Liver Health:** Resolves NAFLD by burning liver fat.
+- **Metabolic:** Resets insulin sensitivity and lipids.
+- **Energy:** Glucagon increases calorie burn.
 """,
         "side_effects_summary": """
 - High Heart Rate
@@ -783,10 +782,10 @@ PEPTIDE_PRESETS = {
         "type": "Metabolic (GLP-1)", "filter_cat": "Slimming & Fat Loss",
         "desc": "GLP-1 Agonist. The standard for medical weight loss.",
         "benefits_summary": """
-- Significant weight loss (15%)
-- Controls blood sugar
-- Cardioprotective
-- Reduces addiction cravings
+- **Satiety:** Slows gastric emptying, reducing hunger.
+- **Heart:** Proven 20% reduction in cardiovascular events.
+- **Addiction:** Reduces cravings for alcohol/sugar.
+- **Weight Loss:** 15% average body weight reduction.
 """,
         "side_effects_summary": """
 - Nausea/Vomiting
@@ -825,10 +824,10 @@ PEPTIDE_PRESETS = {
         "type": "Regenerative", "filter_cat": "Injury & Repair",
         "desc": "Synthetic Thymosin Beta-4. The 'Muscle Repair' peptide.",
         "benefits_summary": """
-- Heals muscle tears
-- Improves flexibility
-- Reduces scar tissue
-- Cardiac repair
+- **Muscle Repair:** Best for tears, strains, and bruising.
+- **Flexibility:** Improves range of motion via inflammation control.
+- **Cardiac:** Repairs heart tissue and reduces scarring.
+- **Hair:** Stimulates follicle stem cells.
 """,
         "side_effects_summary": """
 - Head rush (common)
@@ -866,10 +865,10 @@ PEPTIDE_PRESETS = {
         "type": "Growth Hormone", "filter_cat": "Slimming & Fat Loss",
         "desc": "FDA Approved GHRH for visceral fat reduction.",
         "benefits_summary": """
-- Burns belly fat (Visceral)
-- Increases muscle tone
-- Nootropic effects
-- Lowers triglycerides
+- **Visceral Fat:** Targets stubborn belly fat around organs.
+- **Cognition:** Improves executive function and memory.
+- **Cardio:** Lowers triglycerides significantly.
+- **Muscle:** Increases IGF-1 for lean retention.
 """,
         "side_effects_summary": """
 - Injection redness
@@ -908,10 +907,10 @@ PEPTIDE_PRESETS = {
         "type": "Growth Hormone/Fat Loss Blend", "filter_cat": "Slimming & Fat Loss",
         "desc": "The 'Shred Stack'. Targets visceral fat + systemic GH elevation.",
         "benefits_summary": """
-- Max fat loss (Visceral)
-- Muscle definition
-- Deep sleep
-- Systemic anti-aging
+- **Recomposition:** Powerful combo for fat burn + muscle build.
+- **Metabolic:** Amplifies fasting effects.
+- **Synergy:** Ipamorelin smooths pulse and adds sleep benefits.
+- **Visceral Fat:** Rapid abdominal fat mobilization.
 """,
         "side_effects_summary": """
 - Flushing/Redness
@@ -949,10 +948,10 @@ PEPTIDE_PRESETS = {
         "type": "Metabolic (GLP-1/GIP)", "filter_cat": "Slimming & Fat Loss",
         "desc": "Dual Agonist (Mounjaro). GIP + GLP-1. Superior to Semaglutide.",
         "benefits_summary": """
-- Massive weight loss (22%)
-- Eliminates 'Food Noise'
-- Less nausea than Semaglutide
-- Metabolic repair
+- **Weight Loss:** 22% average loss (SURMOUNT-1).
+- **Food Noise:** Eliminates obsessive food thoughts.
+- **Tolerability:** GIP reduces nausea vs Semaglutide.
+- **Metabolic:** Resolves sleep apnea and metabolic syndrome.
 """,
         "side_effects_summary": """
 - Anhedonia (No joy)
@@ -990,7 +989,7 @@ PEPTIDE_PRESETS = {
 
 FACTORS = {'mcg': 1, 'mg': 1000, 'g': 1000000}
 
-# Initialize State (Default to Tirzepatide)
+# Initialize State
 if 'vial_val' not in st.session_state: st.session_state.vial_val = 30.0
 if 'dose_val' not in st.session_state: st.session_state.dose_val = 2.5
 if 'stock_unit_index' not in st.session_state: st.session_state.stock_unit_index = 0
@@ -1000,7 +999,6 @@ if 'calc_count' not in st.session_state: st.session_state.calc_count = 0
 
 # --- NAVIGATION SIDEBAR ---
 with st.sidebar:
-    st.image("Sites.jpeg", caption="Injection Guide", width=200) # Replaced with new image requirement per user request if available in folder, otherwise fallback to text. Wait, user asked to change the visual guide image at the bottom, not sidebar logo. Reverting sidebar logo to placeholder.
     st.image("https://img.icons8.com/color/96/000000/biotech.png", width=60)
     st.title("Navigation")
     page = st.radio("Go to:", ["🧮 Calculator", "📚 Peptide Database"])
@@ -1090,7 +1088,7 @@ if page == "🧮 Calculator":
 
         st.divider()
         
-        # MOVED TO LEFT COLUMN PER REQUEST
+        # MOVED TO LEFT COLUMN
         with st.expander("🛠️ How to Reconstitute (Mix)", expanded=True):
              if vial_qty > 0 and water_ml > 0:
                 st.markdown(f"1. **Clean:** Wipe the top of the **{vial_qty} {vial_unit}** peptide vial and the water vial with an alcohol swab.\n2. **Withdraw:** Draw exactly **{water_ml} mL** of Bacteriostatic Water.\n3. **Inject:** Slowly inject the **{water_ml} mL** of water into the peptide vial. Aim for the glass wall, not the powder directly.\n4. **Mix:** **Do not shake.** Gently swirl the vial until dissolved.\n5. **Store:** Refrigerate immediately.")
@@ -1173,9 +1171,9 @@ if page == "🧮 Calculator":
             with st.expander(f"📖 **Profile: {selected_peptide}**", expanded=True):
                 st.markdown(f"**Type:** {peptide_info['type']}")
                 st.markdown(f"**🌟 Key Benefits:**")
-                st.markdown(peptide_info['benefits_summary'].strip()) # Strip ensures leading newline is respected
+                st.markdown(peptide_info['benefits_summary'].strip()) 
                 
-                # Added Contraindications inside the warning box
+                # Side Effects + Contraindications
                 st.markdown(f"""
                 <div style="margin-top:10px; padding:10px; background-color:#3e1818; border-left:4px solid #ff4b4b; border-radius:4px;">
                 <strong>⚠️ Common Side Effects:</strong><br>
