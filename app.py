@@ -1,11 +1,10 @@
-# app.py
 import streamlit as st
 from database import PEPTIDE_PRESETS, FACTORS
 from calculator import perform_calc
 
 st.set_page_config(page_title="PeptideCalc Pro v4.0", page_icon="🧪", layout="wide", initial_sidebar_state="expanded")
 
-# CSS Restoration
+# CSS Styling
 st.markdown("""
 <style>
     .syringe-container { border: 2px solid #333; border-radius: 4px; background-color: #f0f0f0; height: 30px; width: 100%; position: relative; margin: 10px 0; }
@@ -79,6 +78,7 @@ if page == "🧮 Calculator":
         st.markdown(f"1. **Clean:** Wipe the top of the **{v_qty} {v_unit}** peptide vial and the water vial.\n2. **Withdraw:** Draw exactly **{water} mL** of Bacteriostatic Water.\n3. **Inject:** Slowly aim for the glass wall.\n4. **Mix:** Swirl gently.\n5. **Store:** Refrigerate immediately.")
     
     with st.expander("💉 Visual Guide: Injection Sites", expanded=False):
+        st.write("Common subcutaneous injection zones: Abdomen, Upper Thigh, and Back of Arm.")
         
 
 elif page == "📚 Peptide Database":
