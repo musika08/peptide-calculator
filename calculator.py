@@ -16,9 +16,7 @@ def perform_calc(vial_qty, vial_unit, water_ml, desired_dose, dose_unit, syringe
         
         if dose_unit == 'IU': target_dose_units = desired_dose
         elif dose_unit == 'mg': target_dose_units = desired_dose * conversion
-        elif dose_unit == 'mcg': target_dose_units = (desired_dose / 1000) * conversion
-        else: target_dose_units = 0
-            
+        else: target_dose_units = (desired_dose / 1000) * conversion
     else:
         if vial_unit == 'mg': total_stock_units = vial_qty * 1000
         elif vial_unit == 'g': total_stock_units = vial_qty * 1000000
@@ -27,12 +25,11 @@ def perform_calc(vial_qty, vial_unit, water_ml, desired_dose, dose_unit, syringe
         
         if dose_unit == 'mg': target_dose_units = desired_dose * 1000
         elif dose_unit == 'g': target_dose_units = desired_dose * 1000000
-        elif dose_unit == 'mcg': target_dose_units = desired_dose
-        else: target_dose_units = 0
+        else: target_dose_units = desired_dose
 
-    if total_stock_units > 0 and target_dose_units > 0:
-        concentration_per_ml = total_stock_units / water_ml
-        draw_ml = target_dose_units / concentration_per_ml
+    if total_stock_units > 0 and water_ml > 0 and target_dose_units > 0:
+        concentration = total_stock_units / water_ml
+        draw_ml = target_dose_units / concentration
         units = draw_ml * syringe_factor
         per_vial = total_stock_units / target_dose_units
         return draw_ml, units, per_vial
