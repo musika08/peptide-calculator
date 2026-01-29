@@ -3,7 +3,7 @@ import math
 
 # --- 1. CONFIGURATION: WIDE MODE ---
 st.set_page_config(
-    page_title="PeptideCalc Pro v3.3",
+    page_title="PeptideCalc Pro v3.4",
     page_icon="🧪",
     layout="wide",
     initial_sidebar_state="expanded"
@@ -58,7 +58,7 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
-# --- EXPANDED KNOWLEDGE BASE (v3.3 - Vertical Lists) ---
+# --- EXPANDED KNOWLEDGE BASE (v3.4) ---
 PEPTIDE_PRESETS = {
     "Custom (Enter manually)": {
         "vial_mg": 5.0, "dose_mcg": 250.0, "type": "N/A", "desc": "Manual calculation.",
@@ -1024,12 +1024,11 @@ if page == "🧮 Calculator":
                 else:
                     st.markdown(f"**Type:** {peptide_info['type']}")
                     st.markdown(f"**🌟 Key Benefits:**")
-                    st.markdown(peptide_info['benefits_summary']) # New vertical format
-                    st.markdown(f"""
-                    <div style="margin-top:10px; padding:10px; background-color:#3e1818; border-left:4px solid #ff4b4b; border-radius:4px;">
-                    <strong>⚠️ Common Side Effects:</strong><br>{peptide_info['side_effects_summary']}
-                    </div>
-                    """, unsafe_allow_html=True)
+                    st.markdown(peptide_info['benefits_summary']) # Vertical formatting
+                    
+                    # Using st.error for side effects to ensure vertical list formatting + Red Box
+                    st.error(f"**⚠️ Common Side Effects:**\n{peptide_info['side_effects_summary']}")
+                    
                     st.write("")
                     st.info(f"**📋 Quick Protocol:** {peptide_info['protocol_summary']}")
                     st.markdown(f"**❄️ Storage:** {peptide_info['storage']}")
