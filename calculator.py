@@ -1,84 +1,86 @@
+# calculator.py
 import streamlit as st
 from database import PEPTIDE_DB
 
 def run_calculator():
     st.subheader("🧪 Peptide Dosage Calculator")
     
-    # Check if a peptide was selected from the database or if we are in manual mode
-    peptide_list = ["Manual / Other"] + list(PEPTIDE_DB.keys())
-    
+    # CSS for the visual syringe fill
+    st.markdown("""
+    <style>
+        .syringe-container { border: 2px solid #333; border-radius: 4px; background-color: #f0f0f0; height: 30px; width: 100%; position: relative; margin-top: 10px; margin-bottom: 10px; }
+        .syringe-liquid { background-color: #ff4b4b; height: 100%; border-radius: 2px 0 0 2px; transition: width 0.5s ease-in-out; }
+        .syringe-markings { position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: repeating-linear-gradient(90deg, transparent, transparent 19%, #000 20%); opacity: 0.1; }
+    </style>
+    """, unsafe_allow_html=True)
+
+    def load_preset():
+        selection = st.session_state.peptide_selector
+        if selection in PEPTIDE_DB:
+            data = PEPTIDE_DB[selection]
+            # Map database keys to session state
+            st.session_state.vial_val = float(data.get("vial_mg", 5.0))
+            st.session_state.dose_val = float(data.get("dose_val", 250.0))
+            st.session_state.stock_unit_selection = data.get("unit", "mg")
+            st.session_state.dose_unit_selection = data.get("unit", "mcg")
+
     col1, col2 = st.columns([2, 1])
     
     with col1:
         with st.container(border=True):
-            selected_peptide = st.selectbox("Select Peptide for Presets", options=peptide_list)
+            sorted_presets = sorted(list(PEPTIDE_DB.keys()))
+            selected_peptide = st.selectbox("Select Peptide Preset", options=sorted_presets, key="peptide_selector", on_change=load_preset)
             
-            # --- FEATURE 4: DEFAULT UNIT LOGIC ---
-            # If HCG is selected, default to IU. Otherwise, default to mcg.
-            if "HCG" in selected_peptide:
-                default_unit_index = 2 # Index for IU
-            else:
-                default_unit_index = 0 # Index for mcg
+            p_data = PEPTIDE_DB[selected_peptide]
 
-            unit = st.radio(
-                "Select Dosage Unit", 
-                ["mcg", "mg", "IU"], 
-                index=default_unit_index, 
-                horizontal=True,
-                help="HCG defaults to IU. Most other peptides use mcg."
-            )
+            # --- DYNAMIC SAFETY ALERTS ---
+            if p_data.get("contra"):
+                st.warning(f"⚠️ **Contraindications:** {p_data['contra']}")
             
+            if "Without" in p_data.get("food", ""):
+                st.info(f"🍽️ **Instruction:** Take on an empty stomach (2+ hours after eating).")
+
             st.divider()
             
             c1, c2 = st.columns(2)
             with c1:
-                vial_size = st.number_input("Vial Amount (mg or IU)", min_value=0.1, value=5.0 if "HCG" not in selected_peptide else 5000.0, step=0.1)
-                bac_water = st.number_input("BAC Water Volume (ml)", min_value=0.1, value=2.0, step=0.1)
+                vial_size = st.number_input("Vial Amount", key="vial_val", min_value=0.1)
+                vial_unit = st.selectbox("Vial Unit", ["mg", "mcg", "IU"], key="stock_unit_selection")
+                bac_water = st.number_input("BAC Water Volume (ml)", value=2.0, min_value=0.1)
             
             with c2:
-                desired_dose = st.number_input(f"Desired Dose ({unit})", min_value=1.0, value=250.0, step=10.0)
-                syringe_size = st.selectbox("Syringe Size", ["1ml (100 units)", "0.5ml (50 units)", "0.3ml (30 units)"])
+                dose_unit = st.selectbox("Dose Unit", ["mcg", "mg", "IU"], key="dose_unit_selection")
+                desired_dose = st.number_input(f"Desired Dose", key="dose_val", min_value=0.1)
 
-            # --- CALCULATION LOGIC ---
-            # Standardize everything to a "unit per ml" concentration
-            # 1. Determine total mass in mcg (or keep as IU)
-            if unit == "mcg":
-                total_micrograms = vial_size * 1000
-                dose_to_calc = desired_dose
-            elif unit == "mg":
-                total_micrograms = vial_size * 1000
-                dose_to_calc = desired_dose * 1000
-            else: # IU
-                total_micrograms = vial_size
-                dose_to_calc = desired_dose
+            # Calculation Logic
+            # Standardizing to MCG for mass, or IU for HCG/Oxytocin
+            if vial_unit == "mg": total_mass = vial_size * 1000
+            elif vial_unit == "mcg": total_mass = vial_size
+            else: total_mass = vial_size # IU
 
-            # 2. Math for the tick marks
+            if dose_unit == "mg": target_mass = desired_dose * 1000
+            elif dose_unit == "mcg": target_mass = desired_dose
+            else: target_mass = desired_dose # IU
+
             try:
-                mcg_per_ml = total_micrograms / bac_water
-                ml_per_dose = dose_to_calc / mcg_per_ml
-                units_on_syringe = ml_per_dose * 100
+                ml_per_dose = (target_mass * bac_water) / total_mass
+                units = ml_per_dose * 100
+                st.success(f"### Result: **{units:.1f} Units**")
                 
-                st.success(f"### Result: **{units_on_syringe:.1f} Units**")
-                st.info(f"This dose will provide {desired_dose}{unit} using {ml_per_dose:.3f}ml of solution.")
-                
-            except ZeroDivisionError:
-                st.error("Please enter valid numbers for vial size and water.")
+                # Syringe Visual
+                percentage = min(units, 100)
+                st.markdown(f"""<div class="syringe-container"><div class="syringe-liquid" style="width: {percentage}%;"></div><div class="syringe-markings"></div></div>""", unsafe_allow_html=True)
+            except:
+                st.error("Check input values.")
 
     with col2:
-        # --- FEATURE 5: VISUAL GUIDE ---
-        st.markdown("### 📍 Administration Guide")
+        st.markdown("### 📍 Admin Guide")
         try:
-            st.image("sites.jpeg", caption="Subcutaneous Injection Sites", use_container_width=True)
+            st.image("sites.jpeg", use_container_width=True)
         except:
-            st.warning("Please ensure 'sites.jpeg' is in the same folder as this script.")
+            st.caption("Visual guide (sites.jpeg) missing.")
         
-        # Display clinical data from database if a peptide is selected
-        if selected_peptide != "Manual / Other":
-            info = PEPTIDE_DB[selected_peptide]
-            with st.expander("📖 Clinical Quick-Ref", expanded=True):
-                st.markdown(f"**Goal:** {info['type']}")
-                st.markdown(f"**Protocol:**\n{info['protocol']}")
-                st.markdown(f"**Storage:** {info['storage']}")
-
-if __name__ == "__main__":
-    run_calculator()
+        with st.expander("📖 Protocol Details", expanded=True):
+            st.markdown(f"**Frequency:** {p_data['freq']}")
+            st.markdown(f"**Timing:** {p_data['timing']}")
+            st.markdown(f"**Benefits:**\n{p_data['benefits']}")
