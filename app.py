@@ -73,6 +73,17 @@ PEPTIDE_PRESETS = {
         "vial_mg": 5.0, "dose_mcg": 300.0, "default_dose_unit": "mcg", "default_stock_unit": "mg", "iu_conversion": None,
         "type": "Fat Loss", "filter_cat": "Slimming & Fat Loss",
         "desc": "Anti-Obesity Drug 9604. A modified fragment of the C-terminus of Human Growth Hormone (HGH) designed specifically to burn fat without the blood sugar effects of full HGH.",
+        "benefits_summary": """
+- Targeted fat burning (lipolysis)
+- No blood sugar spikes
+- Cartilage repair support
+- Non-hormonal (no IGF-1 impact)
+""",
+        "side_effects_summary": """
+- Injection site redness
+- Mild stomach upset (rare)
+- Headache (rare)
+""",
         "contraindications": "None specifically reported, but avoid if pregnant or breastfeeding.",
         "protocol_summary": "300mcg daily, morning fasted.",
         "benefits_detailed": """
@@ -104,6 +115,17 @@ PEPTIDE_PRESETS = {
         "vial_mg": 5.0, "dose_mcg": 250.0, "default_dose_unit": "mcg", "default_stock_unit": "mg", "iu_conversion": None,
         "type": "Regenerative", "filter_cat": "Injury & Repair",
         "desc": "Body Protection Compound-157. A 15-amino acid chain derived from gastric juice. It modulates the nitric oxide system and promotes angiogenesis.",
+        "benefits_summary": """
+- Accelerates tendon/ligament repair
+- Heals gut lining (IBS/Leaky Gut)
+- Reduces neuro-inflammation
+- Protects liver and organs
+""",
+        "side_effects_summary": """
+- Mild nausea (rare)
+- Injection site irritation
+- Fatigue during healing phase
+""",
         "contraindications": "Known active cancer (due to angiogenesis properties).",
         "protocol_summary": "250-500mcg daily or 2x daily.",
         "benefits_detailed": """
@@ -135,6 +157,17 @@ PEPTIDE_PRESETS = {
         "vial_mg": 10.0, "dose_mcg": 500.0, "default_dose_unit": "mcg", "default_stock_unit": "mg", "iu_conversion": None,
         "type": "Regenerative Blend", "filter_cat": "Injury & Repair",
         "desc": "The 'Wolverine Stack'. Synergistic combination where BPC-157 works on connective tissue/gut, while TB-500 works on muscle tissue.",
+        "benefits_summary": """
+- Maximum surgical/injury recovery
+- Improves joint flexibility
+- Cardiovascular protection
+- Systemic anti-inflammatory
+""",
+        "side_effects_summary": """
+- Head rush (TB-500)
+- Fatigue/Lethargy
+- Injection site stinging
+""",
         "contraindications": "Active cancer or history of malignancy (TB-500 promotes cell migration).",
         "protocol_summary": "500mcg-1mg total fluid daily.",
         "benefits_detailed": """
@@ -163,6 +196,17 @@ PEPTIDE_PRESETS = {
         "vial_mg": 5.0, "dose_mcg": 100.0, "default_dose_unit": "mcg", "default_stock_unit": "mg", "iu_conversion": None,
         "type": "Growth Hormone", "filter_cat": "Muscle & Workout",
         "desc": "Modified GRF 1-29. A GHRH analog that acts on the pituitary gland to stimulate pulsatile Growth Hormone release.",
+        "benefits_summary": """
+- Increases lean muscle mass
+- Promotes deep slow-wave sleep
+- Improves skin elasticity
+- Accelerates fat metabolism
+""",
+        "side_effects_summary": """
+- Flushing/Warmth (Vasodilation)
+- Head rush
+- Vivid dreams
+""",
         "contraindications": "Active cancer, history of pituitary tumors.",
         "protocol_summary": "100mcg nightly, fasted.",
         "benefits_detailed": """
@@ -194,6 +238,17 @@ PEPTIDE_PRESETS = {
         "vial_mg": 10.0, "dose_mcg": 200.0, "default_dose_unit": "mcg", "default_stock_unit": "mg", "iu_conversion": None,
         "type": "Growth Hormone Blend", "filter_cat": "Muscle & Workout",
         "desc": "The Gold Standard GH Stack. Combines CJC-1295 and Ipamorelin.",
+        "benefits_summary": """
+- Max natural GH secretion
+- Significant body recomposition
+- Superior recovery & sleep
+- No cortisol/prolactin spike
+""",
+        "side_effects_summary": """
+- Head rush/Flushing
+- Numb fingers (Carpal Tunnel)
+- Water retention
+""",
         "contraindications": "Active cancer, history of pituitary tumors.",
         "protocol_summary": "200-300mcg total nightly, fasted.",
         "benefits_detailed": """
@@ -222,10 +277,21 @@ PEPTIDE_PRESETS = {
         "vial_mg": 10.0, "dose_mcg": 5000.0, "default_dose_unit": "mcg", "default_stock_unit": "mg", "iu_conversion": None,
         "type": "Anti-Aging", "filter_cat": "Wellness & Longevity",
         "desc": "Synthetic tetrapeptide that increases telomerase activity, potentially lengthening telomeres.",
+        "benefits_summary": """
+- Extends lifespan (Telomeres)
+- Resets circadian rhythm
+- Boosts melatonin naturally
+- Anti-tumor/cancer protective
+""",
+        "side_effects_summary": """
+- Daytime drowsiness (rare)
+- Vivid dreams
+- Very safe profile
+""",
         "contraindications": "None reported in studies.",
         "protocol_summary": "5mg-10mg daily for 10-20 days.",
         "benefits_detailed": """
-        - **Telomere Extension:** Upregulates telomerase, preventing the shortening of DNA caps during cell division.
+        - **Telomere Extension:** Upregulates telomerase to protect DNA.
         - **Endocrine Reset:** Restores sensitivity of the hypothalamus/pineal gland.
         - **Sleep Quality:** Normalizes melatonin production.
         - **Immunity:** Enhances T-cell function and has shown anti-carcinogenic properties.
@@ -250,6 +316,17 @@ PEPTIDE_PRESETS = {
         "vial_mg": 50.0, "dose_mcg": 2000.0, "default_dose_unit": "mg", "default_stock_unit": "mg", "iu_conversion": None,
         "type": "Cosmetic/Repair", "filter_cat": "Skin, Hair & Beauty",
         "desc": "Copper Tripeptide-1. A genomic modulator that resets over 4,000 genes to a younger state.",
+        "benefits_summary": """
+- Boosts collagen & elastin
+- Tightens loose skin
+- Regrows hair (follicle size)
+- Activates DNA repair genes
+""",
+        "side_effects_summary": """
+- Painful injection (Sting)
+- Red welts/bruising
+- Zinc depletion
+""",
         "contraindications": "Wilson's Disease (Copper storage disease).",
         "protocol_summary": "1-2mg daily. Evening.",
         "benefits_detailed": """
@@ -278,6 +355,17 @@ PEPTIDE_PRESETS = {
         "vial_mg": 70.0, "dose_mcg": 2500.0, "default_dose_unit": "mg", "default_stock_unit": "mg", "iu_conversion": None,
         "type": "Cosmetic/Recovery Blend", "filter_cat": "Skin, Hair & Beauty",
         "desc": "70mg Tri-Blend. BPC-157 and TB-500 are added to buffer the GHK-Cu, reducing the 'sting'.",
+        "benefits_summary": """
+- Painless GHK-Cu injection
+- Total body skin tightening
+- Rapid injury recovery
+- Gut & Heart health
+""",
+        "side_effects_summary": """
+- Mild redness
+- Flushing
+- Fatigue
+""",
         "contraindications": "Wilson's Disease, Active Cancer.",
         "protocol_summary": "2.5mg - 3mg total daily.",
         "benefits_detailed": """
@@ -305,6 +393,17 @@ PEPTIDE_PRESETS = {
         "vial_mg": 5000.0, "dose_mcg": 250.0, "default_dose_unit": "IU", "default_stock_unit": "IU", "iu_conversion": 1,
         "type": "Hormonal", "filter_cat": "Libido & Sexual Health",
         "desc": "Human Chorionic Gonadotropin. Mimics LH to maintain testicular function.",
+        "benefits_summary": """
+- Prevents testicular shrinkage
+- Maintains fertility/sperm
+- Boosts libido & mood
+- TRT adjunct support
+""",
+        "side_effects_summary": """
+- Estrogen spikes (High E2)
+- Acne/Water retention
+- Gynecomastia risk
+""",
         "contraindications": "Prostate cancer, androgen-dependent tumors.",
         "protocol_summary": "250-500 IU 2-3x per week.",
         "benefits_detailed": """
@@ -334,6 +433,17 @@ PEPTIDE_PRESETS = {
         "vial_mg": 5.0, "dose_mcg": 100.0, "default_dose_unit": "mcg", "default_stock_unit": "mg", "iu_conversion": None,
         "type": "Growth Hormone", "filter_cat": "Muscle & Workout",
         "desc": "Selective GH Secretagogue. The mildest and safest GHRP.",
+        "benefits_summary": """
+- Clean GH release (No hunger)
+- Fat loss & muscle sparing
+- Improved sleep quality
+- Anti-aging support
+""",
+        "side_effects_summary": """
+- Very mild
+- Slight water retention
+- Rare dizziness
+""",
         "contraindications": "Active cancer.",
         "protocol_summary": "100-300mcg nightly, fasted.",
         "benefits_detailed": """
@@ -361,6 +471,17 @@ PEPTIDE_PRESETS = {
         "vial_mg": 10.0, "dose_mcg": 100.0, "default_dose_unit": "mcg", "default_stock_unit": "mg", "iu_conversion": None,
         "type": "Hormonal", "filter_cat": "Libido & Sexual Health",
         "desc": "A neuromodulator that stimulates the hypothalamus to release GnRH.",
+        "benefits_summary": """
+- Restarts HPTA axis safely
+- Boosts fertility (LH/FSH)
+- Increases libido
+- No testicular desensitization
+""",
+        "side_effects_summary": """
+- Flushing/Warmth
+- Injection site redness
+- Mild headache
+""",
         "contraindications": "None specifically reported.",
         "protocol_summary": "100-200mcg daily.",
         "benefits_detailed": """
@@ -388,6 +509,17 @@ PEPTIDE_PRESETS = {
         "vial_mg": 80.0, "dose_mcg": 3000.0, "default_dose_unit": "mg", "default_stock_unit": "mg", "iu_conversion": None,
         "type": "Ultimate Repair/Cosmetic Blend", "filter_cat": "Skin, Hair & Beauty",
         "desc": "The 80mg Master Stack. Adds KPV to the GHK/BPC/TB trio.",
+        "benefits_summary": """
+- Clears Acne, Psoriasis, Eczema
+- Heals Gut (IBD/Colitis)
+- Systemic anti-inflammatory
+- Total tissue repair
+""",
+        "side_effects_summary": """
+- Red welts (Injection site)
+- Fatigue (Herxheimer)
+- Flushing
+""",
         "contraindications": "Wilson's Disease, Active Cancer.",
         "protocol_summary": "3mg total daily.",
         "benefits_detailed": """
@@ -415,6 +547,18 @@ PEPTIDE_PRESETS = {
         "vial_mg": 10.0, "dose_mcg": 500.0, "default_dose_unit": "mcg", "default_stock_unit": "mg", "iu_conversion": None,
         "type": "Cosmetic", "filter_cat": "Skin, Hair & Beauty",
         "desc": "Alpha-MSH analog. Stimulates melanin production and sexual arousal.",
+        "benefits_summary": """
+- Deep, rapid tan
+- Extreme libido boost
+- Appetite suppression
+- UV protection
+""",
+        "side_effects_summary": """
+- Severe Nausea
+- Facial Flushing
+- Spontaneous erections
+- Darkening moles
+""",
         "contraindications": "Melanoma, history of skin cancer, uncontrolled hypertension.",
         "protocol_summary": "100-500mcg before UV exposure.",
         "benefits_detailed": """
@@ -443,6 +587,17 @@ PEPTIDE_PRESETS = {
         "vial_mg": 10.0, "dose_mcg": 5000.0, "default_dose_unit": "mg", "default_stock_unit": "mg", "iu_conversion": None,
         "type": "Metabolic/Mitochondrial", "filter_cat": "Muscle & Workout",
         "desc": "Mitochondrial-Derived Peptide. Known as an 'exercise mimetic'.",
+        "benefits_summary": """
+- Increases VO2 Max/Endurance
+- Prevents weight gain
+- Improves bone metabolism
+- Cellular energy boost
+""",
+        "side_effects_summary": """
+- Painful injection (Sting)
+- Insomnia (if late)
+- Hyperactivity
+""",
         "contraindications": "None reported, but avoid late night administration.",
         "protocol_summary": "5mg once weekly.",
         "benefits_detailed": """
@@ -470,6 +625,17 @@ PEPTIDE_PRESETS = {
         "vial_mg": 500.0, "dose_mcg": 25000.0, "default_dose_unit": "mg", "default_stock_unit": "mg", "iu_conversion": None,
         "type": "Cellular Energy", "filter_cat": "Wellness & Longevity",
         "desc": "Nicotinamide Adenine Dinucleotide. The fuel for cellular engines.",
+        "benefits_summary": """
+- Clears brain fog
+- Restores cellular energy
+- Repairs DNA damage
+- Anti-aging/Longevity
+""",
+        "side_effects_summary": """
+- Chest pressure (The Flush)
+- Anxiety/Panic feeling
+- Nausea/Cramps
+""",
         "contraindications": "Active cancer (theoretical risk).",
         "protocol_summary": "25-50mg 2-3x per week. SLOW INJECTION.",
         "benefits_detailed": """
@@ -501,6 +667,17 @@ PEPTIDE_PRESETS = {
         "default_water_ml": 3.0,
         "type": "Hormonal/Wellness", "filter_cat": "Nootropics & Brain",
         "desc": "The 'Love Hormone'. Acts as a neurotransmitter regulating social interaction and bonding.",
+        "benefits_summary": """
+- Reduces social anxiety
+- Lowers cortisol (Stress)
+- Enhances emotional bonding
+- Modulates pain perception
+""",
+        "side_effects_summary": """
+- Nausea (at high dose)
+- Headache
+- Flushing
+""",
         "contraindications": "Pregnancy (induces labor), severe cardiovascular disease.",
         "protocol_summary": "20-50 IU as needed.",
         "benefits_detailed": """
@@ -529,6 +706,17 @@ PEPTIDE_PRESETS = {
         "vial_mg": 10.0, "dose_mcg": 1000.0, "default_dose_unit": "mg", "default_stock_unit": "mg", "iu_conversion": None,
         "type": "Libido", "filter_cat": "Libido & Sexual Health",
         "desc": "Bremelanotide. Works on the nervous system to treat hypoactive sexual desire.",
+        "benefits_summary": """
+- Treats ED & Low Libido
+- Works when Viagra fails
+- Increases physical arousal
+- For Men & Women
+""",
+        "side_effects_summary": """
+- Nausea (Common)
+- Flushing/Warmth
+- Headache
+""",
         "contraindications": "Uncontrolled hypertension (raises BP).",
         "protocol_summary": "1.5-2mg, 2 hours before activity.",
         "benefits_detailed": """
@@ -557,6 +745,17 @@ PEPTIDE_PRESETS = {
         "vial_mg": 10.0, "dose_mcg": 2000.0, 
         "type": "Metabolic (GLP-1/GIP/Glucagon)", "filter_cat": "Slimming & Fat Loss",
         "desc": "The 'Triple G' Agonist. The most potent weight loss agent currently in trials.",
+        "benefits_summary": """
+- Extreme weight loss (24%+)
+- Burns liver fat (NAFLD)
+- Resets insulin sensitivity
+- Increases metabolism
+""",
+        "side_effects_summary": """
+- High Heart Rate
+- Skin sensitivity
+- Nausea/Constipation
+""",
         "contraindications": "MEN2, Medullary Thyroid Cancer history.",
         "protocol_summary": "2mg weekly, titrate up.",
         "benefits_detailed": """
@@ -588,6 +787,18 @@ PEPTIDE_PRESETS = {
         "vial_mg": 5.0, "dose_mcg": 250.0, "default_dose_unit": "mg", "default_stock_unit": "mg", "iu_conversion": None,
         "type": "Metabolic (GLP-1)", "filter_cat": "Slimming & Fat Loss",
         "desc": "GLP-1 Agonist. The standard for medical weight loss.",
+        "benefits_summary": """
+- Significant weight loss (15%)
+- Controls blood sugar
+- Cardioprotective
+- Reduces addiction cravings
+""",
+        "side_effects_summary": """
+- Nausea/Vomiting
+- Severe Constipation
+- Fatigue
+- Muscle loss
+""",
         "contraindications": "MEN2, Medullary Thyroid Cancer history.",
         "protocol_summary": "0.25mg weekly, titrate up.",
         "benefits_detailed": """
@@ -618,6 +829,17 @@ PEPTIDE_PRESETS = {
         "vial_mg": 5.0, "dose_mcg": 2500.0, "default_dose_unit": "mg", "default_stock_unit": "mg", "iu_conversion": None,
         "type": "Regenerative", "filter_cat": "Injury & Repair",
         "desc": "Synthetic Thymosin Beta-4. The 'Muscle Repair' peptide.",
+        "benefits_summary": """
+- Heals muscle tears
+- Improves flexibility
+- Reduces scar tissue
+- Cardiac repair
+""",
+        "side_effects_summary": """
+- Head rush (common)
+- Lethargy
+- Flu-like symptoms
+""",
         "contraindications": "Active cancer (promotes cell migration).",
         "protocol_summary": "2.5mg twice weekly.",
         "benefits_detailed": """
@@ -648,6 +870,17 @@ PEPTIDE_PRESETS = {
         "vial_mg": 2.0, "dose_mcg": 1000.0, "default_dose_unit": "mg", "default_stock_unit": "mg", "iu_conversion": None,
         "type": "Growth Hormone", "filter_cat": "Slimming & Fat Loss",
         "desc": "FDA Approved GHRH for visceral fat reduction.",
+        "benefits_summary": """
+- Burns belly fat (Visceral)
+- Increases muscle tone
+- Nootropic effects
+- Lowers triglycerides
+""",
+        "side_effects_summary": """
+- Injection redness
+- Joint stiffness
+- Carpal Tunnel
+""",
         "contraindications": "Active cancer, history of pituitary tumors.",
         "protocol_summary": "1-2mg nightly, fasted.",
         "benefits_detailed": """
@@ -679,6 +912,17 @@ PEPTIDE_PRESETS = {
         "vial_mg": 12.0, "dose_mcg": 350.0, "default_dose_unit": "mcg", "default_stock_unit": "mg", "iu_conversion": None,
         "type": "Growth Hormone/Fat Loss Blend", "filter_cat": "Slimming & Fat Loss",
         "desc": "The 'Shred Stack'. Targets visceral fat + systemic GH elevation.",
+        "benefits_summary": """
+- Max fat loss (Visceral)
+- Muscle definition
+- Deep sleep
+- Systemic anti-aging
+""",
+        "side_effects_summary": """
+- Flushing/Redness
+- Joint stiffness
+- Water retention
+""",
         "contraindications": "Active cancer.",
         "protocol_summary": "350-500mcg total nightly, fasted.",
         "benefits_detailed": """
@@ -710,6 +954,18 @@ PEPTIDE_PRESETS = {
         "default_water_ml": 3.0,
         "type": "Metabolic (GLP-1/GIP)", "filter_cat": "Slimming & Fat Loss",
         "desc": "Dual Agonist (Mounjaro). GIP + GLP-1. Superior to Semaglutide.",
+        "benefits_summary": """
+- Massive weight loss (22%)
+- Eliminates 'Food Noise'
+- Less nausea than Semaglutide
+- Metabolic repair
+""",
+        "side_effects_summary": """
+- Anhedonia (No joy)
+- Constipation
+- Hair shedding
+- Cold hands/feet
+""",
         "contraindications": "MEN2, Medullary Thyroid Cancer history.",
         "protocol_summary": "2.5mg weekly, titrate up.",
         "benefits_detailed": """
@@ -804,6 +1060,7 @@ if page == "🧮 Calculator":
     st.subheader("🧪 Reconstitution Calculator")
     st.divider()
 
+    # --- MAIN LAYOUT LOGIC ---
     left_col, right_col = st.columns([1, 1.2], gap="large")
 
     # === LEFT COLUMN: INPUTS ===
@@ -843,7 +1100,7 @@ if page == "🧮 Calculator":
         syringe_type = st.radio("Syringe Type", ["U-100 (Standard)", "U-40 (Vet)"], horizontal=True)
         syringe_factor = 100 if "U-100" in syringe_type else 40
 
-        # MOVED TO LEFT COLUMN
+        # MOVED TO LEFT COLUMN PER REQUEST
         st.divider()
         with st.expander("🛠️ How to Reconstitute (Mix)", expanded=True):
              if vial_qty > 0 and water_ml > 0:
@@ -993,6 +1250,7 @@ elif page == "📚 Peptide Database":
                 st.markdown("**🌟 Clinical Benefits:**")
                 st.markdown(info['benefits_detailed'])
                 
+                # Added Contraindications to Database View as well
                 st.markdown(f"""
                 <div class='side-effect-box'>
                 <strong>⚠️ Side Effects:</strong><br>
